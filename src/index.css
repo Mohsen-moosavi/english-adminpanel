@@ -10,14 +10,15 @@
 
 body{
     font-family: Iransans;
-    background-color: #00ff5d24;
+    background-color:#eff;
+    /* background-color: #00ff5d24; */
 }
 a{
     text-decoration: none;
     transition: all ease 300ms;
 }
 a:hover{
-    /* color: #43d7ff; */
+    color: #dc7718;
 }
 input , input:focus , select , select:focus{
     outline: none;
@@ -25,6 +26,15 @@ input , input:focus , select , select:focus{
 button{
     transition: all ease 300ms;
 }
+.sidebar-icon{
+    transition: all ease 300ms;
+    color: #fff;
+    font-size: 30px;
+}
+.sidebar-link:hover .sidebar-icon{
+    color: #dc7718 !important;
+}
+
 
 @layer base {
     @font-face {

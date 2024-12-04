@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import  {getUserDate, setUserLoggin}  from '../redux/features/userSlice';
+import Sidebar from '../components/modules/Sidebar';
+import Header from '../components/modules/Header';
+import { Outlet } from 'react-router-dom';
 
 export default function Layout() {
 
@@ -19,7 +22,14 @@ export default function Layout() {
     },[])
 
   return (
-    <div>
+    <div className='container max-xl:min-w-[100%] mx-auto'>
+      <div className='w-full sm:my-3 flex min-h-[97vh]'>
+        <Sidebar/>
+          <div className='w-full md:border-4 md:border-solid md:border-main-color rounded-l-xl p-3 md:shadow-shadow-inset'>
+            <Header/>
+            <Outlet/>
+          </div>
+      </div>
     </div>
   )
 }
