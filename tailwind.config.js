@@ -28,7 +28,7 @@ export default {
       boxShadow : {
         "shadow-inset" : 'inset 0 0 0.8rem #000',
         "shadow" : '0 0 0.8rem #000'
-      }
+      },
     },
   },
   plugins: [],

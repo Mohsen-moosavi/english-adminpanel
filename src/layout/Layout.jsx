@@ -22,7 +22,7 @@ export default function Layout() {
     },[])
 
   return (
-    <div className='container max-xl:min-w-[100%] mx-auto'>
+    <div className='container max-2xl:min-w-[100%] mx-auto'>
       <div className='w-full sm:my-3 flex min-h-[97vh]'>
         <Sidebar/>
           <div className='w-full md:border-4 md:border-solid md:border-main-color rounded-l-xl p-3 md:shadow-shadow-inset'>

@@ -35,6 +35,116 @@ button{
     color: #dc7718 !important;
 }
 
+.page-title{
+    font-size: 20px;
+    color: #0e4b50;
+    text-shadow: 0 0 1rem #0e4b50;
+    text-align: center;
+    font-weight: 800;
+    margin-bottom: 2rem;
+}
+
+.page-subtitle{
+    font-size: 18px;
+    color: #0e4b50;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-btn-group{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 0.3rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.form-label{
+    font-size: 1rem;
+    color: #0e4b50;
+    opacity: 0.8;
+}
+
+.form-input{
+    width: 100%;
+    border: 1px solid #0e4b50;
+    background-color: rgba(14, 75, 80, 0.4);
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    resize: none;
+}
+
+.form-input::placeholder{
+    color: #fff;
+    opacity: 0.7;
+}
+
+.form-submit{
+    border-radius: 10px;
+    background-color: #0e4b50;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 8px;
+}
+
+.swal-modal{
+    background-color: #0e4b50;
+    border-radius: 10px;
+}
+
+.swal-title{
+    color:  #fff;
+    font-family: Iransans;
+    font-weight: 500;
+}
+
+.swal-content__input{
+    background-color: #0e4b50;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.swal-content__input:focus{
+    outline: none;
+    border-color: #fff;
+}
+
+.swal-footer{
+    text-align: center;
+    display: flex;
+}
+
+.swal-button-container , .swal-button-container .swal-button{
+    width: 100%;
+}
+
+.dataTable tr td,
+.dataTable tr th{
+    border: 1px solid #0e4b50;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+.dataTable tr th{
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .dataTable tr td,
+    .dataTable tr th{
+        padding: 6px;
+        font-size: 10px;
+    }
+}
+
+
 
 @layer base {
     @font-face {

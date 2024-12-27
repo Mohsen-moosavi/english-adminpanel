@@ -56,9 +56,8 @@ const userSlice = createSlice({
           .addCase(getUserDate.rejected, (state, action) => {
             state.isLoading = false;
             if(action.payload?.response?.data?.status === 401){
-              state.isLogin = false;
+              state.userInfo = {}
             }
-            state.userInfo = {}
             state.error = action.payload?.response?.data?.message;
           })
       },
