@@ -42,7 +42,15 @@ export default function Levels() {
     });
 
     function deleteLevelHandler(id) {
-        dispatch(deleteLevel({ id }))
+        swal({
+            title: 'آیا از حذف اطمینان دارید؟',
+            icon : 'warning',
+            buttons: ['لغو','تایید'],
+        }).then(value => {
+            if(value){
+                dispatch(deleteLevel({ id }))
+            }
+        })
     }
 
     function updateLevelHandler(id){
@@ -50,9 +58,6 @@ export default function Levels() {
             title: 'لطفا نام جدید را وارد کنید.',
             content: 'input',
             buttons: ['لغو','تایید'],
-            customClass : {
-                title: 'page-title',
-            }
         }).then(value => {
             dispatch(updateLevel({id , name : value}))
         })
