@@ -59,7 +59,9 @@ export default function Levels() {
             content: 'input',
             buttons: ['لغو','تایید'],
         }).then(value => {
-            dispatch(updateLevel({id , name : value}))     //       has an error         ////////////////////////////////
+            if(value){
+                dispatch(updateLevel({id , name : value}))
+            }
         })
     }
 
