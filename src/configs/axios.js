@@ -8,3 +8,11 @@ export const appJsonPostApi = axios.create({
       'Content-Type': 'application/json',
     },
   });
+
+  export const multipartFormPostApi = axios.create({
+    baseURL: environment.BASE_API_URL,
+    withCredentials : true,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });

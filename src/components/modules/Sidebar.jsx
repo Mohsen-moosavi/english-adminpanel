@@ -80,10 +80,10 @@ export default function Sidebar() {
                 <span>تگ ها</span>
             </Link>
         </li>
-        <li className="block w-full p-2 rounded-lg">
-            <Link to="#" className="flex justify-start gap-x-3 items-end sidebar-link" data-link="admin-page-console">
+        <li className="block w-full p-2 rounded-lg" data-link="/articles">
+            <Link to="articles" className="flex justify-start gap-x-3 items-end sidebar-link">
             <BsTicketPerforatedFill className='sidebar-icon'/>
-                <span>تیکت ها</span>
+                <span>مقاله ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg">

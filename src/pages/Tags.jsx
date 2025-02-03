@@ -91,12 +91,12 @@ export default function Tags() {
             <form className='mb-4' onSubmit={formik.handleSubmit}>
                 <div className="grid grid-cols-1">
                     <div className="form-btn-group">
-                        <label htmlFor="level-input-1" className="form-label">نام تگ</label>
+                        <label htmlFor="tag-input-1" className="form-label">نام تگ</label>
                         <input
                             type="text"
                             name='name'
                             placeholder="نام تگ را وارد کنید..."
-                            className="form-input" id="level-input-1"
+                            className="form-input" id="tag-input-1"
                             value={formik.values.name}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur} />
@@ -114,9 +114,11 @@ export default function Tags() {
             </form>
 
             <h3 className='page-title'>لیست تگ ها</h3>
-            <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'tagData'} reset={searchChangerFlag}/>
             {tags.length ?
                 (<>
+                    <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1'>
+                        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'tagData'} reset={searchChangerFlag}/>
+                    </div>
                     <DataTable>
                         <thead>
                             <tr>
