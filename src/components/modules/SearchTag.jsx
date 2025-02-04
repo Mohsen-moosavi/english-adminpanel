@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTags, setSearch } from '../../redux/features/tagSlice'
 
-export default function Search({setPaginatorChangerFlag , sliceName ,reset}) {
+export default function Search({setPaginatorChangerFlag , sliceName ,reset ,  getter, setSearch}) {
 
     const [searchWord , setSearchWord] = useState("")
     const {limit} = useSelector(state => state[sliceName])
@@ -11,7 +10,7 @@ export default function Search({setPaginatorChangerFlag , sliceName ,reset}) {
 
     useEffect(()=>{
             dispatch(setSearch(searchWord))
-            dispatch(getTags({limit , offset:0 , search : searchWord}))
+            dispatch(getter({limit , offset:0 , search : searchWord}))
             setPaginatorChangerFlag(prev=>!prev)
     } , [searchWord])
 

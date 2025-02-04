@@ -19,6 +19,7 @@ export default function Router() {
         <Route path='tags' element={<Tags/>}/>
         <Route path='articles' element={<Article/>}/>
         <Route path='articles/create' element={<CreateArticle/>}/>
+        <Route path='articles/edit/:id' element={<CreateArticle/>}/>
       </Route>
     </Routes>
   )
