@@ -86,10 +86,10 @@ export default function Sidebar() {
                 <span>مقاله ها</span>
             </Link>
         </li>
-        <li className="block w-full p-2 rounded-lg">
-            <Link to="#" className="flex justify-start gap-x-3 items-end sidebar-link" data-link="admin-page-console">
-                <FaBasketShopping className='sidebar-icon'/>
-                <span>محصولات</span>
+        <li className="block w-full p-2 rounded-lg" data-link="/books-collection">
+            <Link to="books-collection" className="flex justify-start gap-x-3 items-end sidebar-link">
+            <BsTicketPerforatedFill className='sidebar-icon'/>
+                <span>کتاب ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg">

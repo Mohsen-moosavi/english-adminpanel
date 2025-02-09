@@ -7,6 +7,8 @@ import Levels from '../pages/Levels';
 import Tags from '../pages/tags';
 import Article from '../pages/Article';
 import CreateArticle from '../pages/CreateArticle';
+import BookCollections from '../pages/BookCollections';
+import CreateBookCollection from '../pages/CreateBookCollection';
 
 export default function Router() {
   return (
@@ -20,6 +22,9 @@ export default function Router() {
         <Route path='articles' element={<Article/>}/>
         <Route path='articles/create' element={<CreateArticle/>}/>
         <Route path='articles/edit/:id' element={<CreateArticle/>}/>
+        <Route path='books-collection' element={<BookCollections/>}/>
+        <Route path='books-collection/create' element={<CreateBookCollection/>}/>
+        <Route path='books-collection/edit/:id' element={<CreateBookCollection/>}/>
       </Route>
     </Routes>
   )

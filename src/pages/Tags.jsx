@@ -6,7 +6,7 @@ import DataTable from '../components/modules/DataTable'
 import FormErrorMsg from '../components/modules/FormErrorMessag'
 import { createNewTag, deleteTag, getTags, setSearch, updateTag } from '../redux/features/tagSlice'
 import Pagination from '../components/modules/Pagination'
-import Search from '../components/modules/SearchTag'
+import Search from '../components/modules/Search'
 
 
 export default function Tags() {
