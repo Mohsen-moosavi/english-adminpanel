@@ -64,7 +64,7 @@ export default function BookCollections() {
           )
           : (<>
             <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
-              <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن مقاله جدید</Link>
+              <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>ایجاد مجموعه کتاب جدید</Link>
               <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'bookData'} getter={getBooks} setSearch={setSearch} />
             </div>
             {books.length ? (

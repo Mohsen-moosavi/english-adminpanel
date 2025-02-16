@@ -40,13 +40,18 @@ export const createBookCollection = createAsyncThunk(
                                 setProgress(prevValue => Math.ceil(prevValue + chunkProgress));
                                 chunkNumber++;
                                 start = end;
-                                end = start + chunkSize;
+                                if(fileObject.file.size-end !==0 && fileObject.file.size-end < chunkSize){
+                                    end = start + (fileObject.file.size - end)
+                                }else{
+                                    end = start + chunkSize;
+                                }
                                 await uploadNextChunk();
                             }
                             if (error) {
                                 const fileName = files.map(fileObj => fileObj.fileName)
                                 await authRequest(deleteFileChunckFunc(fileName))
                                 await authRequest(deleteBookWhitoutGettingAllFunc(bookId))
+                                setProgress(0)
                                 fileLinksArray = [];
                                 return false
                             }
@@ -62,7 +67,7 @@ export const createBookCollection = createAsyncThunk(
                 for (let index = 0; index < files.length; index++) {
                     await uploadFileObject(files[index])
                 }
-                setProgress(100)
+                setProgress(0)
                 return;
             } else {
                 toast.error(response.data.message)

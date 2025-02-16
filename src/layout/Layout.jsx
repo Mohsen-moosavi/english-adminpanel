@@ -25,7 +25,7 @@ export default function Layout() {
     <div className='container max-2xl:min-w-[100%] mx-auto'>
       <div className='w-full sm:my-3 flex min-h-[97vh]'>
         <Sidebar/>
-          <div className='w-full md:border-4 md:border-solid md:border-main-color rounded-l-xl p-3 md:shadow-shadow-inset'>
+          <div className='w-full main-content md:border-4 md:border-solid md:border-main-color rounded-l-xl p-3 md:shadow-shadow-inset'>
             <Header/>
             <Outlet/>
           </div>

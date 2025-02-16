@@ -1,7 +1,7 @@
 import { appJsonPostApi, multipartFormPostApi } from "../configs/axios";
 import apiPrivate from "./apiPrivate";
 
-const uploadFileChunckFunc= (chunk , chunkNumber , totalChunks , fileName , name , fileType , group , bookId) => {
+const uploadFileChunckFunc= (chunk , chunkNumber , totalChunks , fileName , name , fileType , group , bookId ) => {
     return (
         async () => {
             try {

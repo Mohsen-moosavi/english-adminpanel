@@ -22,6 +22,7 @@ export default function CreateBookCollection() {
     const params = useParams()
     const [progress, setProgress] = useState(0)
     const { isLoading } = useSelector(state => state.articleData)
+    const {userInfo} = useSelector(state => state.userData)
     const coverInputElm = useRef()
     const bookFileInputElm = useRef()
     const [id, setId] = useState()
@@ -35,6 +36,7 @@ export default function CreateBookCollection() {
     const [subtitleIdInput, setSubtitleIdInput] = useState('')
     const [bookNameInput, setBookNameInput] = useState('')
     const [bookGroupInput, setBookGroupInput] = useState('')
+    const [bookGroupArray, setBookGroupArray] = useState(new Set())
     const [bookTypeInput, setBookTypeInput] = useState('')
     const [bookFileArray, setBookFileArray] = useState([])
     const [deletedFileArray, setDeletedFileArray] = useState([])
@@ -59,7 +61,7 @@ export default function CreateBookCollection() {
             return toast.error(error.response.data.message)
         }
         const book = response.data.data.book
-        console.log("booook=======>" , book)
+        console.log("booook=======>", book)
         formik.setFieldValue('name', book.name)
         formik.setFieldValue('shortDescription', book.shortDescription)
         formik.setFieldValue('longDescription', book.longDescription)
@@ -69,8 +71,9 @@ export default function CreateBookCollection() {
         setCoverUrl(book.cover)
         setTagArray(book.tags?.map(tag => tag.name))
         setSubtitleArray(JSON.parse(book.links).map(link => ({ subtitle: link.replace(/<a href="#.*">/, '').replace(/<\/a>/, ""), id: link.replace(/<a href="#/, '').replace(/">.*/, "") })))
-        setBookFileArray(book.files?.map(file=>({ group: file.group, fileName : file.link?.split('/')?.reverse()[0], name: file.name ,type : file.link?.split('.')?.reverse()[0] , fileType : file.type })))
+        setBookFileArray(book.files?.map(file => ({ group: file.group, fileName: file.link?.split('/')?.reverse()[0], name: file.name, type: file.link?.split('.')?.reverse()[0], fileType: file.type })))
         setIsSelectedCover(true)
+        setBookGroupArray(prevValue => new Set([...prevValue, book.files.map(file => file.group)]))
         setIsBookExist(true)
     }
 
@@ -142,9 +145,9 @@ export default function CreateBookCollection() {
                     if (id) {
                         const newFiles = bookFileArray.filter(file => file.isNew)
                         // console.log('result======>' ,{ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate : values.ageGrate , grate : values.grate, newFiles, deletedFiles : deletedFileArray} )
-                        dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate : values.ageGrate , grate : values.grate, newFiles, deletedFiles : deletedFileArray , navigator, setProgress}))
+                        dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, navigator, setProgress }))
                     } else {
-                        dispatch(createBookCollection({ name : values.name , shortDescription : values.shortDescription , longDescription : values.longDescription , cover : values.cover , slug : values.slug , links , tags : tagArray , ageGrate : values.ageGrate , grate : values.grate , files : bookFileArray , navigator , setProgress}))
+                        dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, navigator, setProgress  }))
                     }
                     // setSearchChangerFlag(prev=>!prev)
                     // setPaginatorChangerFlag(prev=>!prev)
@@ -230,8 +233,9 @@ export default function CreateBookCollection() {
             return toast.error('لطفا یک مشخصه برای فایل مشخص کنید.')
         }
 
-        setBookFileArray(prevValue => [...prevValue, { group: bookGroupInput, fileName : `${Date.now()}___${file.name}`, name: bookNameInput, file ,type : file?.name?.split('.').pop() , fileType : bookTypeInput , isNew  : true }])
+        setBookFileArray(prevValue => [...prevValue, { group: bookGroupInput, fileName: `${userInfo.id}___${Date.now()}___${file.name}`, name: bookNameInput, file, type: file?.name?.split('.').pop(), fileType: bookTypeInput, isNew: true }])
         setBookNameInput('')
+        setBookGroupArray(prevValue => new Set([...prevValue, bookGroupInput]))
         setBookGroupInput('')
         setBookTypeInput('')
         bookFileInputElm.current.value = ''
@@ -239,9 +243,9 @@ export default function CreateBookCollection() {
         bookFileInputElm.current.type = 'file'
     }
 
-    function removeBookFileHandler(fileName){
-        setDeletedFileArray(prev=>[...prev , fileName])
-        setBookFileArray(prevValue=> prevValue.filter(file=>file.fileName !== fileName))
+    function removeBookFileHandler(fileName) {
+        setDeletedFileArray(prev => [...prev, fileName])
+        setBookFileArray(prevValue => prevValue.filter(file => file.fileName !== fileName))
     }
 
     return (
@@ -426,17 +430,23 @@ export default function CreateBookCollection() {
                                     <div>
                                         <label htmlFor="create-book-input-12" className="form-label">گروه فایل:</label>
                                         <input
-                                            type="number"
-                                            // name='tags'
-                                            placeholder="شماره دسته را وارد کنید..."
+                                            type="text"
+
+                                            list='createBook-group-list'
+                                            placeholder="یک عنوان، جهت تضخیص گروه فایل ها وارد کنید..."
                                             className="form-input mt-1" id="create-book-input-12"
                                             value={bookGroupInput}
                                             onChange={e => setBookGroupInput(e.target.value)}
                                         />
+                                        <datalist id='createBook-group-list'>
+                                            {[...bookGroupArray].map((group, index) => (
+                                                <option key={index} value={group} />
+                                            ))}
+                                        </datalist>
                                     </div>
                                     <div>
                                         <label htmlFor="create-book-input-14" className="form-label">نوع فایل:</label>
-                                        <select name="types" className='form-input mt-1' id="create-book-input-14" value={bookTypeInput} onChange={(e)=>setBookTypeInput(e.target.value)}>
+                                        <select name="types" className='form-input mt-1' id="create-book-input-14" value={bookTypeInput} onChange={(e) => setBookTypeInput(e.target.value)}>
                                             <option value="">یک مورد را انتخاب کنید.</option>
                                             <option value="book">کتاب اصلی</option>
                                             <option value="workbook">کتاب کار</option>
@@ -480,16 +490,14 @@ export default function CreateBookCollection() {
                             <div className='mt-2 flex flex-wrap flex-col w-full justify-center items-start'>
                                 {bookFileArray.map((bookFile, index) =>
                                 (
-                                    <div key={index} className={`relative flex justify-between items-center gap-x-3  w-[100%] max-w-[400px] p-3 pl-8 border border-2 border-slate-200 rounded-2xl overflow-hidden  ${bookFile.type === 'pdf' ? 'bg-pdf' : 'bg-zip'}`}>
-                                        <MdClose size={40} color="#475569" className="cursor-pointer rounded-full bg-slate-200 p-3" onClick={()=>removeBookFileHandler(bookFile.fileName)}/>
-                                        <div className="flex-1 flex justify-start" dir="ltr">
+                                    <div key={index} className={`flex justify-between items-center gap-x-3  w-[100%] max-w-[400px] p-3 border border-2 border-slate-200 rounded-2xl overflow-hidden  ${bookFile.type === 'pdf' ? 'bg-pdf' : 'bg-zip'}`}>
+                                        <MdClose size={40} color="#475569" className="cursor-pointer rounded-full bg-slate-200 p-3" onClick={() => removeBookFileHandler(bookFile.fileName)} />
+                                        <div className="flex-1 flex flex-col items-start justify-start" dir="ltr">
                                             <p className="truncate max-w-[268px] font-semibold">{bookFile.name}</p>
+                                            <span className='my-auto text-[10px] text-gray-700'>{bookFile.group}</span>
                                         </div>
-                                        {bookFile.type === 'pdf' && (<FaFilePdf  size={40} color="#ff2323"/>)}
-                                        {bookFile.type === 'zip' && (<FaFileZipper  size={40} color="#d66b12"/>)}
-                                        <div className='absolute top-0 left-0 w-[30px] bg-main-color h-full text-white flex justify-center'>
-                                            <span className='my-auto'>{bookFile.group}</span>
-                                        </div>
+                                        {bookFile.type === 'pdf' && (<FaFilePdf size={40} color="#ff2323" />)}
+                                        {bookFile.type === 'zip' && (<FaFileZipper size={40} color="#d66b12" />)}
                                     </div>
                                 ))}
                             </div>
@@ -544,13 +552,19 @@ export default function CreateBookCollection() {
 
 
                         <div className="grid md:grid-cols-2 gap-x-2 gap-y-2">
-                            <Link to='/books-collection' className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
+                            {
+                                isLoading ? (
+                                    <button  className='form-submit !py-2 block w-full text-center !text-black !bg-gray-400'>بازگشت</button>
+                                ) : (
+                                    <Link to='/books-collection' className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
+                                )
+                            }
                             <input type="submit" disabled={isLoading} value={id ? 'ویرایش مجموعه' : 'افزودن مجموعه'}
                                 className="form-submit !py-2 block w-full hover:opacity-70 transition-all" />
                         </div>
 
-                        {(progress!==0 && progress!==100) && (
-                            <Progress progress={progress}/>
+                        {(progress !== 0 && progress !== 100) && (
+                            <Progress progress={progress} />
                         )}
 
                     </form>

@@ -4,6 +4,7 @@ import levelReducer from './features/levelSlice';
 import tagReducer from './features/tagSlice';
 import articleReducer from './features/articleSlice'
 import bookReducer from './features/bookSlice'
+import courseReducer from './features/courseSlice'
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     levelData : levelReducer,
     tagData : tagReducer,
     articleData : articleReducer,
-    bookData : bookReducer
+    bookData : bookReducer,
+    courseData : courseReducer
   },
 });
 
