@@ -5,6 +5,7 @@ import tagReducer from './features/tagSlice';
 import articleReducer from './features/articleSlice'
 import bookReducer from './features/bookSlice'
 import courseReducer from './features/courseSlice'
+import offReducer from './features/offSlice'
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
     tagData : tagReducer,
     articleData : articleReducer,
     bookData : bookReducer,
-    courseData : courseReducer
+    courseData : courseReducer,
+    offData : offReducer
   },
 });
 

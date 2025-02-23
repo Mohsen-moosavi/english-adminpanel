@@ -12,6 +12,8 @@ import CreateBookCollection from '../pages/CreateBookCollection';
 import Course from '../pages/Course';
 import CreateCourse from '../pages/CreateCourse';
 import Video from '../pages/Video';
+import Off from '../pages/Off';
+import CreateOff from '../pages/CreateOff';
 
 export default function Router() {
   return (
@@ -32,6 +34,9 @@ export default function Router() {
         <Route path='courses/create' element={<CreateCourse/>}/>
         <Route path='courses/edit/:id' element={<CreateCourse/>}/>
         <Route path='courses/video/:id' element={<Video/>}/>
+        <Route path='offs' element={<Off/>}/>
+        <Route path='offs/create' element={<CreateOff/>}/>
+        <Route path='offs/edit/:id' element={<CreateOff/>}/>
       </Route>
     </Routes>
   )

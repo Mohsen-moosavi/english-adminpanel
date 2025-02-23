@@ -139,8 +139,8 @@ export default function Course() {
                       <td>{course['level.name']}</td>
                       <td>{course['book_collection.name']}</td>
                       <td>{Number(course.price) === 0 ? "رایگان" : course.price}</td>
-                      <td>{course.off === 0 ? '-' : course.off}</td>
-                      <td className={course.isCompleted ? "text-green-600" : "text-red-500"}>
+                      <td>{Number(course['offs.percent']) ? course['offs.percent'] : '-'}</td>
+                      <td>
                       <button className={`py-1 px-2 rounded-lg text-white hover:text-white ${course.isCompleted ? "bg-green-600" : "bg-red-500"}`} onClick={()=>statusChangeHandler(course.id)}>
                         {course.isCompleted ? 'تکمیل شده' : "در حال برگزاری"}
                         </button>
