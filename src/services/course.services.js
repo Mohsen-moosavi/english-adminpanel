@@ -124,14 +124,10 @@ const deleteCoursesFunc= (id,limit , offset , search='' ,status , teacherId, boo
 
 const getCourseFunc = async (id)=>{
     try {
-        try {
-            const response = await appJsonPostApi.get(`/course/${id}` , { withCredentials : false});
-            return { response };
-        } catch (error) {
-            return { error };
-        }
+        const response = await appJsonPostApi.get(`/course/${id}` , { withCredentials : false});
+        return { response };
     } catch (error) {
-        return {error}
+        return { error };
     }
 }
 

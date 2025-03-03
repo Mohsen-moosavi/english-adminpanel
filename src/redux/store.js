@@ -6,6 +6,7 @@ import articleReducer from './features/articleSlice'
 import bookReducer from './features/bookSlice'
 import courseReducer from './features/courseSlice'
 import offReducer from './features/offSlice'
+import commentReducer from './features/commentSlice'
 
 const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
     articleData : articleReducer,
     bookData : bookReducer,
     courseData : courseReducer,
-    offData : offReducer
+    offData : offReducer,
+    commentData : commentReducer,
   },
 });
 

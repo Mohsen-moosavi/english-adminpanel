@@ -27,7 +27,8 @@ export default {
       },
       boxShadow : {
         "shadow-inset" : 'inset 0 0 0.8rem #000',
-        "shadow" : '0 0 0.8rem #000'
+        "shadow" : '0 0 0.8rem #000',
+        "shadow-low" : '0 0 10px -3px #000'
       },
       backgroundImage : {
         'zip' : 'linear-gradient(to left, #e37a00, #fbf5e6)',

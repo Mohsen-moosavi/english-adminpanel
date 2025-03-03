@@ -104,9 +104,9 @@ export default function Sidebar() {
                 <span>تخفیف ها</span>
             </Link>
         </li>
-        <li className="block w-full p-2 rounded-lg">
-            <Link to="#" className="flex justify-start gap-x-3 items-end sidebar-link" data-link="admin-page-console">
-            <BsChatLeftTextFill className='sidebar-icon'/>
+        <li className="block w-full p-2 rounded-lg" data-link="/comments">
+            <Link to="comments" className="flex justify-start gap-x-3 items-end sidebar-link">
+            <BsTicketPerforatedFill className='sidebar-icon'/>
                 <span>کامنت ها</span>
             </Link>
         </li>

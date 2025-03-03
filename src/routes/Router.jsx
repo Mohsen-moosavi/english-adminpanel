@@ -14,6 +14,8 @@ import CreateCourse from '../pages/CreateCourse';
 import Video from '../pages/Video';
 import Off from '../pages/Off';
 import CreateOff from '../pages/CreateOff';
+import Comment from '../pages/Comment';
+import CommentLoop from '../pages/CommentLoop';
 
 export default function Router() {
   return (
@@ -37,6 +39,8 @@ export default function Router() {
         <Route path='offs' element={<Off/>}/>
         <Route path='offs/create' element={<CreateOff/>}/>
         <Route path='offs/edit/:id' element={<CreateOff/>}/>
+        <Route path='comments' element={<Comment/>}/>
+        <Route path='comments/:id' element={<CommentLoop/>}/>
       </Route>
     </Routes>
   )
