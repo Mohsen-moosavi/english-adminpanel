@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createCommentsFunc } from '../services/comment.services';
 import { authRequest } from '../services/authApi.service';
 import { useDispatch, useSelector } from 'react-redux';
-import { answerToComment, changeAccept, deleteComment, getComments, setParentStatus, setScore, setSearch, setStatus } from '../redux/features/commentSlice';
+import { answerToComment, changeAccept, deleteComment, getComments, setOffset, setParentStatus, setScore, setSearch, setStatus } from '../redux/features/commentSlice';
 import { Link } from 'react-router-dom';
 import DataTable from '../components/modules/DataTable';
 import Pagination from '../components/modules/Pagination';
@@ -65,6 +65,7 @@ export default function Comment() {
           if (value) {
             dispatch(deleteComment({ id, limit, offset: 0,  search, score, status, parentStatus }))
             setPaginatorChangerFlag(prev => !prev)
+            dispatch(setOffset(0))
           }
         })
   }
@@ -95,7 +96,7 @@ export default function Comment() {
 
 
       <div className='mb-3 grid grid-cols-1 gap-x-2'>
-        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'commentData'} setSearch={setSearch} />
+        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'commentData'} setSearch={setSearch} defaultValue={search} />
       </div>
 
       {search !== '' && !comments.length ?
@@ -111,7 +112,7 @@ export default function Comment() {
                   <th>شماره</th>
                   <th>دوره</th>
                   <th>
-                    <select name="score" className='bg-transparent' onChange={(e) => dispatch(setScore(e.target.value))}>
+                    <select name="score" className='bg-transparent' defaultValue={score} onChange={(e) => dispatch(setScore(e.target.value))}>
                       <option value={''}>امتیاز</option>
                       <option value="5">5</option>
                       <option value="4">4</option>
@@ -123,14 +124,14 @@ export default function Comment() {
                   </th>
                   <th>کاربر</th>
                   <th>
-                    <select name="type" className='bg-transparent' onChange={(e) => dispatch(setParentStatus(e.target.value))}>
+                    <select name="type" className='bg-transparent' defaultValue={parentStatus} onChange={(e) => dispatch(setParentStatus(e.target.value))}>
                       <option value={''}>نوع</option>
                       <option value="main">اصلی</option>
                       <option value="answer">پاسخ</option>
                     </select>
                   </th>
                   <th>
-                    <select name="status" className='bg-transparent' onChange={(e) => dispatch(setStatus(e.target.value))}>
+                    <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                       <option value={''}>وضعیت</option>
                       <option value="accept">تایید شده</option>
                       <option value="notAccept">رد شده</option>
@@ -202,7 +203,7 @@ export default function Comment() {
                 <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
               </div>
               )}
-            {comments.length ? (<Pagination itemsCount={commentsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} />) : ''}
+            {comments.length ? (<Pagination itemsCount={commentsCount} numberOfitemInEveryPage={limit} setOffset={setOffset} paginationHandler={paginationHandler} />) : ''}
 
           </>
         )

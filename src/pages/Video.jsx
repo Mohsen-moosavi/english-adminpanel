@@ -24,6 +24,7 @@ export default function Video() {
 
     useEffect(() => {
         if (!isInitialised.current) {
+            isInitialised.current = true
             if (!location.state?.cover || !location.state?.video) {
                 navigate('/courses')
             }

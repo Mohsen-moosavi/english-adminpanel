@@ -104,6 +104,10 @@ const setOrderStatusAction = (state, action) => {
     state.orderStatus = action.payload;
 }
 
+const setOffsetAction = (state, action) => {
+    state.offset = action.payload;
+}
+
 const offSlice = createSlice({
     name: "off",
     initialState: {
@@ -120,7 +124,8 @@ const offSlice = createSlice({
     reducers: {
         setSearch: setSearchWordAction,
         setPublicStatus : setPublicStatusAction,
-        setOrderStatus : setOrderStatusAction
+        setOrderStatus : setOrderStatusAction,
+        setOffset : setOffsetAction
     },
     extraReducers: builder => {
         builder
@@ -177,6 +182,6 @@ const offSlice = createSlice({
     },
 });
 
-export const { setSearch , setPublicStatus , setOrderStatus } = offSlice.actions;
+export const { setSearch , setPublicStatus , setOrderStatus, setOffset } = offSlice.actions;
 
 export default offSlice.reducer;

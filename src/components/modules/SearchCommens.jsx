@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getArticles } from '../../redux/features/articleSlice'
 import { getComments } from '../../redux/features/commentSlice'
 
-export default function Search({setPaginatorChangerFlag , sliceName , setSearch}) {
+export default function Search({setPaginatorChangerFlag , sliceName , setSearch,defaultValue=''}) {
 
-    const [searchWord , setSearchWord] = useState("")
+    const [searchWord , setSearchWord] = useState(defaultValue)
     const {limit, offset, search, status, score, parentStatus } = useSelector(state => state[sliceName])
     const dispatch = useDispatch()
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Search from './../components/modules/SearchOff'
 import { Link } from 'react-router-dom'
-import { deleteOff, getOffs, setOrderStatus, setPublicStatus, setSearch } from '../redux/features/offSlice'
+import { deleteOff, getOffs, setOffset, setOrderStatus, setPublicStatus, setSearch } from '../redux/features/offSlice'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import moment from 'moment-jalaali'
@@ -39,6 +39,7 @@ export default function Off() {
           if (offs.length === 1) {
             dispatch(deleteOff({ id, limit , offset : 0 , search , publicStatus , orderStatus }))
             setPaginatorChangerFlag(prev => !prev)
+            dispatch(setOffset(0))
           } else {
             dispatch(deleteOff({ id, limit , offset : 0 , search , publicStatus , orderStatus }))
           }
@@ -52,9 +53,9 @@ export default function Off() {
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
         <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن تخفیف جدید</Link>
-        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'offData'} setSearch={setSearch} />
+        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'offData'} setSearch={setSearch} defaultValue={search} />
         <div className="form-btn-group !m-0">
-          <select className="form-input" onChange={(e)=>dispatch(setOrderStatus(e.target.value))}>
+          <select className="form-input" defaultValue={orderStatus} onChange={(e)=>dispatch(setOrderStatus(e.target.value))}>
             <option value="">مرتب سازی</option>
             <option value="expired">منقضی شده</option>
             <option value="maxPercent">بیشترین درصد تخفیف</option>
@@ -89,7 +90,7 @@ export default function Off() {
                   <th>مقدار استفاده</th>
                   <th>مقدار باقی مانده</th>
                   <th>
-                    <select className='bg-transparent' onChange={(e) => dispatch(setPublicStatus(e.target.value))}>
+                    <select className='bg-transparent' defaultValue={publicStatus} onChange={(e) => dispatch(setPublicStatus(e.target.value))}>
                       <option value={''}>وضعیت</option>
                       <option value={"public"}>عمومی</option>
                       <option value={"private"}>اختصاصی</option>
@@ -133,7 +134,7 @@ export default function Off() {
                 <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
               </div>
               )}
-            {offs.length ? (<Pagination itemsCount={offsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />) : ''}
+            {offs.length ? (<Pagination itemsCount={offsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} setOffset={setOffset} reseter={paginatorChangerFlag} />) : ''}
 
           </>
         )

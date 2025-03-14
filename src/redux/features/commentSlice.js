@@ -53,7 +53,7 @@ export const deleteComment = createAsyncThunk(
         const { response, error } = await authRequest(deleteCommentFunc(id, limit, offset, search, score, status, parentStatus));
 
         if (response) {
-            toast.error(response?.data?.message);
+            toast.success(response?.data?.message);
             return response.data;
         }
 

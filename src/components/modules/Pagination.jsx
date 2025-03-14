@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { FaLongArrowAltLeft, FaLongArrowAltRight } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
-import { setOffset } from '../../redux/features/tagSlice'
 
-export default function Pagination({ itemsCount, numberOfitemInEveryPage, defaultPage = 1, paginationHandler, reseter }) {
+export default function Pagination({ itemsCount, numberOfitemInEveryPage, defaultPage = 1, paginationHandler, reseter, setOffset }) {
 
     const paginationBtnCount = Math.ceil(itemsCount / numberOfitemInEveryPage)
     const [page, setPage] = useState(defaultPage)
@@ -11,24 +10,24 @@ export default function Pagination({ itemsCount, numberOfitemInEveryPage, defaul
 
     useEffect(()=>{
         setPage(1)
-        dispatch(setOffset(0))
+        setOffset ? dispatch(setOffset(0)) : null
     } , [reseter])
 
     function paginationClickHandler(button) {
         paginationHandler(button - 1)
-        dispatch(setOffset((button - 1) * numberOfitemInEveryPage))
+        setOffset ? dispatch(setOffset((button - 1) * numberOfitemInEveryPage)):null;
         setPage(button)
     }
 
     function paginationPreClickHandler() {
         paginationHandler(page - 2)
-        dispatch(setOffset((page - 2) * numberOfitemInEveryPage))
+        setOffset ? dispatch(setOffset((page - 2) * numberOfitemInEveryPage)):null;
         setPage(prev => prev - 1)
     }
 
     function paginationNextClickHandler() {
         paginationHandler(page)
-        dispatch(setOffset((page) * numberOfitemInEveryPage))
+        setOffset ? dispatch(setOffset((page) * numberOfitemInEveryPage)):null;
         setPage(prev => prev + 1)
     }
     if(paginationBtnCount > 1){

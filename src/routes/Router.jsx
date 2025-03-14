@@ -16,6 +16,8 @@ import Off from '../pages/Off';
 import CreateOff from '../pages/CreateOff';
 import Comment from '../pages/Comment';
 import CommentLoop from '../pages/CommentLoop';
+import Session from '../pages/Session';
+import CreateSession from '../pages/CreateSession';
 
 export default function Router() {
   return (
@@ -41,6 +43,9 @@ export default function Router() {
         <Route path='offs/edit/:id' element={<CreateOff/>}/>
         <Route path='comments' element={<Comment/>}/>
         <Route path='comments/:id' element={<CommentLoop/>}/>
+        <Route path='sessions/:id' element={<Session/>}/>
+        <Route path='sessions/:id/create' element={<CreateSession/>}/>
+        <Route path='sessions/:id/edit/:sessionId' element={<CreateSession/>}/>
       </Route>
     </Routes>
   )

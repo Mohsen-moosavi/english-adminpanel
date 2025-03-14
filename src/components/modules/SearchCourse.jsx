@@ -3,9 +3,9 @@ import { IoIosSearch } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { getArticles } from '../../redux/features/articleSlice'
 
-export default function Search({setPaginatorChangerFlag , sliceName , setSearch}) {
+export default function Search({setPaginatorChangerFlag , sliceName , setSearch,defaultValue=""}) {
 
-    const [searchWord , setSearchWord] = useState("")
+    const [searchWord , setSearchWord] = useState(defaultValue)
     const {status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit} = useSelector(state => state[sliceName])
     const dispatch = useDispatch()
 

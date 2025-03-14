@@ -3,9 +3,9 @@ import { IoIosSearch } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOffs } from '../../redux/features/offSlice'
 
-export default function Search({setPaginatorChangerFlag , sliceName , setSearch}) {
+export default function Search({setPaginatorChangerFlag , sliceName , setSearch,defaultValue=""}) {
 
-    const [searchWord , setSearchWord] = useState("")
+    const [searchWord , setSearchWord] = useState(defaultValue)
     const {limit , publicStatus , orderStatus} = useSelector(state => state[sliceName])
     const dispatch = useDispatch()
 

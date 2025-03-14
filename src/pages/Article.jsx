@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteArticle, getArticles, setSearch, setStatus } from '../redux/features/articleSlice'
+import { deleteArticle, getArticles, setOffset, setSearch, setStatus } from '../redux/features/articleSlice'
 import DataTable from '../components/modules/DataTable'
 import Search from '../components/modules/SearchArticle'
 import constants from '../constant/environment'
@@ -39,6 +39,7 @@ export default function Article() {
         if (articles.length === 1) {
           dispatch(deleteArticle({ id, limit, offset: 0, search, status, writerId }))
           setPaginatorChangerFlag(prev => !prev)
+          dispatch(setOffset(0))
         } else {
           dispatch(deleteArticle({ id, limit, offset, search, status, writerId }))
         }
@@ -67,7 +68,7 @@ export default function Article() {
         : (<>
           <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
             <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن مقاله جدید</Link>
-            <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'articleData'} setSearch={setSearch} />
+            <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'articleData'} setSearch={setSearch} defaultValue={search} />
           </div>
           {articles.length ? (
             <>
@@ -78,7 +79,7 @@ export default function Article() {
                     <th>نام</th>
                     <th>لینک</th>
                     <th>
-                      <select name="status" className='bg-transparent' onChange={statusChangeHandler}>
+                      <select name="status" className='bg-transparent' defaultValue={status} onChange={statusChangeHandler}>
                         <option value="" selected>وضعیت</option>
                         <option value="draft">پیش نویس</option>
                         <option value="published">منتشر شده</option>
@@ -117,7 +118,7 @@ export default function Article() {
                   ))}
                 </tbody>
               </DataTable>
-              <Pagination itemsCount={articlesCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />
+              <Pagination itemsCount={articlesCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} setOffset={setOffset} reseter={paginatorChangerFlag} />
             </>
           ) :
             (<div className='text-center my-5'>

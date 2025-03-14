@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Search from '../components/modules/SearchCourse'
-import { changeStatus, deleteCourse, getCourses, getCreatingData, setBookId, setLevelId, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
+import { changeStatus, deleteCourse, getCourses, getCreatingData, setBookId, setLevelId, setOffset, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 
@@ -39,6 +39,7 @@ export default function Course() {
         if (courses.length === 1) {
           dispatch(deleteCourse({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus }))
           setPaginatorChangerFlag(prev => !prev)
+          dispatch(setOffset(0))
         } else {
           dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus }))
         }
@@ -57,7 +58,7 @@ export default function Course() {
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
         <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره جدید</Link>
-        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'courseData'} setSearch={setSearch} />
+        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'courseData'} setSearch={setSearch} defaultValue={search}/>
       </div>
 
       {search !== '' && !courses.length ?
@@ -74,7 +75,7 @@ export default function Course() {
                   <th>نام</th>
                   <th>لینک</th>
                   <th>
-                    <select name="teachers" className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
+                    <select name="teachers" defaultValue={teacherId} className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
                       <option value={''}>مدرس</option>
                       {teachers?.map((teacher, index) => (
                         <option key={index} value={teacher.id}>{teacher.name}</option>
@@ -82,7 +83,7 @@ export default function Course() {
                     </select>
                   </th>
                   <th>
-                    <select name="levels" className='bg-transparent' onChange={(e) => dispatch(setLevelId(e.target.value))}>
+                    <select name="levels" className='bg-transparent' defaultValue={levelId} onChange={(e) => dispatch(setLevelId(e.target.value))}>
                       <option value={''}>سطح</option>
                       {levels?.map((level, index) => (
                         <option key={index} value={level.id}>{level.name}</option>
@@ -90,7 +91,7 @@ export default function Course() {
                     </select>
                   </th>
                   <th>
-                    <select name="bookCollections" className='bg-transparent' onChange={(e) => dispatch(setBookId(e.target.value))}>
+                    <select name="bookCollections" defaultValue={bookId} className='bg-transparent' onChange={(e) => dispatch(setBookId(e.target.value))}>
                       <option value={''}>مجموعه</option>
                       {bookCollections?.map((book, index) => (
                         <option key={index} value={book.id}>{book.name}</option>
@@ -98,7 +99,7 @@ export default function Course() {
                     </select>
                   </th>
                   <th>
-                    <select name="price" className='bg-transparent' onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
+                    <select name="price" className='bg-transparent' defaultValue={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
                       <option value={''}>مبلغ</option>
                       <option value="free">رایگان</option>
                       <option value="max">گران ترین</option>
@@ -107,14 +108,14 @@ export default function Course() {
                   </th>
                   <th>تخفیف</th>
                   <th>
-                    <select name="status" className='bg-transparent' onChange={(e) => dispatch(setStatus(e.target.value))}>
+                    <select name="status" defaultValue={status} className='bg-transparent' onChange={(e) => dispatch(setStatus(e.target.value))}>
                       <option value={''}>وضعیت</option>
                       <option value="completed">کامل شده</option>
                       <option value="notCompleted">درحال برگزاری</option>
                     </select>
                   </th>
                   <th>
-                    <select name="score" className='bg-transparent' onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
+                    <select name="score" defaultValue={scoreStatus} className='bg-transparent' onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
                       <option value={''}>امتیاز</option>
                       <option value="5">5</option>
                       <option value="4">4</option>
@@ -123,7 +124,8 @@ export default function Course() {
                       <option value="1">1</option>
                     </select>
                   </th>
-                  <th>ویدئو</th>
+                  <th>ویدئو معارفه</th>
+                  <th>جلسات</th>
                   <th>ویرایش</th>
                   <th>حذف</th>
                 </tr>
@@ -147,7 +149,12 @@ export default function Course() {
                         </td>
                       <td>{course.score}</td>
                       <td>
-                        <Link to={`video/${course.id}`} state={{cover : course.cover,video : course.introductionVideo}} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
+                        <Link to={`video/${course.id}`} state={{cover : course.cover,video : course.introductionVideo}} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-amber-400"}>
+                          مشاهده
+                        </Link>
+                      </td>
+                      <td>
+                        <Link to={`/sessions/${course.id}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-600"}>
                           مشاهده
                         </Link>
                       </td>
@@ -171,7 +178,7 @@ export default function Course() {
                 <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
               </div>
               )}
-            {courses.length ? (<Pagination itemsCount={coursesCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />) : ''}
+            {courses.length ? (<Pagination itemsCount={coursesCount} numberOfitemInEveryPage={limit} setOffset={setOffset} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />) : ''}
 
           </>
         )

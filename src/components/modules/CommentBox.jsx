@@ -5,7 +5,7 @@ import { FaStar, FaTrash } from 'react-icons/fa'
 import { HiDotsVertical } from 'react-icons/hi'
 import { MdFileDownloadDone } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
-import { answerToCommentInCommentLoop, changeAccept, changeAcceptInCommentLoop, deleteCommentInCommentLoop } from '../../redux/features/commentSlice'
+import { answerToCommentInCommentLoop, changeAccept, changeAcceptInCommentLoop, deleteCommentInCommentLoop, setOffset } from '../../redux/features/commentSlice'
 import { useNavigate } from 'react-router-dom'
 import { FaPencil } from 'react-icons/fa6'
 
@@ -47,6 +47,7 @@ export default function CommentBox({ comment, mainCommentId , courseId }) {
         }).then(value => {
             if (value) {
                 dispatch(deleteCommentInCommentLoop({ id, mainCommentId, navigator }))
+                dispatch(setOffset(0))
             }
         })
     }

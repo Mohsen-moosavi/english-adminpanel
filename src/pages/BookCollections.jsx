@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteBook, getBooks, setSearch } from '../redux/features/bookSlice'
+import { deleteBook, getBooks, setOffset, setSearch } from '../redux/features/bookSlice'
 import Search from '../components/modules/Search'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
@@ -37,6 +37,7 @@ export default function BookCollections() {
           if (books.length === 1) {
             dispatch(deleteBook({ id, limit, offset: 0, search}))
             setPaginatorChangerFlag(prev => !prev)
+            dispatch(setOffset(0))
           } else {
             dispatch(deleteBook({ id, limit, offset, search}))
           }
@@ -65,7 +66,7 @@ export default function BookCollections() {
           : (<>
             <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
               <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>ایجاد مجموعه کتاب جدید</Link>
-              <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'bookData'} getter={getBooks} setSearch={setSearch} />
+              <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'bookData'} getter={getBooks} setSearch={setSearch} defaultValue={search} />
             </div>
             {books.length ? (
               <>
@@ -103,7 +104,7 @@ export default function BookCollections() {
                     ))}
                   </tbody>
                 </DataTable>
-                <Pagination itemsCount={booksCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />
+                <Pagination itemsCount={booksCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} setOffset={setOffset} reseter={paginatorChangerFlag} />
               </>
             ) :
               (<div className='text-center my-5'>

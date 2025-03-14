@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import DataTable from '../components/modules/DataTable'
 import FormErrorMsg from '../components/modules/FormErrorMessag'
-import { createNewTag, deleteTag, getTags, setSearch, updateTag } from '../redux/features/tagSlice'
+import { createNewTag, deleteTag, getTags, setOffset, setSearch, updateTag } from '../redux/features/tagSlice'
 import Pagination from '../components/modules/Pagination'
 import Search from '../components/modules/Search'
 
@@ -59,6 +59,7 @@ export default function Tags() {
                 if (tags.length === 1) {
                     dispatch(deleteTag({ id, limit, offset: 0, search }))
                     setPaginatorChangerFlag(prev => !prev)
+                    dispatch(setOffset(0))
                 } else {
                     dispatch(deleteTag({ id, limit, offset, search }))
                 }
@@ -123,7 +124,7 @@ export default function Tags() {
                 ) :
                 (<>
                     <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1'>
-                        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'tagData'} reset={searchChangerFlag} getter={getTags} setSearch={setSearch} />
+                        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'tagData'} reset={searchChangerFlag} getter={getTags} setSearch={setSearch} defaultValue={search} />
                     </div>
                     {tags.length ? (
                         <>
@@ -155,7 +156,7 @@ export default function Tags() {
                                     ))}
                                 </tbody>
                             </DataTable>
-                            <Pagination itemsCount={tagsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />
+                            <Pagination itemsCount={tagsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} setOffset={setOffset} />
                         </>
                     ) : (
                         <div className='text-center my-10'>
