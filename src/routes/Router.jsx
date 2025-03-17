@@ -18,6 +18,8 @@ import Comment from '../pages/Comment';
 import CommentLoop from '../pages/CommentLoop';
 import Session from '../pages/Session';
 import CreateSession from '../pages/CreateSession';
+import Sale from "../pages/Sale";
+import CreateSaleByAdmin from '../pages/CreateSaleByAdmin';
 
 export default function Router() {
   return (
@@ -46,6 +48,10 @@ export default function Router() {
         <Route path='sessions/:id' element={<Session/>}/>
         <Route path='sessions/:id/create' element={<CreateSession/>}/>
         <Route path='sessions/:id/edit/:sessionId' element={<CreateSession/>}/>
+        <Route path='sales' element={<Sale/>}/>
+
+
+        <Route path='users/:id/create-sale' element={<CreateSaleByAdmin/>}/>
       </Route>
     </Routes>
   )

@@ -8,6 +8,7 @@ import courseReducer from './features/courseSlice'
 import offReducer from './features/offSlice'
 import commentReducer from './features/commentSlice'
 import sessionReducer from './features/sessionSlice'
+import saleReducer from './features/saleSlice'
 
 const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ const store = configureStore({
     courseData : courseReducer,
     offData : offReducer,
     commentData : commentReducer,
-    sessionData : sessionReducer
+    sessionData : sessionReducer,
+    saleData : saleReducer,
   },
 });
 

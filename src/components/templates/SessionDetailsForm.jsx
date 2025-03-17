@@ -100,7 +100,7 @@ export default function SessionDetailsForm({ videoDetails }) {
     return (
         <form className='mb-4' onSubmit={formik.handleSubmit}>
             <h4 className='page-subtitle mt-14'>اطلاعات جلسه</h4>
-            <div className='grid md:grid-cols-2 gap-x-3'>
+            <div className='grid md:grid-cols-2 gap-x-3 items-start'>
                 <div className="form-btn-group">
                     <label htmlFor="session-deatils-input-1" className="form-label">عنوان دوره:</label>
                     <input

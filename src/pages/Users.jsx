@@ -1,5 +1,6 @@
 import React from 'react'
 import DataTable from '../components/modules/DataTable'
+import { Link } from 'react-router-dom'
 
 export default function Users() {
   return (
@@ -40,6 +41,7 @@ export default function Users() {
                 <option value="">جدید ترین</option>
               </select>
             </th>
+            <th>افزودن دوره</th>
             <th>تغییر نقش</th>
             <th>بن</th>
             <th>حذف</th>
@@ -55,6 +57,11 @@ export default function Users() {
             <td>B+</td>
             <td>400</td>
             <td>02/11/1403</td>
+            <td>
+              <Link to={'1/create-sale'} state={{userName : 'محسن موسوی'}} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
+              افزودن
+              </Link>
+            </td>
             <td>
               <button className="py-1 px-2 rounded-lg text-white bg-green-500">
                 تغییر

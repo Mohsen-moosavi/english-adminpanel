@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
 import toast from "react-hot-toast";
-import { createNewCourseFunc, deleteVideoFunc, getBookGroupsFunc, getCreatingDataFunc, uploadIntroductionVideoChunckFunc, updateCourseFunc, getCoursesFunc, deleteCoursesFunc, updateIntroductionVideoFunc, updateStatusfunc } from "../../services/course.services";
+import { createNewCourseFunc, deleteVideoFunc, getBookGroupsFunc, getCreatingDataFunc, uploadIntroductionVideoChunckFunc, updateCourseFunc, getCoursesFunc, deleteCoursesFunc, updateIntroductionVideoFunc, updateStatusfunc, getShortDetailCoursesFunc } from "../../services/course.services";
 
 export const createNewCourse = createAsyncThunk(
     'course/createNewCourse',
@@ -106,28 +106,24 @@ export const deleteCourse = createAsyncThunk(
     }
 );
 
-// export const updateArticle = createAsyncThunk(
-//     'article/updateArticle',
-//     async (
-//         {id, title , shortDescription , longDescription , cover , slug , isPublished , links , tags  , navigator},
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(updateArticleFunc(id ,title , shortDescription , longDescription , cover , slug , isPublished , links , tags));
+export const getShortDetailCourses = createAsyncThunk(
+    'course/getShortDetailCourses',
+    async (
+        {setCourses},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await getShortDetailCoursesFunc();
 
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             navigator('/articles')
-//             return response.data;
-//         }
+        if (response) {
+            setCourses(response.data.data?.courses)
+            return;
+        }
 
-//         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
+        toast.error(error?.response?.data ? error?.response?.data.message : "مشکل در دریافت لیست دوره ها");
+        
+        return rejectWithValue(error);
+    }
+);
 
 // export const deleteArticle = createAsyncThunk(
 //     'article/deleteArticle',

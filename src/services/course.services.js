@@ -193,6 +193,16 @@ const updateStatusfunc = (id,limit , offset , search='' ,status , teacherId, boo
     )
 }
 
+const getShortDetailCoursesFunc= async () => {
+    try {
+
+        const response = await appJsonPostApi.get(`/course/short-date` , { withCredentials : false});
+        return { response };
+    } catch (error) {
+        return { error };
+    }
+}
+
 export {
     getBookGroupsFunc,
     getCreatingDataFunc,
@@ -204,5 +214,6 @@ export {
     getCourseFunc,
     updateCourseFunc,
     updateIntroductionVideoFunc,
-    updateStatusfunc
+    updateStatusfunc,
+    getShortDetailCoursesFunc
 }

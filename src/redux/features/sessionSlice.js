@@ -539,53 +539,6 @@ const sessionSlice = createSlice({
                 state.isLoading = false;
             })
 
-
-        // .addCase(getCommentTree.pending, state => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(getCommentTree.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.commentTree = action.payload?.data?.commentTree;
-        // })
-        // .addCase(getCommentTree.rejected, (state, action) => {
-        //     state.isLoading = false;
-        // })
-
-
-        // .addCase(changeAcceptInCommentLoop.pending, state => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(changeAcceptInCommentLoop.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.commentTree = action.payload?.data?.commentTree;
-        // })
-        // .addCase(changeAcceptInCommentLoop.rejected, (state, action) => {
-        //     state.isLoading = false;
-        // })
-
-
-        // .addCase(deleteCommentInCommentLoop.pending, state => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(deleteCommentInCommentLoop.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.commentTree = action.payload?.data?.commentTree;
-        // })
-        // .addCase(deleteCommentInCommentLoop.rejected, (state, action) => {
-        //     state.isLoading = false;
-        // })
-
-
-        // .addCase(answerToCommentInCommentLoop.pending, state => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(answerToCommentInCommentLoop.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.commentTree = action.payload?.data?.commentTree;
-        // })
-        // .addCase(answerToCommentInCommentLoop.rejected, (state, action) => {
-        //     state.isLoading = false;
-        // })
     },
 });
 
