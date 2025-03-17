@@ -1,27 +1,23 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import DataTable from '../components/modules/DataTable'
 import FormErrorMsg from '../components/modules/FormErrorMessag'
 import { createNewTag, deleteTag, getTags, setOffset, setSearch, updateTag } from '../redux/features/tagSlice'
 import Pagination from '../components/modules/Pagination'
-import Search from '../components/modules/Search'
+import Searcher from '../components/modules/Searcher'
 
 
 export default function Tags() {
 
     const dispatch = useDispatch()
-    const isInitialised = useRef(false)
     const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
     const [searchChangerFlag, setSearchChangerFlag] = useState(false)
     const { tags, tagsCount, search, limit, offset, isLoading } = useSelector(state => state.tagData)
 
     useEffect(() => {
-        if (!isInitialised.current) {
-            isInitialised.current = true
-            dispatch(getTags({ limit, offset: 0 }))
-        }
+        dispatch(getTags({ limit, offset: 0,search }))
     }, [])
 
     const FormValidation = Yup.object({
@@ -124,7 +120,8 @@ export default function Tags() {
                 ) :
                 (<>
                     <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1'>
-                        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'tagData'} reset={searchChangerFlag} getter={getTags} setSearch={setSearch} defaultValue={search} />
+                        
+                        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ limit }} getter={getTags} reset={searchChangerFlag} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
                     </div>
                     {tags.length ? (
                         <>

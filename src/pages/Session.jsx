@@ -1,31 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteSession, getSessions, setFileStatus, setOffset, setSearch, setStatus } from '../redux/features/sessionSlice'
-import Search from '../components/modules/searchSession'
 import { Link, useParams } from 'react-router-dom'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
+import Searcher from '../components/modules/Searcher'
 
 export default function Session() {
 
   const { id } = useParams()
-  const isInitialised = useRef(false)
   const dispatch = useDispatch()
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { sessions, sessionsCount, status, fileStatus, search, offset, limit, isLoading } = useSelector(state => state.sessionData)
 
 
   useEffect(()=>{
-    if (!isInitialised.current) {
-      isInitialised.current = true
-      dispatch(getSessions({id,limit, offset:0, search:'', status:'', fileStatus:''}))
-  }
-  },[])
-
-  useEffect(()=>{
-    if(isInitialised.current){
-      dispatch(getSessions({id,limit, offset, search, status, fileStatus}))
-    }
+    dispatch(getSessions({id,limit, offset, search, status, fileStatus}))
   },[status,fileStatus])
 
     function paginationHandler(page) {
@@ -58,17 +48,10 @@ export default function Session() {
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2 gap-y-2'>
         <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن جلسه جدید</Link>
-        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} courseId={id} sliceName={'sessionData'} setSearch={setSearch} defaultValue={search} />
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ id, limit, status, fileStatus }} getter={getSessions} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
-      {search !== '' && !sessions.length ?
-        (<div className='text-center my-5'>
-          <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
-        </div>
-        ) :
-        (
-          <>
-            <DataTable>
+      <DataTable>
               <thead>
                 <tr>
                   <th>شماره</th>
@@ -121,11 +104,8 @@ export default function Session() {
                 <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
               </div>
               )}
-            {sessions.length ? (<Pagination itemsCount={sessionsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} setOffset={setOffset} />) : ''}
+            {sessions.length ? (<Pagination itemsCount={sessionsCount} numberOfitemInEveryPage={limit} paginationHandler={paginationHandler} setOffset={setOffset} reseter={paginatorChangerFlag} />) : ''}
 
-          </>
-        )
-      }
     </div>
   )
 }

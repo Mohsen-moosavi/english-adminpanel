@@ -1,24 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Search from '../components/modules/SearchCourse'
 import { changeStatus, deleteCourse, getCourses, getCreatingData, setBookId, setLevelId, setOffset, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
+import Searcher from '../components/modules/Searcher'
 
 export default function Course() {
 
-  const isInitialised = useRef(false)
+
   const dispatch = useDispatch()
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { courses, coursesCount, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, offset, limit, isLoading, teachers, levels, bookCollections } = useSelector(state => state.courseData)
 
   useEffect(() => {
-    if (!isInitialised.current) {
-      isInitialised.current = true
-      dispatch(getCourses({ limit, offset: 0}))
-      dispatch(getCreatingData({}))
-    }
+    dispatch(getCreatingData({}))
   }, [])
 
   useEffect(() => {
@@ -58,17 +54,10 @@ export default function Course() {
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
         <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره جدید</Link>
-        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'courseData'} setSearch={setSearch} defaultValue={search}/>
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
-      {search !== '' && !courses.length ?
-        (<div className='text-center my-5'>
-          <h5 className='text-red-400 text-lg'>موردی یافت نشد!</h5>
-        </div>
-        ) :
-        (
-          <>
-            <DataTable>
+      <DataTable>
               <thead>
                 <tr>
                   <th>شماره</th>
@@ -180,9 +169,6 @@ export default function Course() {
               )}
             {courses.length ? (<Pagination itemsCount={coursesCount} numberOfitemInEveryPage={limit} setOffset={setOffset} paginationHandler={paginationHandler} reseter={paginatorChangerFlag} />) : ''}
 
-          </>
-        )
-      }
     </div>
   )
 }

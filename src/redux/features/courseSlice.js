@@ -330,7 +330,6 @@ const courseSlice = createSlice({
         levelId: '',
         priceStatus: '',
         scoreStatus: '',
-        parentStatus : '',
         offset: 0,
         limit: 10,
         isLoading: false,

@@ -1,12 +1,11 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import FormErrorMsg from '../components/modules/FormErrorMessag';
-import Search from '../components/modules/SearchCourse';
 import persian from 'react-date-object/calendars/persian'
 import persian_fa from 'react-date-object/locales/persian_fa'
 import gregorian from 'react-date-object/calendars/gregorian'
-import { getCourses, getCreatingData, setBookId, setLevelId, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
+import { getCourses, getCreatingData, setBookId, setLevelId, setOffset, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
 import DataTable from '../components/modules/DataTable';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '../components/modules/Pagination';
@@ -14,6 +13,7 @@ import DatePicker from 'react-multi-date-picker';
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import { createNewOff} from '../redux/features/offSlice';
+import Searcher from '../components/modules/Searcher';
 
 
 
@@ -28,14 +28,10 @@ export default function CreateOff() {
     const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
     const [selectedDate, setSelectedDate] = useState(null)
 
-    const isInitialised = useRef()
-
     useEffect(() => {
-        if (!isInitialised.current) {
-            isInitialised.current = true
-            dispatch(getCourses({ limit, offset: 0 }))
-            dispatch(getCreatingData({}))
-        }
+        dispatch(getCreatingData({}))
+        
+        return ()=>{resetCourseFinders()}
     }, [])
     
 
@@ -43,6 +39,15 @@ export default function CreateOff() {
         dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus }))
     }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus])
 
+    function resetCourseFinders(){
+        dispatch(setSearch(''))
+        dispatch(setStatus(''))
+        dispatch(setTeacherId(''))
+        dispatch(setBookId(''))
+        dispatch(setLevelId(''))
+        dispatch(setPriceStatus(''))
+        dispatch(setScoreStatus(''))
+    }
 
 
     const FormValidation = Yup.object({
@@ -209,7 +214,8 @@ export default function CreateOff() {
                     <h6 className='text-main-color font-bold font-lg mb-1'>لیست دوره ها:</h6>
                     <span className='text-main-color font-sm'>لطفا دوره های مد نظر برای اعمال تخفیف را مشخص کنید.</span>
                     <div className='mb-3 grid grid-cols-1 mt-3'>
-                        <Search setPaginatorChangerFlag={setPaginatorChangerFlag} sliceName={'courseData'} setSearch={setSearch} defaultValue={search} />
+                        
+                        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
                     </div>
 
                     {search !== '' && !courses.length ?
