@@ -20,6 +20,8 @@ import Session from '../pages/Session';
 import CreateSession from '../pages/CreateSession';
 import Sale from "../pages/Sale";
 import CreateSaleByAdmin from '../pages/CreateSaleByAdmin';
+import Ticket from '../pages/Ticket';
+import TicketDetails from '../pages/TicketDetails';
 
 export default function Router() {
   return (
@@ -49,6 +51,8 @@ export default function Router() {
         <Route path='sessions/:id/create' element={<CreateSession/>}/>
         <Route path='sessions/:id/edit/:sessionId' element={<CreateSession/>}/>
         <Route path='sales' element={<Sale/>}/>
+        <Route path='tickets' element={<Ticket/>}/>
+        <Route path='tickets/:id' element={<TicketDetails/>}/>
 
 
         <Route path='users/:id/create-sale' element={<CreateSaleByAdmin/>}/>

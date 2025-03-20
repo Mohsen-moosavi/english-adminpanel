@@ -163,6 +163,22 @@ button{
     top: 0 !important;
 }
 
+
+/* حذف اسکرول‌بار در textarea */
+.textbox-textarea::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* برای فایرفاکس */
+  .textbox-textarea {
+    scrollbar-width: none;
+  }
+  
+  /* برای اینترنت اکسپلورر و Edge */
+  .textbox-textarea {
+    -ms-overflow-style: none;
+  }
+
 @media (max-width: 768px) {
     .dataTable tr td,
     .dataTable tr th{

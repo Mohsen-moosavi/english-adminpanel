@@ -21,21 +21,21 @@ export default function Users() {
               </select>
             </th>
             <th>
-            <select name="level" className='bg-transparent'>
+              <select name="level" className='bg-transparent'>
                 <option value="" selected>سطح</option>
                 <option value="">سطح A+</option>
                 <option value="">سطح B+</option>
               </select>
             </th>
             <th>
-            <select name="score" className='bg-transparent'>
+              <select name="score" className='bg-transparent'>
                 <option value="" selected>امتیاز</option>
                 <option value="">بیشترین امتیاز</option>
                 <option value="">کم ترین امتیاز</option>
               </select>
             </th>
             <th>
-            <select name="date" className='bg-transparent'>
+              <select name="date" className='bg-transparent'>
                 <option value="" selected>پیوستن</option>
                 <option value="">قدیمی ترین</option>
                 <option value="">جدید ترین</option>
@@ -58,8 +58,8 @@ export default function Users() {
             <td>400</td>
             <td>02/11/1403</td>
             <td>
-              <Link to={'1/create-sale'} state={{userName : 'محسن موسوی'}} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
-              افزودن
+              <Link to={'1/create-sale'} state={{ userName: 'محسن موسوی' }} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
+                افزودن
               </Link>
             </td>
             <td>

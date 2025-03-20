@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FaLongArrowAltRight, FaPhotoVideo, FaTrashAlt } from 'react-icons/fa'
-import environment from "./../constant/environment";
 import { HiOutlineUpload } from 'react-icons/hi'
 import { MdVideoLibrary } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'

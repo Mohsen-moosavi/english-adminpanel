@@ -116,8 +116,8 @@ export default function Sidebar() {
                 <span>فروش ها</span>
             </Link>
         </li>
-        <li className="block w-full p-2 rounded-lg">
-            <Link to="#" className="flex justify-start gap-x-3 items-end sidebar-link" data-link="admin-page-console">
+        <li className="block w-full p-2 rounded-lg" data-link="/tickets">
+            <Link to="tickets" className="flex justify-start gap-x-3 items-end sidebar-link">
             <BsTicketPerforatedFill className='sidebar-icon'/>
                 <span>تیکت ها</span>
             </Link>
