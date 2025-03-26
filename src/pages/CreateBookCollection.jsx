@@ -446,7 +446,7 @@ export default function CreateBookCollection() {
                                     </div>
                                     <div>
                                         <label htmlFor="create-book-input-14" className="form-label">نوع فایل:</label>
-                                        <select name="types" className='form-input mt-1' id="create-book-input-14" value={bookTypeInput} onChange={(e) => setBookTypeInput(e.target.value)}>
+                                        <select name="types" className='form-input mt-1' id="create-book-input-14" defaultValue={''} onChange={(e) => setBookTypeInput(e.target.value)}>
                                             <option value="">یک مورد را انتخاب کنید.</option>
                                             <option value="book">کتاب اصلی</option>
                                             <option value="workbook">کتاب کار</option>

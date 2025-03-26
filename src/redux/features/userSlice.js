@@ -36,7 +36,6 @@ const userSlice = createSlice({
         isLogin : false,
         error: null,
         isLoading: false,
-        proccessing: false,
     },
     reducers: {
         setUserLoggin : setUserLogginAction,

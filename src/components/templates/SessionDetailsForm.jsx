@@ -121,6 +121,7 @@ export default function SessionDetailsForm({ videoDetails }) {
                 <div className="form-btn-group">
                     <label htmlFor="session-deatils-input-2" className="form-label">وضعیت دوره:</label>
                     <select
+                    defaultValue=''
                     type="text"
                     name='isFree'
                     placeholder="slug دوره را وارد کنید..."

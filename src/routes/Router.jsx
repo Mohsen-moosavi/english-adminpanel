@@ -22,6 +22,7 @@ import Sale from "../pages/Sale";
 import CreateSaleByAdmin from '../pages/CreateSaleByAdmin';
 import Ticket from '../pages/Ticket';
 import TicketDetails from '../pages/TicketDetails';
+import UserDetails from '../pages/UserDetails';
 
 export default function Router() {
   return (
@@ -30,6 +31,7 @@ export default function Router() {
 
       <Route path='/' element={<Layout/>}>
         <Route path='users' element={<Users/>}/>
+        <Route path='users/:id' element={<UserDetails/>}/>
         <Route path='levels' element={<Levels/>}/>
         <Route path='tags' element={<Tags/>}/>
         <Route path='articles' element={<Article/>}/>

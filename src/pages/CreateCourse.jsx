@@ -303,6 +303,7 @@ export default function CreateCourse() {
                         <div className="form-btn-group">
                             <label htmlFor="create-course-input-14" className="form-label">مدرس دوره:</label>
                             <select
+                            defaultValue={''}
                                 name='teacherId'
                                 className="form-input"
                                 id="create-course-input-14"
@@ -326,6 +327,7 @@ export default function CreateCourse() {
                             {levels.length ? (
                                 <select
                                     name='levelId'
+                                    defaultValue={''}
                                     className="form-input"
                                     id="create-course-input-15"
                                     value={formik.values.levelId}
@@ -354,6 +356,7 @@ export default function CreateCourse() {
                                     <>
                                         <select
                                             id="create-course-input-12"
+                                            defaultValue={''}
                                             className='form-input'
                                             name='bookCollectionId'
                                             value={formik.values.bookCollectionId}
@@ -384,6 +387,7 @@ export default function CreateCourse() {
                                 {bookGroups.length && formik.values.bookCollectionId ? (
                                     <>
                                         <select
+                                        defaultValue={''}
                                             id="create-course-input-13"
                                             className='form-input'
                                             name='bookFileGroup'

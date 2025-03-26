@@ -170,6 +170,7 @@ export default function CreateOff() {
                     <div className="form-btn-group">
                         <label htmlFor="create-off-input-4" className="form-label">نوع تخفیف:</label>
                         <select
+                        defaultValue={''}
                             name='isPublic'
                             className="form-input"
                             id="create-off-input-4"

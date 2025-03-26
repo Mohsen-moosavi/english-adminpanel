@@ -10,6 +10,7 @@ import commentReducer from './features/commentSlice'
 import sessionReducer from './features/sessionSlice'
 import saleReducer from './features/saleSlice'
 import ticketReducer from './features/ticketSlice'
+import usersReducer from './features/usersSlice'
 
 const store = configureStore({
   reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
     sessionData : sessionReducer,
     saleData : saleReducer,
     ticketData : ticketReducer,
+    usersData : usersReducer,
   },
 });
 
