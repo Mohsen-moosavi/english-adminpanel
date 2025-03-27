@@ -59,6 +59,7 @@ export default function Router() {
 
         <Route path='users/:id/create-sale' element={<CreateSaleByAdmin/>}/>
         <Route path='users/:id/user-courses' element={<Course/>}/>
+        <Route path='users/:id/user-sales' element={<Sale/>}/>
       </Route>
     </Routes>
   )

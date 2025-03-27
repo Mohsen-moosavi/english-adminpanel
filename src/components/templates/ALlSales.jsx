@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import DataTable from '../modules/DataTable'
 import moment from 'moment-jalaali'
 import Pagination from '../modules/Pagination'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import DatePicker, { DateObject } from 'react-multi-date-picker'
 import persian from 'react-date-object/calendars/persian'
 import persian_fa from 'react-date-object/locales/persian_fa'
@@ -15,8 +15,11 @@ export default function ALlSales() {
 
   const dispatch = useDispatch()
 
+  const {id : userId} = useParams()
+  const { state } = useLocation()
+
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
-  const { sales, salesCount,totalPrice, search, status, userId, startDate, endDate, saleStatus, offset, priceStatus, limit, isLoading } = useSelector(state => state.saleData)
+  const { sales, salesCount,totalPrice, search, status, startDate, endDate, saleStatus, offset, priceStatus, limit, isLoading } = useSelector(state => state.saleData)
 
   useEffect(() => {
     dispatch(getSales({ limit, offset, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
@@ -56,7 +59,7 @@ swal({
 
   return (
     <div>
-      <h3 className='page-title'>لیست فروش دوره ها</h3>
+      <h3 className='page-title'>{state?.name ? `لیست خرید ${state?.name}` :'لیست فروش دوره ها'}</h3>
 
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2 gap-y-2'>

@@ -84,10 +84,6 @@ const setStatusAction = (state, action) => {
     state.status = action.payload;
 }
 
-const setUserIdAction = (state, action) => {
-    state.userId = action.payload
-}
-
 const setStartDateAction = (state, action) => {
     state.startDate = action.payload
 }
@@ -113,7 +109,6 @@ const saleSlice = createSlice({
         status: '',
         priceStatus : '',
         saleStatus : '',
-        userId : '',
         startDate : '',
         endDate : '',
         search: '',
@@ -125,7 +120,6 @@ const saleSlice = createSlice({
         setSearch: setSearchWordAction,
         setOffset: setOffsetAction,
         setStatus: setStatusAction,
-        setUserId: setUserIdAction,
         setStartDate: setStartDateAction,
         setEndDate: setEndDateAction,
         setPriceStatus : setPriceStatusAction,
@@ -175,6 +169,6 @@ const saleSlice = createSlice({
     },
 });
 
-export const { setSearch, setOffset, setStatus, setUserId, setStartDate, setEndDate, setPriceStatus,setSaleStatus } = saleSlice.actions;
+export const { setSearch, setOffset, setStatus, setStartDate, setEndDate, setPriceStatus,setSaleStatus } = saleSlice.actions;
 
 export default saleSlice.reducer;

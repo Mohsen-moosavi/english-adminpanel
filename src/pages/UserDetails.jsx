@@ -37,7 +37,7 @@ export default function UserDetails() {
               </Link>
             </li>
             <li>
-              <Link to={'#'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-sales'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>خرید ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.saleCount} <IoIosArrowBack /></span>
               </Link>

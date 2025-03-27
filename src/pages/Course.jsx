@@ -145,7 +145,11 @@ export default function Course() {
                 <td>{index + 1 + offset}</td>
                 <td>{course.name}</td>
                 <td>{course.slug}</td>
-                <td>{course['user.name']}</td>
+                <td>
+                  <Link to={`/users/${course['user.id']}`}>
+                    {course['user.name']}
+                  </Link>
+                </td>
                 <td>{course['level.name']}</td>
                 <td>{course['book_collection.name']}</td>
                 <td>{Number(course.price) === 0 ? "رایگان" : course.price}</td>
