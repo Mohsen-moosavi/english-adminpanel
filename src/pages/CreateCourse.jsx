@@ -303,7 +303,6 @@ export default function CreateCourse() {
                         <div className="form-btn-group">
                             <label htmlFor="create-course-input-14" className="form-label">مدرس دوره:</label>
                             <select
-                            defaultValue={''}
                                 name='teacherId'
                                 className="form-input"
                                 id="create-course-input-14"
@@ -356,7 +355,6 @@ export default function CreateCourse() {
                                     <>
                                         <select
                                             id="create-course-input-12"
-                                            defaultValue={''}
                                             className='form-input'
                                             name='bookCollectionId'
                                             value={formik.values.bookCollectionId}
@@ -563,7 +561,7 @@ export default function CreateCourse() {
                                 isLoading ? (
                                     <button disabled={isLoading} className='form-submit !py-2 block w-full text-center !text-black !bg-gray-400'>بازگشت</button>
                                 ) : (
-                                    <Link to='/courses' className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
+                                    <Link to={-1} className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
                                 )
                             }
                             <input type="submit" disabled={isLoading} value={id ? 'ویرایش دوره' : 'افزودن دوره'}

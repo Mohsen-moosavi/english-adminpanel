@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
 import toast from "react-hot-toast";
-import { createNewCourseFunc, deleteVideoFunc, getBookGroupsFunc, getCreatingDataFunc, uploadIntroductionVideoChunckFunc, updateCourseFunc, getCoursesFunc, deleteCoursesFunc, updateIntroductionVideoFunc, updateStatusfunc, getShortDetailCoursesFunc } from "../../services/course.services";
+import { createNewCourseFunc, deleteVideoFunc, getBookGroupsFunc, getCreatingDataFunc, uploadIntroductionVideoChunckFunc, updateCourseFunc, getCoursesFunc, deleteCoursesFunc, updateIntroductionVideoFunc, updateStatusfunc, getShortDetailCoursesFunc, deleteCourseForUserFunc } from "../../services/course.services";
 
 export const createNewCourse = createAsyncThunk(
     'course/createNewCourse',
@@ -71,10 +71,11 @@ export const createNewCourse = createAsyncThunk(
 export const getCourses = createAsyncThunk(
     'course/getCourses',
     async (
-        { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus },
+        { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus)
+        const { response, error } = await authRequest(getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
+
 
         if (response) {
             return response.data;
@@ -88,10 +89,31 @@ export const getCourses = createAsyncThunk(
 export const deleteCourse = createAsyncThunk(
     'course/deleteCourse',
     async (
-        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus },
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteCoursesFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus))
+        const { response, error } = await authRequest(deleteCoursesFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
+
+        if (response) {
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+            localStorage.setItem('isLoggin', false);
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
+
+export const deleteCourseForUser = createAsyncThunk(
+    'course/deleteCourse',
+    async (
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId },
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(deleteCourseForUserFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
 
         if (response) {
             return response.data;
@@ -124,24 +146,6 @@ export const getShortDetailCourses = createAsyncThunk(
         return rejectWithValue(error);
     }
 );
-
-// export const deleteArticle = createAsyncThunk(
-//     'article/deleteArticle',
-//     async (
-//         { id , limit , offset , search, status , writerId},
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-
-//         toast.error(error?.response?.data?.message);
-//         return rejectWithValue(error);
-//     }
-// );
 
 
 export const getBookGroups = createAsyncThunk(
@@ -260,11 +264,11 @@ export const updateVideo = createAsyncThunk(
 export const changeStatus = createAsyncThunk(
     'course/changeStatusCourse',
     async (
-        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus },
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus,userId },
         { rejectWithValue }
     ) => {
 
-        const {response , error} = await authRequest(updateStatusfunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus))
+        const {response , error} = await authRequest(updateStatusfunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId))
 
         if(response){
             return response.data;

@@ -36,7 +36,7 @@ export const createSaleByAdmin = createAsyncThunk(
         const { response, error } = await authRequest(createSaleByAdminFunc(courseId,userId,price))
 
         if(response){
-            navigate(`/users/${userId}`)
+            navigate(-1)
             toast.success(response.data.message)
             return response.data
         }

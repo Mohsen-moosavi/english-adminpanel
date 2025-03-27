@@ -25,7 +25,7 @@ export default function UserDetails() {
           <img src={userData.avatar || userProfile} alt="profile" className='max-sm:max-w-[150px] w-full bg-main-color/40 border-4 border-main-color rounded-xl' />
           <ul className='list-none flex flex-col gap-y-4  w-full text-gray-500 max-sm:text-sm font-bold mt-5'>
             <li>
-              <Link to={'#'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={`user-courses`} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>دوره ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.courseCount} <IoIosArrowBack /></span>
               </Link>
