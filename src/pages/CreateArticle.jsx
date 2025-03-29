@@ -386,7 +386,7 @@ export default function CreateArticle() {
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-x-2 gap-y-2">
-                            <Link to='/articles' className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
+                            <Link to={-1} className="form-submit !py-2 block w-full text-center !text-black !bg-gray-200 hover:!bg-gray-400">بازگشت</Link>
                             <input type="submit" disabled={isLoading} value={id ? 'ویرایش مقاله' : 'افزودن مقاله'}
                                 className="form-submit !py-2 block w-full hover:opacity-70 transition-all" />
                         </div>

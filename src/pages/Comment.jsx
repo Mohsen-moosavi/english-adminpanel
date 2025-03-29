@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { createCommentsFunc } from '../services/comment.services';
-import { authRequest } from '../services/authApi.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { answerToComment, changeAccept, deleteComment, getComments, setOffset, setParentStatus, setScore, setSearch, setStatus } from '../redux/features/commentSlice';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import DataTable from '../components/modules/DataTable';
 import Pagination from '../components/modules/Pagination';
 import Searcher from '../components/modules/Searcher';
+import { authRequest } from '../services/authApi.service';
+import { createCommentsFunc } from '../services/comment.services';
 
 export default function Comment() {
 
@@ -14,34 +14,38 @@ export default function Comment() {
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { comments, commentsCount, limit, offset, search, status, score, parentStatus, isLoading } = useSelector(state => state.commentData)
 
+  const {id : userId} = useParams()
+  const {state} = useLocation()
 
+  // const isInitialised = useRef(false)
   // useEffect(() => {
   //   if (!isInitialised.current) {
   //     isInitialised.current = true
-  //     dispatch(getComments({ limit: 10, offset: 0 }))
-  //     // createComments()
+  //     // dispatch(getComments({ limit: 10, offset: 0 }))
+  //     createComments()
   //   }
   // }, [])
 
-  async function createComments() {
-    const comments = {
-      content: 'سلام این کامنت 3 می باشد.',
-      score: 5,
-      courseId: 1,
-      // parentId: 1
-    }
-    const { response, error } = await authRequest(createCommentsFunc(comments))
+  // async function createComments() {
+  //   const comments = {
+  //     content: 'سلام این کامنت 4 می باشد.',
+  //     // content: 'سلام این کامنت پاسخ برای کامنت 1 می باشد.',
+  //     score: 4,
+  //     courseId: 2,
+  //     // parentId: 5
+  //   }
+  //   const { response, error } = await authRequest(createCommentsFunc(comments))
 
-    console.log("result===>", error, response)
-  }
+  //   console.log("result===>", error, response)
+  // }
 
   function paginationHandler(page) {
-    dispatch(getComments({ limit, offset: page * limit, search, score, status, parentStatus }))
+    dispatch(getComments({ limit, offset: page * limit, search, score, status, parentStatus , userId }))
   }
 
   useEffect(() => {
-    dispatch(getComments({ limit, offset: 0, search, score, status, parentStatus }))
-  }, [score, status, parentStatus])
+    dispatch(getComments({ limit, offset: 0, search, score, status, parentStatus , userId }))
+  }, [score, status, parentStatus , userId])
 
   function changeAcceptCommentHandler(id, accept) {
     swal({
@@ -50,7 +54,7 @@ export default function Comment() {
       buttons: ['لغو', 'تایید'],
     }).then(value => {
       if (value) {
-        dispatch(changeAccept({ id, accept, limit, offset, search, score, status, parentStatus }))
+        dispatch(changeAccept({ id, accept, limit, offset, search, score, status, parentStatus , userId }))
       }
     })
   }
@@ -62,7 +66,7 @@ export default function Comment() {
       buttons: ['لغو', 'تایید'],
     }).then(value => {
       if (value) {
-        dispatch(deleteComment({ id, limit, offset: 0, search, score, status, parentStatus }))
+        dispatch(deleteComment({ id, limit, offset: 0, search, score, status, parentStatus,userId }))
         setPaginatorChangerFlag(prev => !prev)
         dispatch(setOffset(0))
       }
@@ -77,7 +81,7 @@ export default function Comment() {
       buttons: 'تایید',
     }).then(value => {
       if (value) {
-        dispatch(answerToComment({ content: value, courseId, parentId, limit, offset, search, score, status, parentStatus }))
+        dispatch(answerToComment({ content: value, courseId, parentId, limit, offset, search, score, status, parentStatus , userId}))
       }
     })
   }
@@ -91,11 +95,11 @@ export default function Comment() {
 
   return (
     <div>
-      <h3 className='page-title'>لیست کامنت ها</h3>
+      <h3 className='page-title'>{state?.name ? `کامنت های ${state?.name}`: 'لیست کامنت ها'}</h3>
 
 
       <div className='mb-3 grid grid-cols-1 gap-x-2'>
-        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ score, status, parentStatus, limit }} getter={getComments} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ score, status, parentStatus, limit , userId }} getter={getComments} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
       <DataTable>
@@ -143,7 +147,11 @@ export default function Comment() {
                 <td>{index + 1 + offset}</td>
                 <td>{comment['course.name']}</td>
                 <td>{comment.score ? comment.score : '-'}</td>
-                <td>{comment['user.name']}</td>
+                <td>
+                  <Link to={`/users/${comment['user.id']}`}>
+                    {comment['user.name']}
+                  </Link>
+                  </td>
                 <td className={comment.parent_id ? 'text-orange-500' : 'text-blue-500'}>{comment.parent_id ? 'پاسخ' : 'اصلی'}</td>
                 <td>
                   {(comment.isAccept === 1) ? (
@@ -171,7 +179,7 @@ export default function Comment() {
                   </button>
                 </td>
                 <td>
-                  <Link to={`${comment.id}`} state={{ courseId: comment['course.id'], courseName: comment['course.name'] }} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
+                  <Link to={`/comments/${comment.id}`} state={{ courseId: comment['course.id'], courseName: comment['course.name'] }} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
                     مشاهده
                   </Link>
                 </td>

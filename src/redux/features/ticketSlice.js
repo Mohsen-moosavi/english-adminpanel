@@ -169,10 +169,6 @@ const setSubjecthAction = (state, action) => {
     state.subject = action.payload;
 }
 
-const setUserIdAction = (state, action) => {
-    state.userId = action.payload;
-}
-
 const setOffsetAction = (state, action) => {
     state.offset = action.payload;
 }
@@ -184,7 +180,6 @@ const ticketSlice = createSlice({
         ticketsCount: 0,
         status: "",
         subject: "",
-        userId: "",
         offset: 0,
         limit: 10,
         isLoading: false,
@@ -193,7 +188,6 @@ const ticketSlice = createSlice({
         setStatus: setStatusAction,
         setOffset: setOffsetAction,
         setSubjecth: setSubjecthAction,
-        setUserId: setUserIdAction
     },
     extraReducers: builder => {
         builder
@@ -268,6 +262,6 @@ const ticketSlice = createSlice({
     },
 });
 
-export const { setStatus, setOffset, setSubjecth, setUserId } = ticketSlice.actions;
+export const { setStatus, setOffset, setSubjecth } = ticketSlice.actions;
 
 export default ticketSlice.reducer;

@@ -13,7 +13,7 @@ export const createArticle = createAsyncThunk(
 
         if (response) {
             toast.success(response?.data?.message);
-            navigator('/articles')
+            navigator(-1)
             return response.data;
         }
 
@@ -29,12 +29,13 @@ export const createArticle = createAsyncThunk(
 export const getArticles = createAsyncThunk(
     'article/getArticles',
     async (
-        { limit , offset , search ,status , writerId},
+        { limit , offset , search ,status , writerId, userId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId)
+        const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId, userId)
 
         if (response) {
+            console.log('res artcile=========>' , response.data.data)
             return response.data;
         }
 
@@ -53,7 +54,7 @@ export const updateArticle = createAsyncThunk(
 
         if (response) {
             toast.success(response?.data?.message);
-            navigator('/articles')
+            navigator(-1)
             return response.data;
         }
 
@@ -69,10 +70,10 @@ export const updateArticle = createAsyncThunk(
 export const deleteArticle = createAsyncThunk(
     'article/deleteArticle',
     async (
-        { id , limit , offset , search, status , writerId},
+        { id , limit , offset , search, status , writerId , userId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId));
+        const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId , userId));
 
         if (response) {
             toast.success(response?.data?.message);

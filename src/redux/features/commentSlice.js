@@ -7,10 +7,10 @@ import { comment } from "postcss";
 export const getComments = createAsyncThunk(
     'comment/getComments',
     async (
-        { limit, offset, search, score, status, parentStatus },
+        { limit, offset, search, score, status, parentStatus , userId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getCommentsFunc(limit, offset, search, score, status, parentStatus);
+        const { response, error } = await getCommentsFunc(limit, offset, search, score, status, parentStatus , userId);
 
         if (response) {
             return response.data;
@@ -25,10 +25,10 @@ export const getComments = createAsyncThunk(
 export const changeAccept = createAsyncThunk(
     'comment/changeAcceptComments',
     async (
-        { id, accept, limit, offset, search, score, status, parentStatus },
+        { id, accept, limit, offset, search, score, status, parentStatus , userId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(changeAcceptFunc(id, accept, limit, offset, search, score, status, parentStatus));
+        const { response, error } = await authRequest(changeAcceptFunc(id, accept, limit, offset, search, score, status, parentStatus , userId));
 
         if (response) {
             return response.data;
@@ -47,10 +47,10 @@ export const changeAccept = createAsyncThunk(
 export const deleteComment = createAsyncThunk(
     'comment/deleteComment',
     async (
-        { id, limit, offset, search, score, status, parentStatus },
+        { id, limit, offset, search, score, status, parentStatus , userId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteCommentFunc(id, limit, offset, search, score, status, parentStatus));
+        const { response, error } = await authRequest(deleteCommentFunc(id, limit, offset, search, score, status, parentStatus, userId));
 
         if (response) {
             toast.success(response?.data?.message);
@@ -93,11 +93,11 @@ export const getCommentTree = createAsyncThunk(
 export const answerToComment = createAsyncThunk(
     'comment/answerToComment',
     async (
-        { content, courseId, parentId, limit, offset, search, score, status, parentStatus },
+        { content, courseId, parentId, limit, offset, search, score, status, parentStatus, userId },
         { rejectWithValue }
     ) => {
 
-        const { response, error } = await authRequest(answerToCommentFunc(content, courseId, parentId, limit, offset, search, score, status, parentStatus))
+        const { response, error } = await authRequest(answerToCommentFunc(content, courseId, parentId, limit, offset, search, score, status, parentStatus , userId))
 
         if (response) {
             return response.data;

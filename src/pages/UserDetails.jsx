@@ -31,19 +31,19 @@ export default function UserDetails() {
               </Link>
             </li>
             <li>
-              <Link to={'#'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-comments'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>کامنت ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.commentCount}<IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'user-sales'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-sales'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>خرید ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.saleCount} <IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'#'} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-tickets'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>تیکت ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.ticketCount} <IoIosArrowBack /></span>
               </Link>
@@ -56,7 +56,7 @@ export default function UserDetails() {
               </Link>
             </li>
             <li>
-              <Link to={'#'} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
+              <Link to={'user-articles'} state={{name : userData.name}} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
                 <span>مقاله ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.articleCount} <IoIosArrowBack /></span>
               </Link>
@@ -67,7 +67,7 @@ export default function UserDetails() {
       <div className='flex-1 sm:max-w-[500px]'>
         <div className='mb-5'>
           <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
-          <span className='text-[12px] text-[#70987e] font-bold'>{userData.role?.name}</span>
+          <span className='text-[12px] text-[#70987e] font-bold'>{userData.roleName}</span>
         </div>
 
         <div className='mb-8'>

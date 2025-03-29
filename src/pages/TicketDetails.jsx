@@ -56,7 +56,7 @@ export default function TicketDetails() {
     return (
         <div className='relative flex flex-col justify-start flex-1'>
             <div className='inline-block'>
-                <Link to={'/tickets'} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+                <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
                     <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
                     <span>بازگشت</span>
                 </Link>

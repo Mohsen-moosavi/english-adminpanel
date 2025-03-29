@@ -14,12 +14,13 @@ const createCommentsFunc = ({ content, score, courseId, parentId }) => {
     )
 }
 
-const getCommentsFunc = async (limit, offset, search = '', score, status, parentStatus) => {
+const getCommentsFunc = async (limit, offset, search = '', score, status, parentStatus, userId) => {
     try {
         let queryString = `?limit=${limit}&offset=${offset}&search=${search}`
         score && (queryString += `&score=${score}`)
         status && (queryString += `&status=${status}`)
         parentStatus && (queryString += `&parentStatus=${parentStatus}`)
+        userId && (queryString += `&userId=${userId}`)
 
         const response = await appJsonPostApi.get(`/comment${queryString}`, { withCredentials: false });
         return { response };
@@ -28,7 +29,7 @@ const getCommentsFunc = async (limit, offset, search = '', score, status, parent
     }
 }
 
-const changeAcceptFunc = (id, accept, limit, offset, search = '', score, status, parentStatus) => {
+const changeAcceptFunc = (id, accept, limit, offset, search = '', score, status, parentStatus , userId) => {
     return (
         async () => {
             try {
@@ -36,6 +37,7 @@ const changeAcceptFunc = (id, accept, limit, offset, search = '', score, status,
                 score && (queryString += `&score=${score}`)
                 status && (queryString += `&status=${status}`)
                 parentStatus && (queryString += `&parentStatus=${parentStatus}`)
+                userId && (queryString += `&userId=${userId}`)
 
                 const response = await apiPrivate(appJsonPostApi).put(`/comment/${id}${queryString}`, { accept });
                 return { response };
@@ -47,7 +49,7 @@ const changeAcceptFunc = (id, accept, limit, offset, search = '', score, status,
 }
 
 
-const deleteCommentFunc = (id, limit, offset, search = '', score, status, parentStatus) => {
+const deleteCommentFunc = (id, limit, offset, search = '', score, status, parentStatus, userId) => {
     return (
         async () => {
             try {
@@ -55,6 +57,7 @@ const deleteCommentFunc = (id, limit, offset, search = '', score, status, parent
                 score && (queryString += `&score=${score}`)
                 status && (queryString += `&status=${status}`)
                 parentStatus && (queryString += `&parentStatus=${parentStatus}`)
+                userId && (queryString += `&userId=${userId}`)
 
                 const response = await apiPrivate(appJsonPostApi).delete(`/comment/${id}${queryString}`);
                 return { response };
@@ -105,7 +108,7 @@ const deleteCommentInCommentLoopFunc = (id, mainCommentId) => {
     )
 }
 
-const answerToCommentFunc = ( content, courseId, parentId,   limit, offset, search = '', score, status, parentStatus) => {
+const answerToCommentFunc = ( content, courseId, parentId,   limit, offset, search = '', score, status, parentStatus , userId) => {
     return (
         async () => {
             try {
@@ -113,6 +116,7 @@ const answerToCommentFunc = ( content, courseId, parentId,   limit, offset, sear
                 score && (queryString += `&score=${score}`)
                 status && (queryString += `&status=${status}`)
                 parentStatus && (queryString += `&parentStatus=${parentStatus}`)
+                userId && (queryString += `&userId=${userId}`)
 
 
                 const response = await apiPrivate(appJsonPostApi).post(`/comment/answer${queryString}`, { content, courseId, parentId });

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '../components/modules/Pagination';
 import { deleteTicket, getTickets, setOffset, setStatus, setSubjecth } from '../redux/features/ticketSlice';
 import moment from 'moment-jalaali';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 export default function Ticket() {
 
-    const { tickets, ticketsCount, status, subject, userId, offset, limit, isLoading } = useSelector(state => state.ticketData)
+    const {id : userId} = useParams()
+    const {state} = useLocation()
+    const { tickets, ticketsCount, status, subject, offset, limit, isLoading } = useSelector(state => state.ticketData)
     const dispatch = useDispatch()
     const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
 
@@ -49,7 +51,7 @@ export default function Ticket() {
 
     return (
         <div>
-            <h3 className='page-title'>لیست تیکت ها</h3>
+            <h3 className='page-title'>{state?.name ? `تیکت های ${state?.name}`:"لیست تیکت ها"}</h3>
 
             <DataTable>
                 <thead>
@@ -116,7 +118,7 @@ export default function Ticket() {
                                 <td>{moment(ticket.created_at).format('jYYYY/jMM/jDD')}</td>
                                 <td>{moment(ticket.updated_at).format('jYYYY/jMM/jDD')}</td>
                                 <td>
-                                    <Link to={`${ticket.id}`} className='py-1 px-2 rounded-lg text-white hover:text-white bg-green-500'>
+                                    <Link to={`/tickets/${ticket.id}`} className='py-1 px-2 rounded-lg text-white hover:text-white bg-green-500'>
                                         مشاهده
                                     </Link>
                                 </td>
