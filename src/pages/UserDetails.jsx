@@ -50,7 +50,7 @@ export default function UserDetails() {
             </li>
             <hr />
             <li>
-              <Link to={'#'} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
+              <Link to={'user-lessons'} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
                 <span>درس ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.lessonCount} <IoIosArrowBack /></span>
               </Link>

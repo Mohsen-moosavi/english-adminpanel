@@ -63,6 +63,7 @@ export default function Router() {
         <Route path='users/:id/user-comments' element={<Comment/>}/>
         <Route path='users/:id/user-tickets' element={<Ticket/>}/>
         <Route path='users/:id/user-articles' element={<Article/>}/>
+        <Route path='users/:id/user-lessons' element={<Course/>}/>
       </Route>
     </Routes>
   )

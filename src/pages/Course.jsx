@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { changeStatus, deleteCourse, deleteCourseForUser, getCourses, getCreatingData, setBookId, setLevelId, setOffset, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
@@ -8,19 +8,41 @@ import Searcher from '../components/modules/Searcher'
 
 export default function Course() {
 
+  const [userId , setUserId] = useState()
   const { state } = useLocation()
-  const { id : userId}= useParams()
+  const { id }= useParams()
+  const {pathname}= useLocation()
+  const isInitialized = useRef(false)
 
   const dispatch = useDispatch()
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { courses, coursesCount, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, offset, limit, isLoading, teachers, levels, bookCollections } = useSelector(state => state.courseData)
 
-  useEffect(() => {
-    dispatch(getCreatingData({}))
-  }, [])
+  // useEffect(() => {
+  //   if(pathname.endsWith('/user-lessons')){
+  //     dispatch(setTeacherId(id))
+  //   }else{
+  //     setUserId(id)
+  //   }
+  //   dispatch(getCreatingData({}))
+  // }, [])
 
   useEffect(() => {
-    dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+    if(!isInitialized.current){
+      isInitialized.current = true
+
+      if(pathname.endsWith('/user-lessons')){
+        dispatch(setTeacherId(id))
+      }else{
+        setUserId(id)
+      }
+
+      dispatch(getCreatingData({}))
+
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+    }else{
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+    }
   }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId])
 
   function paginationHandler(page) {
@@ -82,7 +104,7 @@ export default function Course() {
             <th>نام</th>
             <th>لینک</th>
             <th>
-              <select name="teachers" defaultValue={teacherId} className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
+              <select name="teachers" defaultValue={pathname.endsWith('/user-lessons') ? id : teacherId} className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
                 <option value={''}>مدرس</option>
                 {teachers?.map((teacher, index) => (
                   <option key={index} value={teacher.id}>{teacher.name}</option>
