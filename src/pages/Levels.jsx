@@ -6,7 +6,7 @@ import { createNewLevel, deleteLevel, getLevels, updateLevel } from '../redux/fe
 import FormErrorMsg from '../components/modules/FormErrorMessag';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import swal from 'sweetalert'
+import Swal from 'sweetalert2';
 
 
 export default function Levels() {
@@ -42,27 +42,29 @@ export default function Levels() {
     });
 
     function deleteLevelHandler(id) {
-        swal({
-            title: 'آیا از حذف اطمینان دارید؟',
-            icon : 'warning',
-            buttons: ['لغو','تایید'],
-        }).then(value => {
-            if(value){
-                dispatch(deleteLevel({ id }))
-            }
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            dispatch(deleteLevel({ id }))
+          }
         })
     }
 
     function updateLevelHandler(id){
-        swal({
-            title: 'لطفا نام جدید را وارد کنید.',
-            content: 'input',
-            buttons: ['لغو','تایید'],
-        }).then(value => {
-            if(value){
-                dispatch(updateLevel({id , name : value}))
+        Swal.fire({
+            inputLabel: 'لطفا نام جدید را وارد کنید.',
+            input : 'text',
+            confirmButtonText: 'تایید',
+          }).then(result=>{
+            if(result.isConfirmed && result.value?.trim()){
+                dispatch(updateLevel({id , name : result.value?.trim()}))
             }
-        })
+          })
     }
 
     return (

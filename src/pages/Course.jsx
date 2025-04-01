@@ -5,6 +5,7 @@ import { changeStatus, deleteCourse, deleteCourseForUser, getCourses, getCreatin
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
+import Swal from 'sweetalert2'
 
 export default function Course() {
 
@@ -19,12 +20,9 @@ export default function Course() {
   const { courses, coursesCount, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, offset, limit, isLoading, teachers, levels, bookCollections } = useSelector(state => state.courseData)
 
   // useEffect(() => {
-  //   if(pathname.endsWith('/user-lessons')){
-  //     dispatch(setTeacherId(id))
-  //   }else{
-  //     setUserId(id)
+  //      return ()=>{
+  //     dispatch(setTeacherId(''))
   //   }
-  //   dispatch(getCreatingData({}))
   // }, [])
 
   useEffect(() => {
@@ -43,40 +41,45 @@ export default function Course() {
     }else{
       dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
     }
-  }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId])
+
+  }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId,pathname])
 
   function paginationHandler(page) {
     dispatch(getCourses({ limit, offset: page * limit, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
   }
 
   function deleteCourseHandler(id , isDeleted) {
-    swal({
-      title: isDeleted ? 'آیا از در دسترس کردن دوره اطمینان دارید؟' :'آیا از غیر قابل دسترس کردن دوره اطمینان دارید؟',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
-      }
-    })
+            Swal.fire({
+              title: isDeleted ? 'آیا از در دسترس کردن دوره اطمینان دارید؟' :'آیا از غیر قابل دسترس کردن دوره اطمینان دارید؟',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'تایید',
+              cancelButtonText: 'لغو',
+            }).then(result=>{
+              if(result.isConfirmed){
+                dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+              }
+            })
   }
 
   function deleteCourseForUserHandler(id) {
-    swal({
-      title: 'آیا از حذف دوره برای این کاربر اطمینان دارید؟',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        if (courses.length === 1) {
-          dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
-          setPaginatorChangerFlag(prev => !prev)
-          dispatch(setOffset(0))
-        } else {
-          dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
-        }
-      }
-    })
+        Swal.fire({
+          title: 'آیا از حذف دوره برای این کاربر اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (courses.length === 1) {
+              dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+              setPaginatorChangerFlag(prev => !prev)
+              dispatch(setOffset(0))
+            } else {
+              dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+            }
+          }
+        })
   }
 
   function statusChangeHandler(id) {
@@ -85,7 +88,7 @@ export default function Course() {
 
   return (
     <div>
-      <h3 className='page-title'>{state?.name ? `دوره های ${state.name}` : 'لیست دوره ها'}</h3>
+      <h3 className='page-title'>{state?.name  ? `دوره های${pathname.endsWith('/user-lessons') ? ' تدریس شده ' :''} ${state.name}` : 'لیست دوره ها'}</h3>
 
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>

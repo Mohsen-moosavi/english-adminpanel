@@ -7,6 +7,7 @@ import SelectSearch from '../components/modules/SelectSearch';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShortDetailCourses } from '../redux/features/courseSlice';
 import { createSaleByAdmin } from '../redux/features/saleSlice';
+import Swal from 'sweetalert2';
 
 export default function CreateSaleByAdmin() {
 
@@ -36,15 +37,17 @@ export default function CreateSaleByAdmin() {
         },
         validationSchema: FormValidation,
         onSubmit: async (values, { resetForm }) => {
-                    swal({
-                        title: 'آیا از اضافه کردن دوره برای کاربر، اطمینان دارید؟',
-                        icon: 'warning',
-                        buttons: ['لغو', 'تایید'],
-                    }).then(value => {
-                        if (value) {
-                            dispatch(createSaleByAdmin({courseId: values.courseId ,userId: id, price: values.price, navigate }))
-                        }
-                    })
+            Swal.fire({
+                title: 'آیا از اضافه کردن دوره برای کاربر، اطمینان دارید؟',
+                icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'تایید',
+              cancelButtonText: 'لغو',
+            }).then(result=>{
+              if(result.isConfirmed){
+                dispatch(createSaleByAdmin({courseId: values.courseId ,userId: id, price: values.price, navigate }))
+              }
+            })
         },
     });
 

@@ -7,6 +7,7 @@ import Pagination from '../components/modules/Pagination';
 import Searcher from '../components/modules/Searcher';
 import { authRequest } from '../services/authApi.service';
 import { createCommentsFunc } from '../services/comment.services';
+import Swal from 'sweetalert2';
 
 export default function Comment() {
 
@@ -48,49 +49,55 @@ export default function Comment() {
   }, [score, status, parentStatus , userId])
 
   function changeAcceptCommentHandler(id, accept) {
-    swal({
+
+    Swal.fire({
       title: `آیا از ${accept ? 'تایید' : 'رد'} کامنت اطمینان دارید؟`,
       icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
+      showCancelButton: true,
+      confirmButtonText: 'تایید',
+      cancelButtonText: 'لغو',
+    }).then(result=>{
+      if(result.isConfirmed){
         dispatch(changeAccept({ id, accept, limit, offset, search, score, status, parentStatus , userId }))
       }
     })
   }
 
   function deleteCourseHandler(id) {
-    swal({
-      title: 'آیا از حذف اطمینان دارید؟ در صورت حذف، تمام کامنت های پاسخ به این مورد نیز، حذف می شوند.',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        dispatch(deleteComment({ id, limit, offset: 0, search, score, status, parentStatus,userId }))
-        setPaginatorChangerFlag(prev => !prev)
-        dispatch(setOffset(0))
-      }
-    })
+
+            Swal.fire({
+              text: 'آیا از حذف اطمینان دارید؟ در صورت حذف، تمام کامنت های پاسخ به این مورد نیز، حذف می شوند.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'تایید',
+              cancelButtonText: 'لغو',
+            }).then(result=>{
+              if(result.isConfirmed){
+                dispatch(deleteComment({ id, limit, offset: 0, search, score, status, parentStatus,userId }))
+                setPaginatorChangerFlag(prev => !prev)
+                dispatch(setOffset(0))
+              }
+            })
   }
 
 
   function answerCommentHandler(courseId, parentId) {
-    swal({
-      title: 'لطفا پاسخ خود را بنویسید.',
-      content: 'input',
-      buttons: 'تایید',
-    }).then(value => {
-      if (value) {
-        dispatch(answerToComment({ content: value, courseId, parentId, limit, offset, search, score, status, parentStatus , userId}))
-      }
-    })
+    Swal.fire({
+                inputLabel: 'لطفا پاسخ خود را بنویسید.',
+                input : 'text',
+                confirmButtonText: 'تایید',
+              }).then(result=>{
+                if(result.isConfirmed && result.value?.trim()){
+                  dispatch(answerToComment({ content: result.value?.trim(), courseId, parentId, limit, offset, search, score, status, parentStatus , userId}))
+                }
+              })
   }
 
   function showCommentContent(content) {
-    swal({
-      title: content,
-      buttons: 'تایید'
-    })
+            Swal.fire({
+              text: content,
+              confirmButtonText: 'تایید',
+            })
   }
 
   return (

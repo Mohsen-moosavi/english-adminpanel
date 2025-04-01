@@ -7,6 +7,7 @@ import { MdManageAccounts } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
 import { getUserDetails } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali'
+import Swal from 'sweetalert2'
 
 export default function UserDetails() {
 
@@ -17,6 +18,43 @@ export default function UserDetails() {
   useEffect(() => {
     dispatch(getUserDetails({ id, setUserData }))
   }, [])
+
+  function changeRoleHandler(){
+
+Swal.fire({
+  title: 'لطفا یکی را انتخاب کنید',
+  html: `
+    <div style="text-align: right;">
+      <input type="radio" id="option1" name="choice" value="گزینه ۱">
+      <label for="option1">گزینه ۱</label><br>
+
+      <input type="radio" id="option2" name="choice" value="گزینه ۲">
+      <label for="option2">گزینه ۲</label><br>
+
+      <input type="radio" id="option3" name="choice" value="گزینه ۳">
+      <label for="option3">گزینه ۳</label>
+    </div>`
+  ,
+  showCancelButton: true,
+  confirmButtonText: 'تایید',
+  cancelButtonText: 'لغو',
+  preConfirm: () => {
+    const selectedOption = document.querySelector('input[name="choice"]:checked');
+    if (!selectedOption) {
+      Swal.showValidationMessage('لطفا یکی از گزینه‌ها را انتخاب کنید!');
+    }
+    return selectedOption ? selectedOption.value : null;
+  }
+}).then((result) => {
+  if (result.isConfirmed) {
+            Swal.fire({
+              title: `شما گزینه "${result.value}" را انتخاب کردید!`,
+              icon: 'success',
+              confirmButtonText: 'تایید',
+            })
+  }
+});
+  }
 
   return (
     <div className='flex max-sm:flex-col gap-x-[30px] lg:gap-x-[50px] gap-y-5 lg:px-8'>
@@ -50,7 +88,7 @@ export default function UserDetails() {
             </li>
             <hr />
             <li>
-              <Link to={'user-lessons'} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
+              <Link to={'user-lessons'} state={{name : userData.name}} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
                 <span>درس ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.lessonCount} <IoIosArrowBack /></span>
               </Link>
@@ -65,9 +103,12 @@ export default function UserDetails() {
         </div>
       </div>
       <div className='flex-1 sm:max-w-[500px]'>
-        <div className='mb-5'>
+        <div className='mb-5 flex items-end justify-between'>
+          <div>
           <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
           <span className='text-[12px] text-[#70987e] font-bold'>{userData.roleName}</span>
+          </div>
+          <button className='rounded-xl bg-main-color text-white px-2 py-1 hover:opacity-60' onClick={changeRoleHandler}>تغییر نقش</button>
         </div>
 
         <div className='mb-8'>

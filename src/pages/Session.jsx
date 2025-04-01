@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
+import Swal from 'sweetalert2'
 
 export default function Session() {
 
@@ -23,21 +24,23 @@ export default function Session() {
     }
 
   function deleteSessionHandler(sessionId){
-    swal({
-      title: 'آیا از حذف اطمینان دارید؟',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        if (sessions.length === 1) {
-          dispatch(deleteSession({ id: sessionId, courseId : id, limit, offset: 0, search, status, fileStatus }))
-          dispatch(setOffset(0))
-          setPaginatorChangerFlag(prev => !prev)
-        } else {
-          dispatch(deleteSession({ id: sessionId, courseId : id, limit, offset, search, status, fileStatus }))
-        }
-      }
-    })
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (sessions.length === 1) {
+              dispatch(deleteSession({ id: sessionId, courseId : id, limit, offset: 0, search, status, fileStatus }))
+              dispatch(setOffset(0))
+              setPaginatorChangerFlag(prev => !prev)
+            } else {
+              dispatch(deleteSession({ id: sessionId, courseId : id, limit, offset, search, status, fileStatus }))
+            }
+          }
+        })
   }
 
 

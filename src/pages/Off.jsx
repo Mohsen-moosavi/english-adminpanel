@@ -6,6 +6,7 @@ import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import moment from 'moment-jalaali'
 import Searcher from '../components/modules/Searcher'
+import Swal from 'sweetalert2'
 
 export default function Off() {
 
@@ -22,21 +23,23 @@ export default function Off() {
   }
 
   function deleteOffHandler(id) {
-    swal({
-      title: 'آیا از حذف اطمینان دارید؟',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        if (offs.length === 1) {
-          dispatch(deleteOff({ id, limit, offset: 0, search, publicStatus, orderStatus }))
-          setPaginatorChangerFlag(prev => !prev)
-          dispatch(setOffset(0))
-        } else {
-          dispatch(deleteOff({ id, limit, offset: 0, search, publicStatus, orderStatus }))
-        }
-      }
-    })
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (offs.length === 1) {
+              dispatch(deleteOff({ id, limit, offset: 0, search, publicStatus, orderStatus }))
+              setPaginatorChangerFlag(prev => !prev)
+              dispatch(setOffset(0))
+            } else {
+              dispatch(deleteOff({ id, limit, offset: 0, search, publicStatus, orderStatus }))
+            }
+          }
+        })
   }
 
   return (

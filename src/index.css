@@ -114,36 +114,47 @@ button{
     transform: translate(-50% , -50%);
 }
 
-.swal-modal{
-    background-color: #0e4b50;
+.swal2-popup{
+    background-color: #e8fff9;
     border-radius: 10px;
 }
-
-.swal-title{
-    color:  #fff;
+/* .swal2-title{
+    color:  #121212;
     font-family: Iransans;
     font-weight: 500;
-}
+} */
 
-.swal-content__input{
+/* 
+.swal2-input{
     background-color: #0e4b50;
     border: 2px solid #fff;
     border-radius: 10px;
     color: #fff;
 }
 
-.swal-content__input:focus{
+.swal2-input:focus{
     outline: none;
     border-color: #fff;
 }
 
-.swal-footer{
+.swal2-footer{
     text-align: center;
     display: flex;
 }
 
-.swal-button-container , .swal-button-container .swal-button{
+.swal2-actions , .swal2-actions .swal2-confirm, .swal2-actions .swal2-cancel{
     width: 100%;
+} */
+
+.swal2-actions{
+    display: flex;
+    width: 90%;
+}
+.swal2-confirm, .swal2-cancel{
+    flex: 1;
+}
+.swal2-confirm{
+    background-color: #0e4b50;
 }
 
 .dataTable tr td,
@@ -186,8 +197,13 @@ button{
         font-size: 10px;
     }
 
-    .swal-title{
-        font-size: 14px;
+    .swal2-title{
+        font-size: 18px;
+    }
+
+    .swal2-icon {
+        max-width: 80px;
+        height: auto;
     }
 
     .main-content{
@@ -200,6 +216,10 @@ button{
     .page-title{
         margin-bottom: 1rem;
         font-size: 16px;
+    }
+
+    .swal2-title{
+        font-size: 14px;
     }
 
     .form-input,#create-off-datapicker-input{

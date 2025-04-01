@@ -9,6 +9,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import DatePicker, { DateObject } from 'react-multi-date-picker'
 import persian from 'react-date-object/calendars/persian'
 import persian_fa from 'react-date-object/locales/persian_fa'
+import Swal from 'sweetalert2'
 
 
 export default function ALlSales() {
@@ -26,21 +27,23 @@ export default function ALlSales() {
   }, [status, userId, startDate, endDate, saleStatus, priceStatus])
 
   function deleteSaleHandler(id) {
-swal({
-        title: 'آیا از حذف اطمینان دارید؟',
-        icon: 'warning',
-        buttons: ['لغو', 'تایید'],
-      }).then(value => {
-        if (value) {
-          if (sales.length === 1) {
-            dispatch(deleteSale({ id, limit, offset:0, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
-            setPaginatorChangerFlag(prev => !prev)
-            dispatch(setOffset(0))
-          } else {
-            dispatch(deleteSale({ id,limit, offset, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
-          }
+    Swal.fire({
+      title: 'آیا از حذف اطمینان دارید؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تایید',
+      cancelButtonText: 'لغو',
+    }).then(result=>{
+      if(result.isConfirmed){
+        if (sales.length === 1) {
+          dispatch(deleteSale({ id, limit, offset:0, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
+          setPaginatorChangerFlag(prev => !prev)
+          dispatch(setOffset(0))
+        } else {
+          dispatch(deleteSale({ id,limit, offset, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
         }
-      })
+      }
+    })
   }
 
   function paginationHandler(page) {

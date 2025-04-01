@@ -6,6 +6,7 @@ import TicketBox from '../components/modules/TicketBox'
 import TextBox from '../components/modules/TextBox'
 import toast from 'react-hot-toast'
 import { FaLongArrowAltRight } from 'react-icons/fa'
+import Swal from 'sweetalert2'
 
 
 export default function TicketDetails() {
@@ -29,27 +30,31 @@ export default function TicketDetails() {
     }
 
     function deleteMessageHandler(messageId) {
-        swal({
-            title: 'آیا از حذف اطمینان دارید؟',
-            icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
-                dispatch(deleteTicketMessage({ ticketId: ticketDetails.id, messageId, setTicketDetails, navigate }))
-            }
-        })
+                Swal.fire({
+                  title: 'آیا از حذف اطمینان دارید؟',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'تایید',
+                  cancelButtonText: 'لغو',
+                }).then(result=>{
+                  if(result.isConfirmed){
+                    dispatch(deleteTicketMessage({ ticketId: ticketDetails.id, messageId, setTicketDetails, navigate }))
+                  }
+                })
     }
 
     function changeStatusHandler(){
-        swal({
+        Swal.fire({
             title: `آیا از ${ticketDetails.status === 'closed' ? 'باز کردن تیکت' : 'بستن تیکت'} اطمینان دارید؟`,
             icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
+            showCancelButton: true,
+            confirmButtonText: 'تایید',
+            cancelButtonText: 'لغو',
+          }).then(result=>{
+            if(result.isConfirmed){
                 dispatch(changeStatus({ id : ticketDetails.id, setTicketDetails}))
             }
-        })
+          })
     }
 
 

@@ -7,6 +7,7 @@ import FormErrorMsg from '../components/modules/FormErrorMessag'
 import { createNewTag, deleteTag, getTags, setOffset, setSearch, updateTag } from '../redux/features/tagSlice'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
+import Swal from 'sweetalert2'
 
 
 export default function Tags() {
@@ -46,38 +47,39 @@ export default function Tags() {
     }
 
     function deleteTagHandler(id) {
-        swal({
-            title: 'آیا از حذف اطمینان دارید؟',
-            icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
-                if (tags.length === 1) {
-                    dispatch(deleteTag({ id, limit, offset: 0, search }))
-                    setPaginatorChangerFlag(prev => !prev)
-                    dispatch(setOffset(0))
-                } else {
-                    dispatch(deleteTag({ id, limit, offset, search }))
-                }
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (tags.length === 1) {
+                dispatch(deleteTag({ id, limit, offset: 0, search }))
+                setPaginatorChangerFlag(prev => !prev)
+                dispatch(setOffset(0))
+            } else {
+                dispatch(deleteTag({ id, limit, offset, search }))
             }
+          }
         })
     }
 
     function updateTagHandler(id) {
-        swal({
-            title: 'لطفا نام جدید را وارد کنید.',
-            content: 'input',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
-                if (tags.length === 1) {
-                    dispatch(updateTag({ id, name: value, limit, offset: 0, search }))
-                    setSearchChangerFlag(prev => !prev)
-                } else {
-                    dispatch(updateTag({ id, name: value, limit, offset, search }))
-                }
-            }
-        })
+    Swal.fire({
+                inputLabel: 'لطفا نام جدید را وارد کنید.',
+                input : 'text',
+                confirmButtonText: 'تایید',
+              }).then(result=>{
+                if(result.isConfirmed && result.value?.trim()){
+                    if (tags.length === 1) {
+                        dispatch(updateTag({ id, name: result.value?.trim(), limit, offset: 0, search }))
+                        setSearchChangerFlag(prev => !prev)
+                    } else {
+                        dispatch(updateTag({ id, name: result.value?.trim(), limit, offset, search }))
+                    }                }
+              })
     }
 
 

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import { answerToCommentInCommentLoop, changeAccept, changeAcceptInCommentLoop, deleteCommentInCommentLoop, setOffset } from '../../redux/features/commentSlice'
 import { useNavigate } from 'react-router-dom'
 import { FaPencil } from 'react-icons/fa6'
+import Swal from 'sweetalert2'
 
 export default function CommentBox({ comment, mainCommentId , courseId }) {
 
@@ -28,40 +29,44 @@ export default function CommentBox({ comment, mainCommentId , courseId }) {
     }
 
     function changeAcceptCommentHandler(id, accept) {
-        swal({
-            title: `آیا از ${accept ? 'تایید' : 'رد'} کامنت اطمینان دارید؟`,
-            icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
+            Swal.fire({
+              title: `آیا از ${accept ? 'تایید' : 'رد'} کامنت اطمینان دارید؟`,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'تایید',
+              cancelButtonText: 'لغو',
+            }).then(result=>{
+              if(result.isConfirmed){
                 dispatch(changeAcceptInCommentLoop({ id, accept }))
-            }
-        })
+              }
+            })
     }
 
     function deleteCommentHandler(id , mainCommentId) {
-        swal({
-            title: 'آیا از حذف اطمینان دارید؟ در صورت حذف، تمام کامنت های پاسخ به این مورد نیز، حذف می شوند.',
-            icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
+            Swal.fire({
+              text: 'آیا از حذف اطمینان دارید؟ در صورت حذف، تمام کامنت های پاسخ به این مورد نیز، حذف می شوند.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'تایید',
+              cancelButtonText: 'لغو',
+            }).then(result=>{
+              if(result.isConfirmed){
                 dispatch(deleteCommentInCommentLoop({ id, mainCommentId, navigator }))
                 dispatch(setOffset(0))
-            }
-        })
+              }
+            })
     }
 
     function answerCommentHandler(mainCommentId,courseId, parentId){
-        swal({
-            title: 'لطفا پاسخ خود را بنویسید.',
-            content : 'input',
-            buttons: 'تایید',
-        }).then(value => {
-            if (value) {
-                dispatch(answerToCommentInCommentLoop({id : mainCommentId, content : value, courseId, parentId, navigator }))
+        Swal.fire({
+            inputLabel: 'لطفا پاسخ خود را بنویسید.',
+            input : 'text',
+            confirmButtonText: 'تایید',
+          }).then(result=>{
+            if(result.isConfirmed && result.value?.trim()){
+                dispatch(answerToCommentInCommentLoop({id : mainCommentId, content : result.value, courseId, parentId, navigator }))
             }
-        })
+          })
     }
 
     return (

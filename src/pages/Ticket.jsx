@@ -5,6 +5,7 @@ import Pagination from '../components/modules/Pagination';
 import { deleteTicket, getTickets, setOffset, setStatus, setSubjecth } from '../redux/features/ticketSlice';
 import moment from 'moment-jalaali';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function Ticket() {
 
@@ -32,20 +33,22 @@ export default function Ticket() {
     }
 
     function deleteTicketHandler(id) {
-        swal({
-            title: 'آیا از حذف اطمینان دارید؟',
-            icon: 'warning',
-            buttons: ['لغو', 'تایید'],
-        }).then(value => {
-            if (value) {
-                if (tickets.length === 1) {
-                    dispatch(deleteTicket({ id, offset: 0, limit, status, subject, userId }))
-                    dispatch(setOffset(0))
-                    setPaginatorChangerFlag(prev => !prev)
-                } else {
-                    dispatch(deleteTicket({ id, offset, limit, status, subject, userId }))
-                }
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (tickets.length === 1) {
+                dispatch(deleteTicket({ id, offset: 0, limit, status, subject, userId }))
+                dispatch(setOffset(0))
+                setPaginatorChangerFlag(prev => !prev)
+            } else {
+                dispatch(deleteTicket({ id, offset, limit, status, subject, userId }))
             }
+          }
         })
     }
 

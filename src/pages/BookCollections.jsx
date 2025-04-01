@@ -5,6 +5,7 @@ import { deleteBook, getBooks, setOffset, setSearch } from '../redux/features/bo
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
+import Swal from 'sweetalert2'
 
 export default function BookCollections() {
   const isInitialised = useRef(false)
@@ -28,21 +29,23 @@ export default function BookCollections() {
   }
 
   function deleteBookHandler(id) {
-    swal({
-      title: 'آیا از حذف اطمینان دارید؟',
-      icon: 'warning',
-      buttons: ['لغو', 'تایید'],
-    }).then(value => {
-      if (value) {
-        if (books.length === 1) {
-          dispatch(deleteBook({ id, limit, offset: 0, search }))
-          setPaginatorChangerFlag(prev => !prev)
-          dispatch(setOffset(0))
-        } else {
-          dispatch(deleteBook({ id, limit, offset, search }))
-        }
-      }
-    })
+        Swal.fire({
+          title: 'آیا از حذف اطمینان دارید؟',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'تایید',
+          cancelButtonText: 'لغو',
+        }).then(result=>{
+          if(result.isConfirmed){
+            if (books.length === 1) {
+              dispatch(deleteBook({ id, limit, offset: 0, search }))
+              setPaginatorChangerFlag(prev => !prev)
+              dispatch(setOffset(0))
+            } else {
+              dispatch(deleteBook({ id, limit, offset, search }))
+            }
+          }
+        })
   }
 
   // function statusChangeHandler(e){
