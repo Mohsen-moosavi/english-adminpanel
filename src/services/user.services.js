@@ -1,4 +1,4 @@
-import { appJsonPostApi } from "../configs/axios"
+import { appJsonPostApi, multipartFormPostApi } from "../configs/axios"
 import apiPrivate from "./apiPrivate"
 
 const getUsersFunc = (searchName='' , searchPhone='', roleStatus, purchaseStatus , scoreStatus , levelStatus, deletedUser,scorePriority, limit , offset) => {
@@ -52,8 +52,67 @@ const getUserDetailsFunc = (id) => {
     )
 }
 
+const getRolesFunc = () => {
+    return (
+        async () => {
+            try {
+                const response = await apiPrivate(appJsonPostApi).get(`/role`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
+const changeUserRoleFunc = (userId, roleId) => {
+    return (
+        async () => {
+            try {
+                const response = await apiPrivate(appJsonPostApi).put(`/user/change-role` , {userId, roleId});
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
+const removeUserProfileFunc = (userId) => {
+    return (
+        async () => {
+            try {
+                const response = await apiPrivate(appJsonPostApi).delete(`/user/${userId}/delete-profile`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
+const updateProfileAvatarFunc= (userId , avatar) => {
+    return (
+        async () => {
+            try {
+                const formData = new FormData()
+                formData.append('avatar' , avatar)
+
+                const response = await apiPrivate(multipartFormPostApi).put(`/user/${userId}/update-profile` , formData);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
 export {
     getUsersFunc,
     getFinderParamsFunc,
-    getUserDetailsFunc
+    getUserDetailsFunc,
+    getRolesFunc,
+    changeUserRoleFunc,
+    removeUserProfileFunc,
+    updateProfileAvatarFunc
 }

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
-import { getFinderParamsFunc, getUserDetailsFunc, getUsersFunc } from "../../services/user.services";
+import { changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, updateProfileAvatarFunc } from "../../services/user.services";
+import toast from "react-hot-toast";
 
 export const getUsers = createAsyncThunk(
     'users/getUsers',
@@ -34,7 +35,7 @@ export const getFinders = createAsyncThunk(
         if (response) {
             setAllRoles(response.data.data.roles)
             setAllLevels(response.data.data.levels)
-            // return response.data;
+            return response.data;
         }
 
         if (error?.response?.status === 401) {
@@ -55,9 +56,9 @@ export const getUserDetails = createAsyncThunk(
         const { response, error } = await authRequest(getUserDetailsFunc(id));
 
         if (response) {
-            console.log("userDetails================>" , response.data.data)
             setUserData(response.data.data.user)
-            // return response.data;
+            console.log('userData====>' , response.data.data.user)
+            return response.data;
         }
 
         if (error?.response?.status === 401) {
@@ -65,6 +66,96 @@ export const getUserDetails = createAsyncThunk(
         } else {
             toast.error(error?.response?.data?.message);
         }
+        return rejectWithValue(error);
+    }
+);
+
+export const getRoles = createAsyncThunk(
+    'users/getRoles',
+    async (
+        { setRoles},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(getRolesFunc());
+
+        if (response) {
+            setRoles(response.data.data.roles)
+            return response.data;
+        }
+
+        toast.error(error?.response?.data?.message);
+        return rejectWithValue(error);
+    }
+);
+
+export const changeUserRole = createAsyncThunk(
+    'users/changeUserRole',
+    async (
+        { userId, roleId, setUserData},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(changeUserRoleFunc(userId , roleId));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+            localStorage.setItem('isLoggin', false);
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
+
+export const removeUserProfile = createAsyncThunk(
+    'users/removeUserProfile',
+    async (
+        { userId, setUserData},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(removeUserProfileFunc(userId));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+            localStorage.setItem('isLoggin', false);
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
+
+export const updateUserAvtar = createAsyncThunk(
+    'users/updateUserAvatar',
+    async (
+        { userId, avatar, setUserData , setShowLoader},
+        { rejectWithValue }
+    ) => {
+        setShowLoader(true)
+        const { response, error } = await authRequest(updateProfileAvatarFunc(userId,avatar));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            setShowLoader(false)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+            localStorage.setItem('isLoggin', false);
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        setShowLoader(false)
         return rejectWithValue(error);
     }
 );

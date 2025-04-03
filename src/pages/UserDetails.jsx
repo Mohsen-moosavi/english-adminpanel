@@ -1,100 +1,158 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import userProfile from './../../public/user-profile.png'
-import { FaStar, FaUserAlt } from 'react-icons/fa'
+import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
-import { MdManageAccounts } from 'react-icons/md'
 import { useDispatch } from 'react-redux'
-import { getUserDetails } from '../redux/features/usersSlice'
+import { changeUserRole, getRoles, getUserDetails, removeUserProfile, updateUserAvtar } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali'
 import Swal from 'sweetalert2'
+import { MdEdit } from 'react-icons/md'
+import toast from 'react-hot-toast'
+import { ImSpinner8 } from 'react-icons/im'
 
 export default function UserDetails() {
 
   const dispatch = useDispatch()
+  const isInitialised = useRef(false)
+  const profileInputElm = useRef()
   const { id } = useParams()
   const [userData, setUserData] = useState({})
+  const [roles, setRoles] = useState([])
+  const [showLoader, setShowLoader] = useState(false)
 
   useEffect(() => {
+    if (!isInitialised.current) {
+      isInitialised.current = true
+      dispatch(getRoles({ setRoles }))
+    }
     dispatch(getUserDetails({ id, setUserData }))
   }, [])
 
-  function changeRoleHandler(){
+  function removeUserProfileHandler() {
+    Swal.fire({
+      title: 'آیا از حذف تصویر پروفایل اطمینان دارید؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تایید',
+      cancelButtonText: 'لغو',
+    }).then(result => {
+      if (result.isConfirmed) {
+        dispatch(removeUserProfile({ setUserData, userId: userData.id }))
+      }
+    })
+  }
 
-Swal.fire({
-  title: 'لطفا یکی را انتخاب کنید',
-  html: `
-    <div style="text-align: right;">
-      <input type="radio" id="option1" name="choice" value="گزینه ۱">
-      <label for="option1">گزینه ۱</label><br>
+  function changeRoleHandler() {
 
-      <input type="radio" id="option2" name="choice" value="گزینه ۲">
-      <label for="option2">گزینه ۲</label><br>
+    Swal.fire({
+      title: 'لطفا یک مورد را انتخاب کنید',
+      html: `
+    <div class='change-role-modal'>
+      ${roles?.map(role => (
+        `<input class='radio-role-input' type="radio" key={level.id} id="option${role.id}" name="choice" ${role.name === userData.roleName ? 'checked={true} disabled' : ' '} value="${role.id}">
+        <label class='change-role-modal-item' for="option${role.id}">
+        <span>${role.name}</span>
+        <span class='custom-radio'></span>
+        </label>`
+      )).join('')}
+    </div>`,
+      confirmButtonText: 'تایید',
+      preConfirm: () => {
+        const selectedOption = document.querySelector('input[name="choice"]:checked');
+        if (!selectedOption) {
+          Swal.showValidationMessage('لطفا یکی از گزینه‌ها را انتخاب کنید!');
+        }
+        return selectedOption ? selectedOption.value : null;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(changeUserRole({ userId: userData.id, roleId: result.value, setUserData }))
+      }
+    });
+  }
 
-      <input type="radio" id="option3" name="choice" value="گزینه ۳">
-      <label for="option3">گزینه ۳</label>
-    </div>`
-  ,
-  showCancelButton: true,
-  confirmButtonText: 'تایید',
-  cancelButtonText: 'لغو',
-  preConfirm: () => {
-    const selectedOption = document.querySelector('input[name="choice"]:checked');
-    if (!selectedOption) {
-      Swal.showValidationMessage('لطفا یکی از گزینه‌ها را انتخاب کنید!');
+  function changeUserProfileHandler(e) {
+    const file = e.target.files[0]
+    if (!file) {
+      emtyFileInput(e)
+      return toast.error("لطفا یک فایل معتبر انتخاب کنید.")
     }
-    return selectedOption ? selectedOption.value : null;
+
+    if (!['jpg', 'png', 'jpeg'].includes(file?.name?.split('.').pop())) {
+      emtyFileInput(e)
+      return toast.error("فقط فرمت های png، jpg و jpeg مجاز است.")
+    }
+
+    if (file.size > 300 * 1024) {
+      emtyFileInput(e)
+      return toast.error("حجم فایل نباید بیشتر از 300 کیلوبایت باشد.")
+    }
+
+    dispatch(updateUserAvtar({ userId: userData.id, avatar: file, setUserData, setShowLoader }))
   }
-}).then((result) => {
-  if (result.isConfirmed) {
-            Swal.fire({
-              title: `شما گزینه "${result.value}" را انتخاب کردید!`,
-              icon: 'success',
-              confirmButtonText: 'تایید',
-            })
-  }
-});
+
+  function emtyFileInput(e) {
+    e.target.type = ''
+    e.target.type = 'file'
   }
 
   return (
     <div className='flex max-sm:flex-col gap-x-[30px] lg:gap-x-[50px] gap-y-5 lg:px-8'>
       <div className='max-sm:order-1 sm:max-w-[180px] max-sm:max-w-full lg:max-w-[230px] flex-1'>
         <div className='flex flex-col items-center justify-start'>
-          <img src={userData.avatar || userProfile} alt="profile" className='max-sm:max-w-[150px] w-full bg-main-color/40 border-4 border-main-color rounded-xl' />
+          <div className='lg:w-[230px] lg:h-[230px] sm:w-[180px] sm:h-[180px] max-sm:w-[150px] max-sm:h-[150px] overflow-hidden border-4 border-main-color rounded-xl flex items-center justify-center relative'>
+            {showLoader ? (
+              <ImSpinner8 size={50} color='#56abc9' className='animate-[spin_2s_linear_infinite] min-h-[150px]' />
+            ) : (
+              <>
+                <img src={userData.avatar || userProfile} alt="profile" className='w-full bg-main-color/40' />
+                <div className='absolute bottom-0 left-[5%] flex gap-x-2'>
+                  <button className={`p-2 rounded-full ${userData.avatar ? 'bg-red-400' : 'bg-red-300'}`} disabled={!userData.avatar} onClick={removeUserProfileHandler}>
+                    <FaTrash size={15} color='#fff' />
+                  </button>
+                  <button className='bg-sky-400 p-2 rounded-full' onClick={() => profileInputElm.current.click()}>
+                    <MdEdit size={15} color='#fff' />
+                  </button>
+                </div>
+              </>
+            )}
+            <input ref={profileInputElm} type="file" className='hidden' onChange={changeUserProfileHandler} />
+          </div>
           <ul className='list-none flex flex-col gap-y-4  w-full text-gray-500 max-sm:text-sm font-bold mt-5'>
             <li>
-              <Link to={`user-courses`} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={`user-courses`} state={{ name: userData.name }} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>دوره ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.courseCount} <IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'user-comments'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-comments'} state={{ name: userData.name }} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>کامنت ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.commentCount}<IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'user-sales'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-sales'} state={{ name: userData.name }} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>خرید ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.saleCount} <IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'user-tickets'} state={{name : userData.name}} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
+              <Link to={'user-tickets'} state={{ name: userData.name }} className='  max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl transition flex justify-between'>
                 <span>تیکت ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.ticketCount} <IoIosArrowBack /></span>
               </Link>
             </li>
             <hr />
             <li>
-              <Link to={'user-lessons'} state={{name : userData.name}} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
+              <Link to={'user-lessons'} state={{ name: userData.name }} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
                 <span>درس ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.lessonCount} <IoIosArrowBack /></span>
               </Link>
             </li>
             <li>
-              <Link to={'user-articles'} state={{name : userData.name}} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
+              <Link to={'user-articles'} state={{ name: userData.name }} className=' max-sm:shadow-shadow-low sm:hover:shadow-shadow-low p-2 rounded-xl text-green-700 transition flex justify-between'>
                 <span>مقاله ها:</span>
                 <span className='flex items-center gap-x-1'>{userData.articleCount} <IoIosArrowBack /></span>
               </Link>
@@ -105,8 +163,8 @@ Swal.fire({
       <div className='flex-1 sm:max-w-[500px]'>
         <div className='mb-5 flex items-end justify-between'>
           <div>
-          <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
-          <span className='text-[12px] text-[#70987e] font-bold'>{userData.roleName}</span>
+            <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
+            <span className='text-[12px] text-[#70987e] font-bold'>{userData.roleName}</span>
           </div>
           <button className='rounded-xl bg-main-color text-white px-2 py-1 hover:opacity-60' onClick={changeRoleHandler}>تغییر نقش</button>
         </div>
