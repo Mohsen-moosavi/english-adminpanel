@@ -47,12 +47,13 @@ const updateArticleFunc= (id , title , shortDescription , longDescription , cove
     )
 }
 
-const getArticlesFunc= async (limit , offset , search='' , status , writerId , userId) => {
+const getArticlesFunc= async (limit , offset , search='' , status , writerId , userId, tagId) => {
     try {
         let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
         status && (searchQuery+=`&status=${status}`)
         writerId && (searchQuery+=`&writerId=${writerId}`)
         userId && (searchQuery+=`&userId=${userId}`)
+        tagId && (searchQuery+=`&tagId=${tagId}`)
 
         const response = await appJsonPostApi.get(`/article${searchQuery}` , { withCredentials : false});
         return { response };
@@ -70,7 +71,7 @@ const getArticleFunc= async (id) => {
     }
 }
 
-const deleteArticleFunc= (id, limit, offset, search , status , writerId , userId) => {
+const deleteArticleFunc= (id, limit, offset, search , status , writerId , userId, tagId) => {
     return (
         async () => {
             try {
@@ -78,6 +79,7 @@ const deleteArticleFunc= (id, limit, offset, search , status , writerId , userId
                 status && (searchQuery+=`&status=${status}`)
                 writerId && (searchQuery+=`&writerId=${writerId}`)
                 userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
 
 
                 const response = await apiPrivate(appJsonPostApi).delete(`/article/${id}${searchQuery}`);

@@ -98,20 +98,26 @@ const deleteBookWhitoutGettingAllFunc = (bookId) => {
     )
 }
 
-const getAllBooksFunc= async (limit , offset , search = '') => {
+const getAllBooksFunc= async (limit , offset , search = '', tagId) => {
     try {
-        const response = await appJsonPostApi.get(`/book?limit=${limit}&offset=${offset}&search=${search}` , { withCredentials : false});
+        let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
+        tagId && (searchQuery+=`&tagId=${tagId}`)
+
+        const response = await appJsonPostApi.get(`/book${searchQuery}` , { withCredentials : false});
         return { response };
     } catch (error) {
         return { error };
     }
 }
 
-const deleteBookWithGettingAllFunc = (id, limit, offset, search) => {
+const deleteBookWithGettingAllFunc = (id, limit, offset, search, tagId) => {
     return (
         async () => {
             try {
-                const response = await apiPrivate(appJsonPostApi).delete(`/book/${id}/get-all?limit=${limit}&offset=${offset}&search=${search}`);
+                let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
+                tagId && (searchQuery+=`&tagId=${tagId}`)
+
+                const response = await apiPrivate(appJsonPostApi).delete(`/book/${id}/get-all${searchQuery}`);
                 return { response };
             } catch (error) {
                 return { error };

@@ -1,11 +1,11 @@
 import { appJsonPostApi } from "../configs/axios";
 import apiPrivate from "./apiPrivate";
 
-const createTagFunc= (name) => {
+const createTagFunc= (name,limit, offset) => {
     return (
         async () => {
             try {
-                const response = await apiPrivate(appJsonPostApi).post('/tag?limit=10&offset=0' , {name});
+                const response = await apiPrivate(appJsonPostApi).post(`/tag?limit=${limit}&offset=${offset}` , {name});
                 return { response };
             } catch (error) {
                 return { error };

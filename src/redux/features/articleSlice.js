@@ -29,10 +29,10 @@ export const createArticle = createAsyncThunk(
 export const getArticles = createAsyncThunk(
     'article/getArticles',
     async (
-        { limit , offset , search ,status , writerId, userId},
+        { limit , offset , search ,status , writerId, userId, tagId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId, userId)
+        const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId, userId, tagId)
 
         if (response) {
             console.log('res artcile=========>' , response.data.data)
@@ -70,10 +70,10 @@ export const updateArticle = createAsyncThunk(
 export const deleteArticle = createAsyncThunk(
     'article/deleteArticle',
     async (
-        { id , limit , offset , search, status , writerId , userId},
+        { id , limit , offset , search, status , writerId , userId, tagId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId , userId));
+        const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId , userId, tagId));
 
         if (response) {
             toast.success(response?.data?.message);

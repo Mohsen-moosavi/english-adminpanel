@@ -11,7 +11,7 @@ export default function Course() {
 
   const [userId , setUserId] = useState()
   const { state } = useLocation()
-  const { id }= useParams()
+  const { id , tagId }= useParams()
   const {pathname}= useLocation()
   const isInitialized = useRef(false)
 
@@ -37,15 +37,15 @@ export default function Course() {
 
       dispatch(getCreatingData({}))
 
-      dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : teacherId, bookId, levelId, priceStatus, scoreStatus, userId , tagId }))
     }else{
-      dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId }))
     }
 
   }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId,pathname])
 
   function paginationHandler(page) {
-    dispatch(getCourses({ limit, offset: page * limit, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+    dispatch(getCourses({ limit, offset: page * limit, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId}))
   }
 
   function deleteCourseHandler(id , isDeleted) {
@@ -57,7 +57,7 @@ export default function Course() {
               cancelButtonText: 'لغو',
             }).then(result=>{
               if(result.isConfirmed){
-                dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+                dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId , tagId }))
               }
             })
   }
@@ -72,23 +72,23 @@ export default function Course() {
         }).then(result=>{
           if(result.isConfirmed){
             if (courses.length === 1) {
-              dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+              dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId }))
               setPaginatorChangerFlag(prev => !prev)
               dispatch(setOffset(0))
             } else {
-              dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+              dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId }))
             }
           }
         })
   }
 
   function statusChangeHandler(id) {
-    dispatch(changeStatus({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId }))
+    dispatch(changeStatus({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId }))
   }
 
   return (
     <div>
-      <h3 className='page-title'>{state?.name  ? `دوره های${pathname.endsWith('/user-lessons') ? ' تدریس شده ' :''} ${state.name}` : 'لیست دوره ها'}</h3>
+      <h3 className='page-title'>{state?.name  ? `دوره های${pathname.endsWith('/user-lessons') ? ' تدریس شده ' :''} ${state.name}` : state?.tagName ? `دوره های مرتبط با تگ ${state?.tagName}`: 'لیست دوره ها'}</h3>
 
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
@@ -97,7 +97,7 @@ export default function Course() {
         ) : (
           <Link to='/courses/create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره جدید</Link>
         )}
-        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit, userId }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit, userId , tagId }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
       <DataTable>

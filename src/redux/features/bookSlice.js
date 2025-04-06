@@ -88,10 +88,10 @@ export const createBookCollection = createAsyncThunk(
 export const getBooks = createAsyncThunk(
     'book/getBooks',
     async (
-        { limit , offset , search },
+        { limit , offset , search,tagId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await getAllBooksFunc(limit , offset , search)
+        const { response, error } = await getAllBooksFunc(limit , offset , search, tagId)
 
         if (response) {
             console.log('books=========>' , response)
@@ -182,10 +182,10 @@ export const updateBookCollection = createAsyncThunk(
 export const deleteBook = createAsyncThunk(
     'book/deleteBooks',
     async (
-        {id, limit , offset , search },
+        {id, limit , offset , search , tagId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteBookWithGettingAllFunc(id ,limit , offset , search))
+        const { response, error } = await authRequest(deleteBookWithGettingAllFunc(id ,limit , offset , search, tagId))
 
         if (response) {
             console.log('books=========>' , response)

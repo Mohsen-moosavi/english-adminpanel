@@ -83,7 +83,7 @@ const deleteVideoFunc=(fileName) => {
     )
 }
 
-const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus, userId)=>{
+const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId)=>{
     return (
         async () => {
             try {
@@ -97,6 +97,7 @@ const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, l
                 priceStatus && (searchQuery+=`&priceStatus=${priceStatus}`)
                 scoreStatus && (searchQuery+=`&scoreStatus=${scoreStatus}`)
                 userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
     
                 const response = await apiPrivate(appJsonPostApi).get(`/course?${searchQuery}` , { withCredentials : false});
     
@@ -109,7 +110,7 @@ const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, l
 }
 
 
-const deleteCoursesFunc= (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId) => {
+const deleteCoursesFunc= (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId) => {
     return (
         async()=>{
             try {
@@ -121,6 +122,7 @@ const deleteCoursesFunc= (id,limit , offset , search='' ,status , teacherId, boo
                 priceStatus && (searchQuery+=`&priceStatus=${priceStatus}`)
                 scoreStatus && (searchQuery+=`&scoreStatus=${scoreStatus}`)
                 userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
 
                 const response = await apiPrivate(appJsonPostApi).delete(`/course/${id}?${searchQuery}` , { withCredentials : true});
                 return { response };
@@ -132,7 +134,7 @@ const deleteCoursesFunc= (id,limit , offset , search='' ,status , teacherId, boo
     )
 }
 
-const deleteCourseForUserFunc= (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId) => {
+const deleteCourseForUserFunc= (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId) => {
     return (
         async()=>{
             try {
@@ -144,6 +146,7 @@ const deleteCourseForUserFunc= (id,limit , offset , search='' ,status , teacherI
                 priceStatus && (searchQuery+=`&priceStatus=${priceStatus}`)
                 scoreStatus && (searchQuery+=`&scoreStatus=${scoreStatus}`)
                 userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
 
                 const response = await apiPrivate(appJsonPostApi).delete(`/user/${userId}/delete-course/${id}?${searchQuery}` , { withCredentials : true});
                 return { response };
@@ -213,7 +216,7 @@ const updateIntroductionVideoFunc = (id,chunk, chunkNumber ,totalChunks,fileName
     )
 }
 
-const updateStatusfunc = (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId) => {
+const updateStatusfunc = (id,limit , offset , search='' ,status , teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId) => {
     return (
         async () => {
             try {
@@ -225,6 +228,7 @@ const updateStatusfunc = (id,limit , offset , search='' ,status , teacherId, boo
                 priceStatus && (searchQuery+=`&priceStatus=${priceStatus}`)
                 scoreStatus && (searchQuery+=`&scoreStatus=${scoreStatus}`)
                 userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
 
                 const response = await apiPrivate(appJsonPostApi).post(`/course/change-status/${id}?${searchQuery}`);
                 return { response };

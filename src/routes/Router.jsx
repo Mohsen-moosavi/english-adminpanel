@@ -4,7 +4,7 @@ import Login from '../pages/Login';
 import Layout from '../layout/Layout';
 import Users from '../pages/Users';
 import Levels from '../pages/Levels';
-import Tags from '../pages/tags';
+import Tags from '../pages/Tags';
 import Article from '../pages/Article';
 import CreateArticle from '../pages/CreateArticle';
 import BookCollections from '../pages/BookCollections';
@@ -34,6 +34,9 @@ export default function Router() {
         <Route path='users/:id' element={<UserDetails/>}/>
         <Route path='levels' element={<Levels/>}/>
         <Route path='tags' element={<Tags/>}/>
+        <Route path='tags/:tagId/tag-courses' element={<Course/>}/>
+        <Route path='tags/:tagId/tag-books' element={<BookCollections/>}/>
+        <Route path='tags/:tagId/tag-articles' element={<Article/>}/>
         <Route path='articles' element={<Article/>}/>
         <Route path='articles/create' element={<CreateArticle/>}/>
         <Route path='articles/edit/:id' element={<CreateArticle/>}/>

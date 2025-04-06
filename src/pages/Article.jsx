@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 export default function Article() {
 
 
-   const {id : userId} = useParams()
+   const {id : userId, tagId} = useParams()
   const {state} = useLocation()
   const dispatch = useDispatch()
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
@@ -25,11 +25,11 @@ export default function Article() {
   // }, [])
 
   useEffect(() => {
-    dispatch(getArticles({ limit, offset: 0, search, status, writerId, userId }))
+    dispatch(getArticles({ limit, offset: 0, search, status, writerId, userId,tagId }))
   }, [status, writerId , userId])
 
   function paginationHandler(page) {
-    dispatch(getArticles({ limit, offset: page * limit, search, status, writerId,userId }))
+    dispatch(getArticles({ limit, offset: page * limit, search, status, writerId,userId, tagId }))
   }
 
   function deleteArticleHandler(id) {
@@ -43,11 +43,11 @@ export default function Article() {
     }).then(result=>{
       if(result.isConfirmed){
         if (articles.length === 1) {
-          dispatch(deleteArticle({ id, limit, offset: 0, search, status, writerId ,userId }))
+          dispatch(deleteArticle({ id, limit, offset: 0, search, status, writerId ,userId, tagId }))
           setPaginatorChangerFlag(prev => !prev)
           dispatch(setOffset(0))
         } else {
-          dispatch(deleteArticle({ id, limit, offset, search, status, writerId, userId }))
+          dispatch(deleteArticle({ id, limit, offset, search, status, writerId, userId, tagId }))
         }
       }
     })
@@ -55,11 +55,11 @@ export default function Article() {
 
   return (
     <div>
-      <h3 className='page-title'>{state?.name ? `مقاله های ${state?.name}`:"لیست مقاله ها"}</h3>
+      <h3 className='page-title'>{state?.name ? `مقاله های ${state?.name}`: state?.tagName ? `مقاله ها با تگ ${state.tagName}` :"لیست مقاله ها"}</h3>
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
-        {!!userId ? null: (<Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن مقاله جدید</Link>)} 
-        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ limit, status, writerId , userId}} getter={getArticles} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
+        {!!userId ? null: (<Link to='/articles/create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن مقاله جدید</Link>)} 
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ limit, status, writerId , userId, tagId}} getter={getArticles} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
       <DataTable>

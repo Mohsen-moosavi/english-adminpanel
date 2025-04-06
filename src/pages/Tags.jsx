@@ -8,6 +8,7 @@ import { createNewTag, deleteTag, getTags, setOffset, setSearch, updateTag } fro
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
 import Swal from 'sweetalert2'
+import { Link } from 'react-router-dom'
 
 
 export default function Tags() {
@@ -122,7 +123,6 @@ export default function Tags() {
                 ) :
                 (<>
                     <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1'>
-                        
                         <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ limit }} getter={getTags} reset={searchChangerFlag} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
                     </div>
                     {tags.length ? (
@@ -132,6 +132,9 @@ export default function Tags() {
                                     <tr>
                                         <th>شماره</th>
                                         <th>نام</th>
+                                        <th>مقاله ها</th>
+                                        <th>کتاب ها</th>
+                                        <th>دوره ها</th>
                                         <th>تغییر نام</th>
                                         <th>حذف</th>
                                     </tr>
@@ -141,6 +144,21 @@ export default function Tags() {
                                         <tr key={index}>
                                             <td>{index + 1 + offset}</td>
                                             <td>{tag.name}</td>
+                                            <td>
+                                                <Link to={`${tag.id}/tag-articles`} state={{tagName: tag.name}} className="py-1 px-2 rounded-lg text-white bg-blue-500">
+                                                    {`${tag.articleCount} (مشاهده)`}
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link to={`${tag.id}/tag-books`} state={{tagName: tag.name}} className="py-1 px-2 rounded-lg text-white bg-blue-500">
+                                                    {`${tag.bookCount} (مشاهده)`}
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link to={`${tag.id}/tag-courses`} state={{tagName: tag.name}} className="py-1 px-2 rounded-lg text-white bg-blue-500">
+                                                    {`${tag.courseCount} (مشاهده)`}
+                                                </Link>
+                                            </td>
                                             <td>
                                                 <button className="py-1 px-2 rounded-lg text-white bg-green-500" onClick={() => updateTagHandler(tag.id)}>
                                                     تغییر

@@ -6,12 +6,13 @@ import { createTagFunc, getTagsFunc ,deleteTagFunc ,updateTagFunc } from "../../
 export const createNewTag = createAsyncThunk(
     'tag/createNewtag',
     async (
-        { name , },
+        { name ,limit, offset },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(createTagFunc(name));
+        const { response, error } = await authRequest(createTagFunc(name,limit, offset));
 
         if (response) {
+            console.log("res tag===========>" , response.data.data)
             toast.success(response?.data?.message);
             return response.data;
         }
@@ -35,6 +36,7 @@ export const getTags = createAsyncThunk(
         const { response, error } = await getTagsFunc(limit , offset , search)
 
         if (response) {
+            console.log("tags==========>" , response.data.data)
             return response.data;
         }
 

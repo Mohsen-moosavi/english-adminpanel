@@ -71,10 +71,10 @@ export const createNewCourse = createAsyncThunk(
 export const getCourses = createAsyncThunk(
     'course/getCourses',
     async (
-        { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId},
+        { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
+        const { response, error } = await authRequest(getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId))
 
 
         if (response) {
@@ -89,10 +89,10 @@ export const getCourses = createAsyncThunk(
 export const deleteCourse = createAsyncThunk(
     'course/deleteCourse',
     async (
-        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId },
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteCoursesFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
+        const { response, error } = await authRequest(deleteCoursesFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId , tagId))
 
         if (response) {
             return response.data;
@@ -110,10 +110,10 @@ export const deleteCourse = createAsyncThunk(
 export const deleteCourseForUser = createAsyncThunk(
     'course/deleteCourse',
     async (
-        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId },
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(deleteCourseForUserFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId))
+        const { response, error } = await authRequest(deleteCourseForUserFunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId))
 
         if (response) {
             return response.data;
@@ -264,11 +264,11 @@ export const updateVideo = createAsyncThunk(
 export const changeStatus = createAsyncThunk(
     'course/changeStatusCourse',
     async (
-        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus,userId },
+        { id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus,userId, tagId },
         { rejectWithValue }
     ) => {
 
-        const {response , error} = await authRequest(updateStatusfunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId))
+        const {response , error} = await authRequest(updateStatusfunc(id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId))
 
         if(response){
             return response.data;

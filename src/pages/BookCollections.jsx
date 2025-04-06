@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { deleteBook, getBooks, setOffset, setSearch } from '../redux/features/bookSlice'
 import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2'
 
 export default function BookCollections() {
   const isInitialised = useRef(false)
+  const {tagId} = useParams()
+  const {state} = useLocation()
   const dispatch = useDispatch()
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { books, booksCount, search, limit, offset, isLoading } = useSelector(state => state.bookData)
@@ -16,7 +18,7 @@ export default function BookCollections() {
   useEffect(() => {
     if (!isInitialised.current) {
       isInitialised.current = true
-      dispatch(getBooks({ limit, offset: 0 }))
+      dispatch(getBooks({ limit, offset: 0, tagId }))
     }
   }, [])
 
@@ -25,7 +27,7 @@ export default function BookCollections() {
   // }, [status , writerId])
 
   function paginationHandler(page) {
-    dispatch(getBooks({ limit, offset: page * limit, search }))
+    dispatch(getBooks({ limit, offset: page * limit, search, tagId }))
   }
 
   function deleteBookHandler(id) {
@@ -38,11 +40,11 @@ export default function BookCollections() {
         }).then(result=>{
           if(result.isConfirmed){
             if (books.length === 1) {
-              dispatch(deleteBook({ id, limit, offset: 0, search }))
+              dispatch(deleteBook({ id, limit, offset: 0, search, tagId }))
               setPaginatorChangerFlag(prev => !prev)
               dispatch(setOffset(0))
             } else {
-              dispatch(deleteBook({ id, limit, offset, search }))
+              dispatch(deleteBook({ id, limit, offset, search, tagId }))
             }
           }
         })
@@ -54,7 +56,7 @@ export default function BookCollections() {
 
   return (
     <div>
-      <h3 className='page-title'>مجموعه کتاب ها</h3>
+      <h3 className='page-title'>{`مجموعه کتاب ها ${state?.tagName ? `با تگ ${state.tagName}` : ''}`}</h3>
 
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2 gap-y-2'>
