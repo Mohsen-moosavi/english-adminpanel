@@ -18,7 +18,7 @@ export const createNewOff = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -40,7 +40,7 @@ export const getOffs = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -61,7 +61,7 @@ export const deleteOff = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -84,7 +84,7 @@ export const deleteOff = createAsyncThunk(
 //         console.log('errorrr=====>', error);
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }

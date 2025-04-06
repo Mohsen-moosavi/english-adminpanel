@@ -39,7 +39,7 @@ export const createNewCourse = createAsyncThunk(
                     }
                     await uploadNextChunk();
                 } else if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                     resultError = error
                 } else {
                     toast.error(error?.response?.data?.message);
@@ -53,7 +53,7 @@ export const createNewCourse = createAsyncThunk(
                 }
                 await authRequest(deleteVideoFunc(videoLink?.split('/')?.reverse()[0]))
                 if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                 }
                 toast.error(error?.response?.data?.message);
                 resultError = error
@@ -99,7 +99,7 @@ export const deleteCourse = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -120,7 +120,7 @@ export const deleteCourseForUser = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -178,7 +178,7 @@ export const getCreatingData = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -199,7 +199,7 @@ export const updateCourse = createAsyncThunk(
             return navigator('/courses')
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -246,7 +246,7 @@ export const updateVideo = createAsyncThunk(
                 }
 
                 if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                 } else {
                     toast.error(error?.response?.data?.message);
                 }
@@ -276,7 +276,7 @@ export const changeStatus = createAsyncThunk(
 
         console.log('error====>', error)
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }

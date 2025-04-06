@@ -19,7 +19,7 @@ export const getSales = createAsyncThunk(
         }
         
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -42,7 +42,7 @@ export const createSaleByAdmin = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -64,7 +64,7 @@ export const deleteSale = createAsyncThunk(
         }
         
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }

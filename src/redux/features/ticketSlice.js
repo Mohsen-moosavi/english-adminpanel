@@ -17,7 +17,7 @@ import { changeStatusOfTicketFunc, deleteTicketFunc, deleteTicketMessageFunc, ge
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -38,7 +38,7 @@ export const getTickets = createAsyncThunk(
             return response.data;
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -59,7 +59,7 @@ export const deleteTicket = createAsyncThunk(
             return response.data;
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -81,7 +81,7 @@ export const getTicketDetails = createAsyncThunk(
             return response.data;
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
             navigate("/tickets")
@@ -105,7 +105,7 @@ export const sendAnswerToTicket = createAsyncThunk(
             return response.data;
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -130,7 +130,7 @@ export const deleteTicketMessage = createAsyncThunk(
             return response.data;
         }
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -153,7 +153,7 @@ export const changeStatus = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }

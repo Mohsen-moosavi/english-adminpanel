@@ -18,7 +18,7 @@ export const createArticle = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -59,7 +59,7 @@ export const updateArticle = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }

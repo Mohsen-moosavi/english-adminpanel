@@ -42,7 +42,7 @@ export const uploadVideo = createAsyncThunk(
                     }
                     await uploadNextChunk();
                 } else if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                     resultError = error
                 } else {
                     toast.error(error?.response?.data?.message);
@@ -103,7 +103,7 @@ export const updateVideo = createAsyncThunk(
                     }
                     await uploadNextChunk();
                 } else if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                     resultError = error
                 } else {
                     toast.error(error?.response?.data?.message);
@@ -164,7 +164,7 @@ export const updateDetails = createAsyncThunk(
                     }
                     await uploadNextChunk();
                 } else if (error?.response?.status === 401) {
-                    localStorage.setItem('isLoggin', false);
+                                window.location.assign('/login');
                     resultError = error
                 } else {
                     toast.error(error?.response?.data?.message);
@@ -203,7 +203,7 @@ export const updateDetailsWithoutFile = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -244,7 +244,7 @@ export const deleteSession = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -267,7 +267,7 @@ export const getSingleSession = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -289,7 +289,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -312,7 +312,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -335,7 +335,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -358,7 +358,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -379,7 +379,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -402,7 +402,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }
@@ -427,7 +427,7 @@ export const getSingleSession = createAsyncThunk(
 //         }
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //             navigator('/comments')

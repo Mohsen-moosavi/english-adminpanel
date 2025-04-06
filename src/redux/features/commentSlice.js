@@ -35,7 +35,7 @@ export const changeAccept = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -58,7 +58,7 @@ export const deleteComment = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -81,7 +81,7 @@ export const getCommentTree = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -104,7 +104,7 @@ export const answerToComment = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -125,7 +125,7 @@ export const answerToCommentInCommentLoop = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -148,7 +148,7 @@ export const changeAcceptInCommentLoop = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }
@@ -173,7 +173,7 @@ export const deleteCommentInCommentLoop = createAsyncThunk(
         }
 
         if (error?.response?.status === 401) {
-            localStorage.setItem('isLoggin', false);
+                        window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
             navigator('/comments')
@@ -218,7 +218,7 @@ export const deleteCommentInCommentLoop = createAsyncThunk(
 //         console.log('errorrr=====>', error);
 
 //         if (error?.response?.status === 401) {
-//             localStorage.setItem('isLoggin', false);
+//                         window.location.assign('/login');
 //         } else {
 //             toast.error(error?.response?.data?.message);
 //         }

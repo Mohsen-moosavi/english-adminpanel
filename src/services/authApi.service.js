@@ -24,7 +24,6 @@ const sendRefreshTokenRequest = async () => {
         console.log('refreshToken ====>', response)
         return true
     } catch (error) {
-        window.localStorage.setItem('isLoggedIn', false)
         window.location.assign('/login')
     }
 }

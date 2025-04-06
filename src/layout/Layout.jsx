@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import  {getUserDate, setUserLoggin}  from '../redux/features/userSlice';
 import Sidebar from '../components/modules/Sidebar';
 import Header from '../components/modules/Header';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 export default function Layout() {
 
-  const { userInfo, isLoading, error } =
+  const { userInfo, isLoading, error, isLogin } =
   useSelector((state) => state.userData);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const isInitialized = useRef(false);
 
@@ -20,6 +21,16 @@ export default function Layout() {
         dispatch(getUserDate({}))
       }
     },[])
+
+    
+  // useEffect(()=>{
+  //   if(location.pathname !== '/login' && !isLogin){
+  //     window.location.assign('/login')
+  //   }else{
+  //   console.log('auth===================================================================')
+  //     dispatch(getUserDate({}))
+  //   }
+  // },[isLogin])
 
   return (
     <div className='container max-2xl:min-w-[100%] mx-auto'>
