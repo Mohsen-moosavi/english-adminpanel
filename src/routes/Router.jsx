@@ -23,6 +23,7 @@ import CreateSaleByAdmin from '../pages/CreateSaleByAdmin';
 import Ticket from '../pages/Ticket';
 import TicketDetails from '../pages/TicketDetails';
 import UserDetails from '../pages/UserDetails';
+import Console from '../pages/Console';
 
 export default function Router() {
   return (
@@ -30,6 +31,7 @@ export default function Router() {
       <Route path='/login' element={<Login/>}/>
 
       <Route path='/' element={<Layout/>}>
+        <Route path='' element={<Console/>}/>
         <Route path='users' element={<Users/>}/>
         <Route path='users/:id' element={<UserDetails/>}/>
         <Route path='levels' element={<Levels/>}/>

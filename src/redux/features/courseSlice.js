@@ -74,6 +74,7 @@ export const getCourses = createAsyncThunk(
         { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId},
         { rejectWithValue }
     ) => {
+        console.log('userId=======================================>' , userId)
         const { response, error } = await authRequest(getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId))
 
 

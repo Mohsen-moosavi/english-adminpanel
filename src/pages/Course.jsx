@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 
 export default function Course() {
 
-  const [userId , setUserId] = useState()
+  const userId = useRef()
   const { state } = useLocation()
   const { id , tagId }= useParams()
   const {pathname}= useLocation()
@@ -20,8 +20,9 @@ export default function Course() {
   const { courses, coursesCount, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, offset, limit, isLoading, teachers, levels, bookCollections } = useSelector(state => state.courseData)
 
   // useEffect(() => {
-  //      return ()=>{
-  //     dispatch(setTeacherId(''))
+  //   return ()=>{
+  //     dispatch(setTeacherId(null))
+  //     console.log("================================= done =================================")
   //   }
   // }, [])
 
@@ -32,20 +33,21 @@ export default function Course() {
       if(pathname.endsWith('/user-lessons')){
         dispatch(setTeacherId(id))
       }else{
-        setUserId(id)
+        userId.current =id
+        dispatch(setTeacherId(null))
       }
 
       dispatch(getCreatingData({}))
 
-      dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : teacherId, bookId, levelId, priceStatus, scoreStatus, userId , tagId }))
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : null, bookId, levelId, priceStatus, scoreStatus, userId:userId.current , tagId }))
     }else{
-      dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId }))
+      dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId : userId.current, tagId }))
     }
 
-  }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId,pathname])
+  }, [search, status, teacherId, bookId, levelId, priceStatus, scoreStatus ,pathname])
 
   function paginationHandler(page) {
-    dispatch(getCourses({ limit, offset: page * limit, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId}))
+    dispatch(getCourses({ limit, offset: page * limit, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId:userId.current,tagId}))
   }
 
   function deleteCourseHandler(id , isDeleted) {
@@ -57,7 +59,7 @@ export default function Course() {
               cancelButtonText: 'لغو',
             }).then(result=>{
               if(result.isConfirmed){
-                dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId , tagId }))
+                dispatch(deleteCourse({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId: userId.current , tagId }))
               }
             })
   }
@@ -72,18 +74,18 @@ export default function Course() {
         }).then(result=>{
           if(result.isConfirmed){
             if (courses.length === 1) {
-              dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId }))
+              dispatch(deleteCourseForUser({ id, limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId: userId.current,tagId }))
               setPaginatorChangerFlag(prev => !prev)
               dispatch(setOffset(0))
             } else {
-              dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId,tagId }))
+              dispatch(deleteCourseForUser({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId: userId.current,tagId }))
             }
           }
         })
   }
 
   function statusChangeHandler(id) {
-    dispatch(changeStatus({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId, tagId }))
+    dispatch(changeStatus({ id, limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId: userId.current, tagId }))
   }
 
   return (
@@ -92,12 +94,12 @@ export default function Course() {
 
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>
-        {(state?.name && userId) ? (
-          <Link to={`/users/${userId}/create-sale`} className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره برای کاربر</Link>
+        {(state?.name && userId.current) ? (
+          <Link to={`/users/${userId.current}/create-sale`} className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره برای کاربر</Link>
         ) : (
           <Link to='/courses/create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن دوره جدید</Link>
         )}
-        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit, userId , tagId }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
+        <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ status, teacherId, bookId, levelId, priceStatus, scoreStatus, limit, userId:userId.current , tagId }} getter={getCourses} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
       </div>
 
       <DataTable>
@@ -160,7 +162,7 @@ export default function Course() {
             <th>جلسات</th>
             <th>ویرایش</th>
             <th>دسترسی</th>
-            {userId ? (<th>حذف</th>) : null}
+            {userId.current ? (<th>حذف</th>) : null}
           </tr>
         </thead>
         {courses.length ? (
@@ -205,7 +207,7 @@ export default function Course() {
                     {course.deleted_at ? 'غیر فعال' : 'فعال'}
                   </button>
                 </td>
-                {userId ? (
+                {userId.current ? (
                   <td>
                     <button disabled={isLoading} className="py-1 px-2 rounded-lg text-white hover:text-white bg-red-500" onClick={() => deleteCourseForUserHandler(course.id)}>
                       حذف
