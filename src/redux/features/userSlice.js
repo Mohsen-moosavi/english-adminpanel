@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { authRequest, getUserInfo } from "../../services/authApi.service";
+import { authRequest, getUserInfo, logOutService } from "../../services/authApi.service";
+import toast from "react-hot-toast";
 
 export const getUserDate = createAsyncThunk(
     'user/getUserDate',
@@ -18,6 +19,26 @@ export const getUserDate = createAsyncThunk(
           toast.error(error?.response?.data?.message);
         }
           return rejectWithValue(error);
+    }
+  );
+
+  export const logout = createAsyncThunk(
+    'user/logout',
+    async (
+      {},
+      { rejectWithValue }
+    ) => {      
+        const {response , error} = await logOutService();
+        console.log("logout=====================>" ,response)
+
+        if(response){
+          toast.success('با موفقیت از حسابتان خارج شدید.')
+          return true;
+        };
+        
+
+        toast.error(error?.response?.data?.message);
+        return rejectWithValue(error);
     }
   );
 
@@ -58,6 +79,14 @@ const userSlice = createSlice({
               state.userInfo = {}
             }
             state.error = action.payload?.response?.data?.message;
+          })
+
+
+
+          .addCase(logout.fulfilled, (state, action) => {
+            state.userInfo = {};
+            state.isLogin = false;
+            window.location.assign('/login')
           })
       },
 });

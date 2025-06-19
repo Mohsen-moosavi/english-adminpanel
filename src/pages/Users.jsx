@@ -3,7 +3,7 @@ import DataTable from '../components/modules/DataTable'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Pagination from '../components/modules/Pagination';
-import { getFinders, getUsers, setDeletedUser, setLevelStatus, setOffset, setPurchaseStatus, setRoleStatus, setScorePriority, setScoreStatus } from '../redux/features/usersSlice'
+import { getFinders, getUsers, setBanStatus, setDeletedUser, setLevelStatus, setOffset, setPurchaseStatus, setRoleStatus, setScorePriority, setScoreStatus } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali';
 import SearchName from '../components/templates/SearchUserByName';
 import SearchPhone from '../components/templates/SearchUserByPhone';
@@ -16,18 +16,18 @@ export default function Users() {
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const [allRoles, setAllRoles] = useState([])
   const [allLevels, setAllLevels] = useState([])
-  const { users, usersCount, searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority, limit, offset } = useSelector(state => state.usersData)
+  const { users, usersCount, searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser,banStatus, scorePriority, limit, offset } = useSelector(state => state.usersData)
 
   useEffect(() => {
     if (!isInitialised.current) {
       isInitialised.current = true
       dispatch(getFinders({ setAllRoles, setAllLevels }))
     }
-    dispatch(getUsers({ searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority, limit, offset }))
-  }, [searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser])
+    dispatch(getUsers({ searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus, limit, offset }))
+  }, [searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser,banStatus])
 
   function paginationHandler(page) {
-    dispatch(getUsers({ offset: page * limit, limit, searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority }))
+    dispatch(getUsers({ offset: page * limit, limit, searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus }))
   }
 
   function setScoreStatusHandler(event) {
@@ -57,7 +57,7 @@ export default function Users() {
         <SearchName setPaginatorChangerFlag={setPaginatorChangerFlag} />
         <SearchPhone setPaginatorChangerFlag={setPaginatorChangerFlag} />
         <div className="form-btn-group !m-0">
-          <select className="form-input" defaultValue={deletedUser} onChange={(e) => dispatch(setDeletedUser(e.target.value))}>
+          <select className="form-input" value={deletedUser} onChange={(e) => dispatch(setDeletedUser(e.target.value))}>
             <option value={0}>کاربران موجود</option>
             <option value={1}>کاربران حذف شده</option>
           </select>
@@ -72,7 +72,7 @@ export default function Users() {
             <th>نام کاربری</th>
             <th>تلفن</th>
             <th>
-              <select name="role" className='bg-transparent' defaultValue={Number(roleStatus)} onChange={(e) => dispatch(setRoleStatus(e.target.value))}>
+              <select name="role" className='bg-transparent' value={Number(roleStatus)} onChange={(e) => dispatch(setRoleStatus(e.target.value))}>
                 <option value="">نقش</option>
                 {allRoles?.map((role, index) => (
                   <option key={index} value={role.id} selected={role.id === Number(roleStatus)}>{role.name}</option>
@@ -80,7 +80,7 @@ export default function Users() {
               </select>
             </th>
             <th>
-              <select name="levels" className='bg-transparent' defaultValue={levelStatus} onChange={e => dispatch(setLevelStatus(e.target.value))}>
+              <select name="levels" className='bg-transparent' value={levelStatus} onChange={e => dispatch(setLevelStatus(e.target.value))}>
                 <option value="">سطح</option>
                 {allLevels?.map((level, index) => (
                   <option value={level.id} key={index} selected={Number(levelStatus) === level.id}>{level.name}</option>
@@ -88,20 +88,27 @@ export default function Users() {
               </select>
             </th>
             <th>
-              <select name="score" className='bg-transparent' defaultValue={scoreStatus} onChange={setScoreStatusHandler}>
+              <select name="score" className='bg-transparent' value={scoreStatus} onChange={setScoreStatusHandler}>
                 <option value="">امتیاز</option>
                 <option value="max">بیشترین امتیاز</option>
                 <option value="min">کم ترین امتیاز</option>
               </select>
             </th>
             <th>
-              <select name="price" className='bg-transparent' defaultValue={purchaseStatus} onChange={setPurchaseStatusHandler}>
+              <select name="price" className='bg-transparent' value={purchaseStatus} onChange={setPurchaseStatusHandler}>
                 <option value="">میزان خرید</option>
                 <option value="max">بیشترین خرید</option>
                 <option value="min">کم ترین خرید</option>
               </select>
             </th>
             <th>تاریخ پیوستن</th>
+            <th>
+              <select name="ban" className='bg-transparent' value={banStatus} onChange={e=> dispatch(setBanStatus(e.target.value))}>
+                <option value="">بن</option>
+                <option value="ban">بن شده</option>
+                <option value="notBan">بن نشده</option>
+              </select>
+            </th>
             <th>جزئیات</th>
           </tr>
         </thead>
@@ -118,6 +125,7 @@ export default function Users() {
                 <td>{user.score}</td>
                 <td>{user.totalSpent}</td>
                 <td>{moment(user.created_at).format('jYYYY/jMM/jDD')}</td>
+                <td className={user.banDate ? 'text-red-400' : ''}>{user.banDate ? moment(user.banDate).format('jYYYY/jMM/jDD') : '-'}</td>
                 <td>
                   <Link to={`${user.id}`} className='py-1 px-2 rounded-lg text-white hover:text-white bg-green-500'>
                     مشاهده

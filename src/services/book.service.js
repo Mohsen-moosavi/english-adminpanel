@@ -24,7 +24,7 @@ const uploadFileChunckFunc= (chunk , chunkNumber , totalChunks , fileName , name
     )
 }
 
-const createBookFunc = (name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover) => {
+const createBookFunc = (name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover,isForChildren) => {
     return (
         async () => {
             try {
@@ -38,6 +38,7 @@ const createBookFunc = (name,shortDescription,longDescription,slug,ageGrate,grat
                 formData.append("tags[]", tags);
                 formData.append("links", JSON.stringify(links));
                 formData.append("cover", cover);
+                formData.append("isForChildren", isForChildren);
 
                 const response = await apiPrivate(multipartFormPostApi).post('/book' , formData);
                 return { response };
@@ -48,7 +49,7 @@ const createBookFunc = (name,shortDescription,longDescription,slug,ageGrate,grat
     )
 }
 
-const updateBookFunc = (id,name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover) => {
+const updateBookFunc = (id,name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover,isForChildren) => {
     return (
         async () => {
             try {
@@ -61,6 +62,7 @@ const updateBookFunc = (id,name,shortDescription,longDescription,slug,ageGrate,g
                 formData.append("grate", grate);
                 formData.append("tags[]", tags);
                 formData.append("links", JSON.stringify(links));
+                formData.append("isForChildren", isForChildren);
                 cover && formData.append('cover' , cover)
 
                 const response = await apiPrivate(multipartFormPostApi).put(`/book/${id}` , formData);

@@ -58,7 +58,7 @@ export default function Login() {
   }, [])
 
   return (
-    <div className="w-[100%] my-5 flex items-center justify-center">
+    <div className="w-[100%] h-[100vh] py-5 flex items-center justify-center">
       <div className="relative w-full max-w-[500px] shadow-center rounded-xl border-4 border-solid border-[#0000a3] bg-[#7fb5f9]">
         <div className="flex items-center justify-center absolute top-[-30px] sm:top-[-50px] right-2/4 translate-x-[50%] w-[60px] h-[60px] sm:w-[100px] sm:h-[100px] bg-[#d2eeff] rounded-full border-4 border-solid border-[#0000a3]">
           <svg xmlns="http://www.w3.org/2000/svg" fill="#0000a3" className="w-[30px] h-[30px] sm:w-[60px] sm:h-[60px]" viewBox="0 0 16 16">

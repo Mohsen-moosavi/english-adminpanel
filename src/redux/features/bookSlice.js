@@ -6,12 +6,12 @@ import { uploadFileChunckFunc, deleteFileChunckFunc, createBookFunc,updateBookFu
 export const createBookCollection = createAsyncThunk(
     'book/createBook',
     async (
-        { name, shortDescription, longDescription, cover, slug, links, tags, ageGrate, grate, files, navigator, setProgress },
+        { name, shortDescription, longDescription, cover, slug, links, tags, ageGrate, grate, files, isForChildren, navigator, setProgress },
         { rejectWithValue }
     ) => {
         setProgress(0)
 
-        const { response, error } = await authRequest(createBookFunc(name, shortDescription, longDescription, slug, ageGrate, grate, tags, links, cover));
+        const { response, error } = await authRequest(createBookFunc(name, shortDescription, longDescription, slug, ageGrate, grate, tags, links, cover,isForChildren));
 
         if (response) {
             if (response.data.status === 201 && response.data.data.bookId) {
@@ -106,12 +106,12 @@ export const getBooks = createAsyncThunk(
 export const updateBookCollection = createAsyncThunk(
     'book/updateBook',
     async (
-        { id, name, shortDescription, longDescription, cover, slug, links, tags, ageGrate, grate, newFiles, deletedFiles, navigator, setProgress},
+        { id, name, shortDescription, longDescription, cover, slug, links, tags, ageGrate, grate, newFiles, deletedFiles,isForChildren, navigator, setProgress},
         { rejectWithValue }
     ) => {
         setProgress(0)
 
-        const { response, error } = await authRequest(updateBookFunc(id,name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover));
+        const { response, error } = await authRequest(updateBookFunc(id,name,shortDescription,longDescription,slug,ageGrate,grate,tags,links,cover,isForChildren));
 
         if (response) {
             if (response.data.status === 201 && response.data.data.bookId) {

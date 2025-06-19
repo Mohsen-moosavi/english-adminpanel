@@ -4,7 +4,7 @@ import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useDispatch } from 'react-redux'
-import { changeUserRole, getRoles, getUserDetails, removeUserProfile, updateUserAvtar } from '../redux/features/usersSlice'
+import { banUser, changeUserRole, getRoles, getUserDetails, removeUserProfile, updateUserAvtar } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali'
 import Swal from 'sweetalert2'
 import { MdEdit } from 'react-icons/md'
@@ -70,6 +70,34 @@ export default function UserDetails() {
         dispatch(changeUserRole({ userId: userData.id, roleId: result.value, setUserData }))
       }
     });
+  }
+
+  function banUserHandler() {
+
+    Swal.fire({
+        inputLabel: 'لطفا علت بن شدن کاربر را بنویسید.',
+        input: 'text',
+        confirmButtonText: 'تایید',
+    }).then(result => {
+        if (result.isConfirmed && result.value?.trim()) {
+          dispatch(banUser({ userId: userData.id, isBan:true ,description:result.value?.trim() , setUserData }))
+        }
+    })
+  }
+
+    function removeBanUserHandler() {
+
+    Swal.fire({
+      title: 'آیا از خارج کردن کاربر از حالت بن اطمینان دارید؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تایید',
+      cancelButtonText: 'لغو',
+    }).then(result=>{
+      if(result.isConfirmed){
+        dispatch(banUser({ userId: userData.id, isBan:false , setUserData }))
+      }
+    })
   }
 
   function changeUserProfileHandler(e) {
@@ -161,12 +189,31 @@ export default function UserDetails() {
         </div>
       </div>
       <div className='flex-1 sm:max-w-[500px]'>
-        <div className='mb-5 flex items-end justify-between'>
+        <div className='mb-5'>
+        <div className='flex items-end justify-between'>
           <div>
-            <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
+            <div className='flex items-center gap-x-1'>
+              <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
+              {userData.banData ? (<span className='text-red-400 font-bold'>(بن شده)</span>) : null}
+            </div>
             <span className='text-[12px] text-[#70987e] font-bold'>{userData.roleName}</span>
           </div>
-          <button className='rounded-xl bg-main-color text-white px-2 py-1 hover:opacity-60' onClick={changeRoleHandler}>تغییر نقش</button>
+          <div className='flex flex-col gap-y-1'>
+          <button className='rounded-xl bg-main-color text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={changeRoleHandler}>تغییر نقش</button>
+          {
+            userData.banDate ? (
+              <button className='rounded-xl bg-green-400 text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={removeBanUserHandler}>خروج از بن</button>
+            ) :(
+              <button className='rounded-xl bg-red-400 text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={banUserHandler}>بن کردن</button>
+            )
+          }
+          </div>
+        </div>
+        {userData.banData ? (
+          <div>
+            <p className='mt-2 text-[14px] text-red-400'>{userData.banData}<span>({moment(userData.banDate).format('jYYYY/jMM/jDD')})</span></p>
+          </div>
+        ):null}
         </div>
 
         <div className='mb-8'>

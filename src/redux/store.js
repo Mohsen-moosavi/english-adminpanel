@@ -12,6 +12,7 @@ import saleReducer from './features/saleSlice'
 import ticketReducer from './features/ticketSlice'
 import usersReducer from './features/usersSlice'
 import consoleReducer from './features/consoleSlice'
+import contactReducer from './features/contactSlice'
 
 const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
     ticketData : ticketReducer,
     usersData : usersReducer,
     consoleData : consoleReducer,
+    contactData : contactReducer,
   },
 });
 

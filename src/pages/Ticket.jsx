@@ -81,6 +81,7 @@ export default function Ticket() {
                                 <option value="closed">بسته شده</option>
                             </select>
                         </th>
+                        <th>عنوان</th>
                         <th>تاریخ ایجاد</th>
                         <th>آخرین تغییر</th>
                         <th>مشاهده</th>
@@ -118,6 +119,7 @@ export default function Ticket() {
                                                 'بسته شده'
                                     }
                                 </td>
+                                <td>{`${ticket.title?.slice(0,20)}...`}</td>
                                 <td>{moment(ticket.created_at).format('jYYYY/jMM/jDD')}</td>
                                 <td>{moment(ticket.updated_at).format('jYYYY/jMM/jDD')}</td>
                                 <td>

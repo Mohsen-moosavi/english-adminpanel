@@ -24,6 +24,7 @@ import Ticket from '../pages/Ticket';
 import TicketDetails from '../pages/TicketDetails';
 import UserDetails from '../pages/UserDetails';
 import Console from '../pages/Console';
+import Contact from '../pages/Contact';
 
 export default function Router() {
   return (
@@ -60,6 +61,7 @@ export default function Router() {
         <Route path='sales' element={<Sale/>}/>
         <Route path='tickets' element={<Ticket/>}/>
         <Route path='tickets/:id' element={<TicketDetails/>}/>
+        <Route path='contacts' element={<Contact/>}/>
 
 
         <Route path='users/:id/create-sale' element={<CreateSaleByAdmin/>}/>

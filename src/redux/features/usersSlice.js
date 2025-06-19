@@ -1,15 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
-import { changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, updateProfileAvatarFunc } from "../../services/user.services";
+import { banUserFunc, changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, updateProfileAvatarFunc } from "../../services/user.services";
 import toast from "react-hot-toast";
 
 export const getUsers = createAsyncThunk(
     'users/getUsers',
     async (
-        { searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority, limit, offset },
+        { searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus, limit, offset },
         { rejectWithValue }
     ) => {
-        const { response, error } = await authRequest(getUsersFunc(searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority, limit, offset));
+        const { response, error } = await authRequest(getUsersFunc(searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus, limit, offset));
 
         if (response) {
             return response.data;
@@ -111,6 +111,29 @@ export const changeUserRole = createAsyncThunk(
     }
 );
 
+export const banUser = createAsyncThunk(
+    'users/banUser',
+    async (
+        { userId, isBan,description, setUserData},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(banUserFunc(userId , isBan,description));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+                        window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
+
 export const removeUserProfile = createAsyncThunk(
     'users/removeUserProfile',
     async (
@@ -180,6 +203,10 @@ const setScoreStatusAction = (state, action) => {
     state.scoreStatus = action.payload;
 }
 
+const setBanStatusAction = (state, action) => {
+    state.banStatus = action.payload;
+}
+
 const setLevelStatusAction = (state, action) => {
     state.levelStatus = action.payload;
 }
@@ -208,6 +235,7 @@ const usersSlice = createSlice({
         purchaseStatus: '',
         scoreStatus: '',
         levelStatus: '',
+        banStatus: '',
         deletedUser: 0,
         scorePriority: 0,
         offset: 0,
@@ -224,6 +252,7 @@ const usersSlice = createSlice({
         setDeletedUser: setDeletedUserAction,
         setScorePriority: setScorePriorityAction,
         setOffset: setOffsetAction,
+        setBanStatus :setBanStatusAction
     },
     extraReducers: builder => {
         builder
@@ -242,6 +271,6 @@ const usersSlice = createSlice({
 });
 
 
-export const { setSearchName, setSearchPhone, setRoleStatus, setPurchaseStatus, setScoreStatus, setLevelStatus, setDeletedUser, setScorePriority, setOffset } = usersSlice.actions;
+export const { setSearchName, setSearchPhone, setRoleStatus, setPurchaseStatus, setScoreStatus, setLevelStatus, setBanStatus, setDeletedUser, setScorePriority, setOffset } = usersSlice.actions;
 
 export default usersSlice.reducer;

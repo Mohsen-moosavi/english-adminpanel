@@ -1,7 +1,7 @@
 import { appJsonPostApi, multipartFormPostApi } from "../configs/axios"
 import apiPrivate from "./apiPrivate"
 
-const getUsersFunc = (searchName='' , searchPhone='', roleStatus, purchaseStatus , scoreStatus , levelStatus, deletedUser,scorePriority, limit , offset) => {
+const getUsersFunc = (searchName='' , searchPhone='', roleStatus, purchaseStatus , scoreStatus , levelStatus, deletedUser,scorePriority,banStatus, limit , offset) => {
     return (
         async () => {
             try {
@@ -12,6 +12,7 @@ const getUsersFunc = (searchName='' , searchPhone='', roleStatus, purchaseStatus
                 purchaseStatus && (queryString += `&purchaseStatus=${purchaseStatus}`)
                 scoreStatus && (queryString += `&scoreStatus=${scoreStatus}`)
                 levelStatus && (queryString += `&levelStatus=${levelStatus}`)
+                banStatus && (queryString += `&banStatus=${banStatus}`)
                 !!deletedUser && (queryString += `&deletedUser=${deletedUser}`)
                 !!scorePriority && (queryString += `&scorePriority=${scorePriority}`)
 
@@ -78,6 +79,21 @@ const changeUserRoleFunc = (userId, roleId) => {
     )
 }
 
+const banUserFunc = (userId , isBan,description) => {
+    return (
+        async () => {
+            try {
+                const reqBody = {isBan};
+                (isBan) && (reqBody.description = description) 
+                const response = await apiPrivate(appJsonPostApi).put(`/user/ban/${userId}`,reqBody);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
 const removeUserProfileFunc = (userId) => {
     return (
         async () => {
@@ -114,5 +130,6 @@ export {
     getRolesFunc,
     changeUserRoleFunc,
     removeUserProfileFunc,
-    updateProfileAvatarFunc
+    updateProfileAvatarFunc,
+    banUserFunc
 }

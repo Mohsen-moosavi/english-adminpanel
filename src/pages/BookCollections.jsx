@@ -71,6 +71,7 @@ export default function BookCollections() {
               <th>نام</th>
               <th>لینک</th>
               <th>گروه سنی</th>
+              <th>مخصوص کودکان</th>
               <th>سطح</th>
               <th>ویرایش</th>
               <th>حذف</th>
@@ -84,9 +85,10 @@ export default function BookCollections() {
                   <td>{book.name}</td>
                   <td>{book.slug}</td>
                   <td>{book.ageGrate}</td>
+                  <td>{book.forChildren === 1 ? "کودکان": '-'}</td>
                   <td>{book.grate}</td>
                   <td>
-                    <Link to={`edit/${book.id}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-blue-500"}>
+                    <Link to={`/books-collection/edit/${book.id}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-blue-500"}>
                       ویرایش
                     </Link>
                   </td>

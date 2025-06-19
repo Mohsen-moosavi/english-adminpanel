@@ -54,4 +54,13 @@ const authRequest = async (request) => {
     }
 }
 
-export { authRequest, getUserInfo }
+const logOutService = async () => {
+    try {
+        const response = await appJsonPostApi.post('/auth/logout',{},{withCredentials:true})
+        return {response}
+    } catch (error) {
+        return {error}
+    }
+}
+
+export { authRequest, getUserInfo,logOutService }

@@ -7,7 +7,6 @@ import { HiOutlineUpload } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
 import { FiFileText } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
-import { createArticle, updateArticle } from '../redux/features/articleSlice';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaFilePdf } from 'react-icons/fa';
@@ -68,6 +67,7 @@ export default function CreateBookCollection() {
         formik.setFieldValue('slug', book.slug)
         formik.setFieldValue('ageGrate', book.ageGrate)
         formik.setFieldValue('grate', book.grate)
+        formik.setFieldValue('isForChildren', Boolean(book.forChildren))
         setCoverUrl(book.cover)
         setTagArray(book.tags?.map(tag => tag.name))
         setSubtitleArray(JSON.parse(book.links).map(link => ({ subtitle: link.replace(/<a href="#.*">/, '').replace(/<\/a>/, ""), id: link.replace(/<a href="#/, '').replace(/">.*/, "") })))
@@ -129,6 +129,7 @@ export default function CreateBookCollection() {
             slug: '',
             ageGrate: '',
             grate: '',
+            isForChildren: false
         },
         validationSchema: FormValidation,
         onSubmit: async (values, { resetForm }) => {
@@ -145,9 +146,9 @@ export default function CreateBookCollection() {
                     if (id) {
                         const newFiles = bookFileArray.filter(file => file.isNew)
                         // console.log('result======>' ,{ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate : values.ageGrate , grate : values.grate, newFiles, deletedFiles : deletedFileArray} )
-                        dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, navigator, setProgress }))
+                        dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, isForChildren:values.isForChildren, navigator, setProgress }))
                     } else {
-                        dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, navigator, setProgress  }))
+                        dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, isForChildren:values.isForChildren, navigator, setProgress  }))
                     }
                     // setSearchChangerFlag(prev=>!prev)
                     // setPaginatorChangerFlag(prev=>!prev)
@@ -548,6 +549,20 @@ export default function CreateBookCollection() {
                                     </>
                                 )}
 
+                        </div>
+
+                        <div className='flex items-center gap-x-2 mb-3'>
+                            <input
+                                name='isForChildren'
+                                type="checkbox"
+                                id='isForChildrenCheckbox'
+                                className='w-[20px] h-[20px]'
+                                onChange={formik.handleChange}
+                                value={formik.values.isForChildren}
+                                checked={formik.values.isForChildren}
+                            />
+
+                            <label htmlFor="isPublishedCheckbox" className='text-main-color'>کتاب مخصوص کودکان</label>
                         </div>
 
 

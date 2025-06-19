@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { BsChatLeftTextFill, BsHouseGearFill, BsTicketPerforatedFill } from 'react-icons/bs'
 import { FaBasketShopping, FaUser } from 'react-icons/fa6'
 import { IoCloseCircleSharp } from 'react-icons/io5'
+import LogoutBtn from './logoutBtn'
 
 export default function Sidebar() {
 
@@ -122,6 +123,13 @@ export default function Sidebar() {
                 <span>تیکت ها</span>
             </Link>
         </li>
+        <li className="block w-full p-2 rounded-lg" data-link="/contacts">
+            <Link to="contacts" className="flex justify-start gap-x-3 items-end sidebar-link">
+            <BsTicketPerforatedFill className='sidebar-icon'/>
+                <span>پیغام ها</span>
+            </Link>
+        </li>
+        <LogoutBtn/>
     </ul>
     </div>
 

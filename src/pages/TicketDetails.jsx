@@ -66,15 +66,16 @@ export default function TicketDetails() {
                     <span>بازگشت</span>
                 </Link>
             </div>
-            <h3 className='page-title'>
+            <h3 className='page-title !mb-1'>
                 {ticketDetails?.subject === 'fiscal' ? 'تیکت مالی' :
                     ticketDetails?.subject === 'scholastic' ? 'تیکت درسی' :
                         ticketDetails?.subject === 'counseling' ? 'تیکت مشاوره' :
                             ticketDetails?.subject === 'offer' ? 'تیکت پیشنهادات و انتقادات' :
                                 ticketDetails?.subject === 'support' ? 'تیکت پشتیانی سایت' :
-                                    ticketDetails?.subject
+                                    'غیره'
                 }
             </h3>
+            <h4 className='text-main-color mb-8 mx-auto'>{ticketDetails.title}</h4>
 
             <div>
                 {ticketDetails.messages?.map((message, index) => (
