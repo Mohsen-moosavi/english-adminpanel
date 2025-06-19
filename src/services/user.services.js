@@ -107,6 +107,19 @@ const removeUserProfileFunc = (userId) => {
     )
 }
 
+const resetPasswordFunc = (phone) => {
+    return (
+        async () => {
+            try {
+                const response = await apiPrivate(appJsonPostApi).put(`/auth/reset-pass`,{phone});
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
+}
+
 const updateProfileAvatarFunc= (userId , avatar) => {
     return (
         async () => {
@@ -131,5 +144,6 @@ export {
     changeUserRoleFunc,
     removeUserProfileFunc,
     updateProfileAvatarFunc,
-    banUserFunc
+    banUserFunc,
+    resetPasswordFunc
 }

@@ -4,7 +4,7 @@ import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useDispatch } from 'react-redux'
-import { banUser, changeUserRole, getRoles, getUserDetails, removeUserProfile, updateUserAvtar } from '../redux/features/usersSlice'
+import { banUser, changeUserRole, getRoles, getUserDetails, removeUserProfile, resetPassword, updateUserAvtar } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali'
 import Swal from 'sweetalert2'
 import { MdEdit } from 'react-icons/md'
@@ -125,6 +125,20 @@ export default function UserDetails() {
     e.target.type = 'file'
   }
 
+  function resetPass(){
+    Swal.fire({
+      title: 'آیا از بازنشانی گذرواژه اطمینان دارید؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تایید',
+      cancelButtonText: 'لغو',
+    }).then(result => {
+      if (result.isConfirmed) {
+        dispatch(resetPassword({phone:userData?.phone }))
+      }
+    })
+  }
+
   return (
     <div className='flex max-sm:flex-col gap-x-[30px] lg:gap-x-[50px] gap-y-5 lg:px-8'>
       <div className='max-sm:order-1 sm:max-w-[180px] max-sm:max-w-full lg:max-w-[230px] flex-1'>
@@ -190,7 +204,7 @@ export default function UserDetails() {
       </div>
       <div className='flex-1 sm:max-w-[500px]'>
         <div className='mb-5'>
-        <div className='flex items-end justify-between'>
+        <div className='flex items-start justify-between'>
           <div>
             <div className='flex items-center gap-x-1'>
               <h1 className='font-bold text-lg sm:text-2xl text-main-color'>{userData.name}</h1>
@@ -202,11 +216,12 @@ export default function UserDetails() {
           <button className='rounded-xl bg-main-color text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={changeRoleHandler}>تغییر نقش</button>
           {
             userData.banDate ? (
-              <button className='rounded-xl bg-green-400 text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={removeBanUserHandler}>خروج از بن</button>
+              <button className='rounded-xl bg-green-400 text-white text-[12px] px-2 py-1 hover:opacity-70' onClick={removeBanUserHandler}>خروج از بن</button>
             ) :(
-              <button className='rounded-xl bg-red-400 text-white text-[12px] px-2 py-1 hover:opacity-60' onClick={banUserHandler}>بن کردن</button>
+              <button className='rounded-xl bg-red-400 text-white text-[12px] px-2 py-1 hover:opacity-70' onClick={banUserHandler}>بن کردن</button>
             )
           }
+          <button className='rounded-xl bg-blue-500 text-white text-[12px] px-2 py-1 hover:opacity-70' onClick={resetPass}>بازنشانی گذرواژه</button>
           </div>
         </div>
         {userData.banData ? (

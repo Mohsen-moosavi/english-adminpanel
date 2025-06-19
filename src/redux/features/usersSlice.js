@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
-import { banUserFunc, changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, updateProfileAvatarFunc } from "../../services/user.services";
+import { banUserFunc, changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, resetPasswordFunc, updateProfileAvatarFunc } from "../../services/user.services";
 import toast from "react-hot-toast";
 
 export const getUsers = createAsyncThunk(
@@ -150,6 +150,28 @@ export const removeUserProfile = createAsyncThunk(
 
         if (error?.response?.status === 401) {
                         window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
+
+export const resetPassword = createAsyncThunk(
+    'users/resetPassword',
+    async (
+        { phone},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(resetPasswordFunc(phone));
+
+        if (response) {
+            toast.success(response.data.message)
+            return;
+        }
+
+        if (error?.response?.status === 401) {
+            window.location.assign('/login');
         } else {
             toast.error(error?.response?.data?.message);
         }

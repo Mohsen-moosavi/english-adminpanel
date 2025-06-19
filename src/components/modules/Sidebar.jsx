@@ -5,6 +5,11 @@ import { BsChatLeftTextFill, BsHouseGearFill, BsTicketPerforatedFill } from 'rea
 import { FaBasketShopping, FaUser } from 'react-icons/fa6'
 import { IoCloseCircleSharp } from 'react-icons/io5'
 import LogoutBtn from './logoutBtn'
+import { AiFillGift, AiFillMessage, AiFillTag } from 'react-icons/ai'
+import { BiSolidDollarCircle } from 'react-icons/bi'
+import { GrArticle } from 'react-icons/gr'
+import { PiBooksDuotone, PiStepsFill } from 'react-icons/pi'
+import { FaChalkboardTeacher, FaUsers } from 'react-icons/fa'
 
 export default function Sidebar() {
 
@@ -65,55 +70,55 @@ export default function Sidebar() {
         </li>
         <li className="block w-full p-2 rounded-lg"  data-link="/users">
             <Link to="users" className="flex justify-start gap-x-3 items-end sidebar-link">
-                <FaBasketShopping className='sidebar-icon'/>
+                <FaUsers className='sidebar-icon'/>
                 <span>کاربران</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg"  data-link="/levels">
             <Link to="levels" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <FaUser className='sidebar-icon'/>
+            <PiStepsFill className='sidebar-icon'/>
                 <span>سطح ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/tags">
             <Link to="tags" className="flex justify-start gap-x-3 items-end sidebar-link" >
-            <BsChatLeftTextFill className='sidebar-icon'/>
+            <AiFillTag className='sidebar-icon'/>
                 <span>تگ ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/articles">
             <Link to="articles" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <GrArticle className='sidebar-icon'/>
                 <span>مقاله ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/books-collection">
             <Link to="books-collection" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <PiBooksDuotone className='sidebar-icon'/>
                 <span>کتاب ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/courses">
             <Link to="courses" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <FaChalkboardTeacher className='sidebar-icon'/>
                 <span>دوره ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/offs">
             <Link to="offs" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <AiFillGift className='sidebar-icon'/>
                 <span>تخفیف ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/comments">
             <Link to="comments" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <AiFillMessage className='sidebar-icon'/>
                 <span>کامنت ها</span>
             </Link>
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/sales">
             <Link to="sales" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <BiSolidDollarCircle className='sidebar-icon'/>
                 <span>فروش ها</span>
             </Link>
         </li>
@@ -125,7 +130,7 @@ export default function Sidebar() {
         </li>
         <li className="block w-full p-2 rounded-lg" data-link="/contacts">
             <Link to="contacts" className="flex justify-start gap-x-3 items-end sidebar-link">
-            <BsTicketPerforatedFill className='sidebar-icon'/>
+            <BsChatLeftTextFill className='sidebar-icon'/>
                 <span>پیغام ها</span>
             </Link>
         </li>

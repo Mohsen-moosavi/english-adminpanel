@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/features/userSlice'
-import { BsTicketPerforatedFill } from 'react-icons/bs'
+import { AiOutlineLogout } from 'react-icons/ai'
+
 
 function LogoutBtn() {
 
@@ -11,9 +12,9 @@ function LogoutBtn() {
     }
 
     return (
-        <li className="block w-full p-2 rounded-lg" data-link="/contacts">
+        <li className="block w-full p-2 rounded-lg">
             <button onClick={logoutHandler} className="flex justify-start gap-x-3 items-end sidebar-link hover:text-[#dc7718]">
-                <BsTicketPerforatedFill className='sidebar-icon' />
+                <AiOutlineLogout className='sidebar-icon' />
                 <span>خروج</span>
             </button>
         </li>
