@@ -85,7 +85,6 @@ export default function Off() {
               </select>
             </th>
             <th>سازنده</th>
-            <th>ویرایش</th>
             <th>حذف</th>
           </tr>
         </thead>
@@ -102,11 +101,6 @@ export default function Off() {
                 <td className={`${off.remainingTimes === 0 ? "text-red-500" : "text-green-600"}`}>{(off.remainingTimes === 0 || off.remainingTimes > 0) ? off.remainingTimes : 'نامحدود'}</td>
                 <td className={`${off.public ? "text-green-600" : "text-red-500"}`}>{off.public === 1 ? 'عمومی' : "اختصاصی"}</td>
                 <td>{off['creator.name']}</td>
-                <td>
-                  <Link to={`edit/${off.id}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-blue-500"}>
-                    ویرایش
-                  </Link>
-                </td>
                 <td>
                   <button className="py-1 px-2 rounded-lg text-white hover:text-white bg-red-500" onClick={() => deleteOffHandler(off.id)}>
                     حذف

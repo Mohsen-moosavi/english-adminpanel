@@ -50,14 +50,14 @@ export const getFinders = createAsyncThunk(
 export const getUserDetails = createAsyncThunk(
     'users/getUserDetails',
     async (
-        { id,setUserData},
+        { id,setUserData,setIsLoaded},
         { rejectWithValue }
     ) => {
         const { response, error } = await authRequest(getUserDetailsFunc(id));
 
         if (response) {
             setUserData(response.data.data.user)
-            console.log('userData====>' , response.data.data.user)
+            setIsLoaded(true)
             return response.data;
         }
 
@@ -66,6 +66,7 @@ export const getUserDetails = createAsyncThunk(
         } else {
             toast.error(error?.response?.data?.message);
         }
+        setIsLoaded(true)
         return rejectWithValue(error);
     }
 );

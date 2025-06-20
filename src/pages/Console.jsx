@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { getData, getUncompletedCourses } from '../redux/features/consoleSlice'
-import userProfile from './../../public/user-profile.png'
 import { Link } from 'react-router-dom'
 
 export default function Console() {
@@ -46,16 +45,16 @@ export default function Console() {
                 {unCompletedCourses.length ? 
                     unCompletedCourses.map(course=>(
                         <div className="w-[full] rounded-xl overflow-hidden shadow-shadow-low p-2 transition-all hover:-translate-y-2">
-                        <Link to="#">
+                        <Link to={`/courses/edit/${course.id}`}>
                             <div className="overflow-hidden rounded-xl shadow-shadow-low max-h-[200px]">
-                                <img src={course.cover} className="w-full" alt="course img" className='w-full'/>
+                                <img src={course.cover} className="w-full" alt="course img"/>
                             </div>
                         </Link>
                         <div className="flex flex-col justify-start px-3">
                             <div className="relative text-center">
-                                <a href="#">
+                                <Link to={`/courses/edit/${course.id}`}>
                                     <h4 className="p-3 bg-main-color/20 rounded-xl text-main-color font-bold max-sm:text-sm">{course.name}</h4>
-                                </a>
+                                </Link>
                                 <span className="absolute bottom-[-10px] bg-blue-600 rounded-xl px-1 sm:px-2 h-[19px] leading-[18px] sm:h-[25px] sm:leading-[27px] left-[15%] text-white max-sm:text-[10px]">{course.level?.name}</span>
                                 <span className="absolute flex gap-x-1 items-center justify-center bottom-[-10px] right-[15%] bg-green-900 rounded-xl px-1 sm:px-2 h-[19px] leading-[17px] sm:h-[25px] sm:leading-[27px] text-white max-sm:text-[10px]">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="pb-1" viewBox="0 0 16 16">

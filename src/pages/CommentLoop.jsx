@@ -26,7 +26,7 @@ export default function CommentLoop() {
 
     return (
         <div>
-            <h3 className='page-title'>{`کامنت برای دوره  ${state.courseName}`}</h3>
+            <h3 className='page-title'>{`کامنت برای دوره  ${state?.courseName}`}</h3>
             {commentTree.map((comment , index)=> ( <CommentBox key={index} courseId={state?.courseId} mainCommentId={id} comment={comment}/>))}
         </div>
     )

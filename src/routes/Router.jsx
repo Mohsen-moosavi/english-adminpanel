@@ -25,6 +25,7 @@ import TicketDetails from '../pages/TicketDetails';
 import UserDetails from '../pages/UserDetails';
 import Console from '../pages/Console';
 import Contact from '../pages/Contact';
+import NotFound from '../pages/notFound';
 
 export default function Router() {
   return (
@@ -52,7 +53,7 @@ export default function Router() {
         <Route path='courses/video/:id' element={<Video/>}/>
         <Route path='offs' element={<Off/>}/>
         <Route path='offs/create' element={<CreateOff/>}/>
-        <Route path='offs/edit/:id' element={<CreateOff/>}/>
+        {/* <Route path='offs/edit/:id' element={<CreateOff/>}/> */}
         <Route path='comments' element={<Comment/>}/>
         <Route path='comments/:id' element={<CommentLoop/>}/>
         <Route path='sessions/:id' element={<Session/>}/>
@@ -72,6 +73,8 @@ export default function Router() {
         <Route path='users/:id/user-articles' element={<Article/>}/>
         <Route path='users/:id/user-lessons' element={<Course/>}/>
       </Route>
+        <Route path='/*' element={<NotFound/>}/>
+
     </Routes>
   )
 }
