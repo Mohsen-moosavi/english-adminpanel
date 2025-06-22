@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { FaLongArrowAltRight, FaPhotoVideo, FaSpinner, FaTrashAlt } from 'react-icons/fa'
+import { useEffect, useRef, useState } from 'react'
+import { FaLongArrowAltRight, FaPhotoVideo, FaTrashAlt } from 'react-icons/fa'
 import { HiOutlineUpload } from 'react-icons/hi'
 import { MdVideoLibrary } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'

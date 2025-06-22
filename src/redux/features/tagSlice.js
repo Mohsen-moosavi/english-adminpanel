@@ -12,7 +12,6 @@ export const createNewTag = createAsyncThunk(
         const { response, error } = await authRequest(createTagFunc(name,limit, offset));
 
         if (response) {
-            console.log("res tag===========>" , response.data.data)
             toast.success(response?.data?.message);
             return response.data;
         }
@@ -36,7 +35,6 @@ export const getTags = createAsyncThunk(
         const { response, error } = await getTagsFunc(limit , offset , search)
 
         if (response) {
-            console.log("tags==========>" , response.data.data)
             return response.data;
         }
 
@@ -53,12 +51,10 @@ export const deleteTag = createAsyncThunk(
     ) => {
         const { response, error } = await authRequest(deleteTagFunc(id , limit , offset , search));
 
-        console.log('responses---=====>', response);
         if (response) {
             toast.success(response?.data?.message);
             return response.data;
         }
-        console.log('errorrr=====>', error);
 
         toast.error(error?.response?.data?.message);
         return rejectWithValue(error);
@@ -77,7 +73,6 @@ export const updateTag = createAsyncThunk(
             toast.success(response?.data?.message);
             return response.data;
         }
-        console.log('errorrr=====>', error);
 
         if (error?.response?.status === 401) {
                         window.location.assign('/login');

@@ -69,29 +69,6 @@ export const deleteOff = createAsyncThunk(
     }
 );
 
-// export const updateTag = createAsyncThunk(
-//     'tag/updateTag',
-//     async (
-//         { id , name , limit , offset , search },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(updateTagFunc(id ,name, limit , offset , search ));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-//         console.log('errorrr=====>', error);
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
-
 const setSearchWordAction = (state, action) => {
     state.search = action.payload;
 }
@@ -166,19 +143,6 @@ const offSlice = createSlice({
         .addCase(deleteOff.rejected, (state, action) => {
             state.isLoading = false;
         })
-
-
-        // .addCase(updateTag.pending, state => {
-        //     state.isLoading = true;
-        // })
-        // .addCase(updateTag.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.tags = action.payload?.data?.tags;
-        //     state.count = action.payload?.data?.count;
-        // })
-        // .addCase(updateTag.rejected, (state, action) => {
-        //     state.isLoading = false;
-        // })
     },
 });
 

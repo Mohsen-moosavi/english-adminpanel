@@ -74,7 +74,6 @@ export const getCourses = createAsyncThunk(
         { limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId},
         { rejectWithValue }
     ) => {
-        console.log('userId=======================================>' , userId)
         const { response, error } = await authRequest(getCoursesFunc(limit, offset, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus , userId, tagId))
 
 
@@ -231,11 +230,9 @@ export const updateVideo = createAsyncThunk(
 
                 if (response) {
                     newVideoLink = response.data?.data?.link;
-                    console.log(newVideoLink);
                     const temp = `Chunk ${chunkNumber + 1
                         }/${totalChunks} uploaded successfully`;
                     setProgress(Number((chunkNumber + 1) * chunkProgress));
-                    console.log(temp);
                     chunkNumber++;
                     start = end;
                     if (video.size - end !== 0 && video.size - end < chunkSize) {
@@ -275,7 +272,6 @@ export const changeStatus = createAsyncThunk(
             return response.data;
         }
 
-        console.log('error====>', error)
         if (error?.response?.status === 401) {
                         window.location.assign('/login');
         } else {

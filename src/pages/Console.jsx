@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { getData, getUncompletedCourses } from '../redux/features/consoleSlice'
 import { Link } from 'react-router-dom'
 
@@ -43,8 +43,8 @@ export default function Console() {
             <h3 className='page-title mt-10'>دوره های تکمیل نشده</h3>
             <div className='mt-5 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-3 gap-y-3'>
                 {unCompletedCourses.length ? 
-                    unCompletedCourses.map(course=>(
-                        <div className="w-[full] rounded-xl overflow-hidden shadow-shadow-low p-2 transition-all hover:-translate-y-2">
+                    unCompletedCourses.map((course,i)=>(
+                        <div key={i} className="w-[full] rounded-xl overflow-hidden shadow-shadow-low p-2 transition-all hover:-translate-y-2">
                         <Link to={`/courses/edit/${course.id}`}>
                             <div className="overflow-hidden rounded-xl shadow-shadow-low max-h-[200px]">
                                 <img src={course.cover} className="w-full" alt="course img"/>

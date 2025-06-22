@@ -3,28 +3,6 @@ import { authRequest } from "../../services/authApi.service";
 import toast from "react-hot-toast";
 import { changeStatusOfTicketFunc, deleteTicketFunc, deleteTicketMessageFunc, getTicketDetailsFunc, getTicketsFunc, sendAnswerToTicketFunc } from "../../services/ticket.services";
 
-// export const createNewTag = createAsyncThunk(
-//     'tag/createNewtag',
-//     async (
-//         { name, },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(createTagFunc(name));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
-
 
 export const getTickets = createAsyncThunk(
     'ticket/getTicketS',
@@ -76,7 +54,6 @@ export const getTicketDetails = createAsyncThunk(
         const { response, error } = await authRequest(getTicketDetailsFunc(id))
 
         if (response) {
-            console.log("response=======================>" , response.data?.data?.ticket)
             setTicketDetails(response.data?.data?.ticket)
             return response.data;
         }

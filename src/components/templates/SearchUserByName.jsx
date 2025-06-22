@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsers, setOffset, setSearchName } from '../../redux/features/usersSlice'

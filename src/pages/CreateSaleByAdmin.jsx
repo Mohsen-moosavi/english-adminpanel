@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import FormErrorMsg from '../components/modules/FormErrorMessag';
@@ -64,7 +64,6 @@ export default function CreateSaleByAdmin() {
                             <FormErrorMsg msg={formik.errors.courseId} />
                         </div>
                     ) : null}
-                    {console.log('formik.touched.price===>',formik.touched.courseId , formik.values.courseId)}
                 </SelectSearch>
 
                 <div className="form-btn-group">

@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import FormErrorMsg from '../components/modules/FormErrorMessag';
 import persian from 'react-date-object/calendars/persian'
@@ -170,7 +170,6 @@ export default function CreateOff() {
                     <div className="form-btn-group">
                         <label htmlFor="create-off-input-4" className="form-label">نوع تخفیف:</label>
                         <select
-                        defaultValue={''}
                             name='isPublic'
                             className="form-input"
                             id="create-off-input-4"
@@ -235,7 +234,7 @@ export default function CreateOff() {
                                             <th>شماره</th>
                                             <th>نام</th>
                                             <th>
-                                                <select name="teachers" className='bg-transparent' defaultValue={teacherId} onChange={(e) => dispatch(setTeacherId(e.target.value))}>
+                                                <select name="teachers" className='bg-transparent' value={teacherId} onChange={(e) => dispatch(setTeacherId(e.target.value))}>
                                                     <option value={''}>مدرس</option>
                                                     {teachers?.map((teacher, index) => (
                                                         <option key={index} value={teacher.id}>{teacher.name}</option>
@@ -243,7 +242,7 @@ export default function CreateOff() {
                                                 </select>
                                             </th>
                                             <th>
-                                                <select name="levels" className='bg-transparent' defaultValue={levelId} onChange={(e) => dispatch(setLevelId(e.target.value))}>
+                                                <select name="levels" className='bg-transparent' value={levelId} onChange={(e) => dispatch(setLevelId(e.target.value))}>
                                                     <option value={''}>سطح</option>
                                                     {levels?.map((level, index) => (
                                                         <option key={index} value={level.id}>{level.name}</option>
@@ -251,7 +250,7 @@ export default function CreateOff() {
                                                 </select>
                                             </th>
                                             <th>
-                                                <select name="bookCollections" className='bg-transparent' defaultValue={bookId} onChange={(e) => dispatch(setBookId(e.target.value))}>
+                                                <select name="bookCollections" className='bg-transparent' value={bookId} onChange={(e) => dispatch(setBookId(e.target.value))}>
                                                     <option value={''}>مجموعه</option>
                                                     {bookCollections?.map((book, index) => (
                                                         <option key={index} value={book.id}>{book.name}</option>
@@ -259,7 +258,7 @@ export default function CreateOff() {
                                                 </select>
                                             </th>
                                             <th>
-                                                <select name="price" className='bg-transparent' defaultValue={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
+                                                <select name="price" className='bg-transparent' value={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
                                                     <option value={''}>مبلغ</option>
                                                     <option value="free">رایگان</option>
                                                     <option value="max">گران ترین</option>
@@ -268,14 +267,14 @@ export default function CreateOff() {
                                             </th>
                                             <th>تخفیف</th>
                                             <th>
-                                                <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+                                                <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                                                     <option value={''}>وضعیت</option>
                                                     <option value="completed">کامل شده</option>
                                                     <option value="notCompleted">درحال برگزاری</option>
                                                 </select>
                                             </th>
                                             <th>
-                                                <select name="score" className='bg-transparent' defaultValue={scoreStatus} onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
+                                                <select name="score" className='bg-transparent' value={scoreStatus} onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
                                                     <option value={''}>امتیاز</option>
                                                     <option value="5">5</option>
                                                     <option value="4">4</option>

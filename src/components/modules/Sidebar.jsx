@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import logoImg from './../../assets/logo2.png'
 import { Link, useLocation } from 'react-router-dom'
 import { BsChatLeftTextFill, BsHouseGearFill, BsTicketPerforatedFill } from 'react-icons/bs'
-import { FaBasketShopping, FaUser } from 'react-icons/fa6'
 import { IoCloseCircleSharp } from 'react-icons/io5'
 import LogoutBtn from './logoutBtn'
 import { AiFillGift, AiFillMessage, AiFillTag } from 'react-icons/ai'
@@ -39,7 +38,7 @@ export default function Sidebar() {
         sidebarContainer.current.classList.remove("z-[1000]");
         
         for (const key in ulMenuElm.current.children) {
-            if(ulMenuElm.current.children[key]?.dataset?.link === 'console'){
+            if(location.pathname === '/' && ulMenuElm.current.children[key]?.dataset?.link === '/console'){
                 ulMenuElm.current.children[key]?.classList?.add('bg-secound-color')
             }else if(location.pathname.includes( ulMenuElm.current.children[key]?.dataset?.link)){
                 ulMenuElm.current.children[key]?.classList.add('bg-secound-color')

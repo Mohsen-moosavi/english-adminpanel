@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteOff, getOffs, setOffset, setOrderStatus, setPublicStatus, setSearch } from '../redux/features/offSlice'
@@ -50,7 +50,7 @@ export default function Off() {
         <Link to='create' className='bg-main-color rounded-[10px] text-center text-white hover:bg-main-color/70 hover:text-white p-2'>افزودن تخفیف جدید</Link>
         <Searcher setPaginatorChangerFlag={setPaginatorChangerFlag} defaultgetterValuesObj={{ publicStatus, orderStatus, limit }} getter={getOffs} setSearch={setSearch} setOffset={setOffset} defaultValue={search} />
         <div className="form-btn-group !m-0">
-          <select className="form-input" defaultValue={orderStatus} onChange={(e) => dispatch(setOrderStatus(e.target.value))}>
+          <select className="form-input" value={orderStatus} onChange={(e) => dispatch(setOrderStatus(e.target.value))}>
             <option value="">مرتب سازی</option>
             <option value="expired">منقضی شده</option>
             <option value="maxPercent">بیشترین درصد تخفیف</option>
@@ -78,7 +78,7 @@ export default function Off() {
             <th>مقدار استفاده</th>
             <th>مقدار باقی مانده</th>
             <th>
-              <select className='bg-transparent' defaultValue={publicStatus} onChange={(e) => dispatch(setPublicStatus(e.target.value))}>
+              <select className='bg-transparent' value={publicStatus} onChange={(e) => dispatch(setPublicStatus(e.target.value))}>
                 <option value={''}>وضعیت</option>
                 <option value={"public"}>عمومی</option>
                 <option value={"private"}>اختصاصی</option>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { changeStatus, deleteCourse, deleteCourseForUser, getCourses, getCreatingData, setBookId, setLevelId, setOffset, setPriceStatus, setScoreStatus, setSearch, setStatus, setTeacherId } from '../redux/features/courseSlice'
@@ -19,12 +19,6 @@ export default function Course() {
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
   const { courses, coursesCount, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, offset, limit, isLoading, teachers, levels, bookCollections } = useSelector(state => state.courseData)
 
-  // useEffect(() => {
-  //   return ()=>{
-  //     dispatch(setTeacherId(null))
-  //     console.log("================================= done =================================")
-  //   }
-  // }, [])
 
   useEffect(() => {
     if(!isInitialized.current){
@@ -34,7 +28,7 @@ export default function Course() {
         dispatch(setTeacherId(id))
       }else{
         userId.current =id
-        dispatch(setTeacherId(null))
+        dispatch(setTeacherId(''))
       }
 
       dispatch(getCreatingData({}))
@@ -109,15 +103,15 @@ export default function Course() {
             <th>نام</th>
             <th>لینک</th>
             <th>
-              <select name="teachers" defaultValue={pathname.endsWith('/user-lessons') ? id : teacherId} className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
+              <select name="teachers" value={pathname.endsWith('/user-lessons') ? id : teacherId} className='bg-transparent' onChange={(e) => dispatch(setTeacherId(e.target.value))}>
                 <option value={''}>مدرس</option>
                 {teachers?.map((teacher, index) => (
                   <option key={index} value={teacher.id}>{teacher.name}</option>
                 ))}
-              </select>
+                </select>
             </th>
             <th>
-              <select name="levels" className='bg-transparent' defaultValue={levelId} onChange={(e) => dispatch(setLevelId(e.target.value))}>
+              <select name="levels" className='bg-transparent' value={levelId} onChange={(e) => dispatch(setLevelId(e.target.value))}>
                 <option value={''}>سطح</option>
                 {levels?.map((level, index) => (
                   <option key={index} value={level.id}>{level.name}</option>
@@ -125,7 +119,7 @@ export default function Course() {
               </select>
             </th>
             <th>
-              <select name="bookCollections" defaultValue={bookId} className='bg-transparent' onChange={(e) => dispatch(setBookId(e.target.value))}>
+              <select name="bookCollections" value={bookId} className='bg-transparent' onChange={(e) => dispatch(setBookId(e.target.value))}>
                 <option value={''}>مجموعه</option>
                 {bookCollections?.map((book, index) => (
                   <option key={index} value={book.id}>{book.name}</option>
@@ -133,7 +127,7 @@ export default function Course() {
               </select>
             </th>
             <th>
-              <select name="price" className='bg-transparent' defaultValue={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
+              <select name="price" className='bg-transparent' value={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
                 <option value={''}>مبلغ</option>
                 <option value="free">رایگان</option>
                 <option value="max">گران ترین</option>
@@ -142,14 +136,14 @@ export default function Course() {
             </th>
             <th>تخفیف</th>
             <th>
-              <select name="status" defaultValue={status} className='bg-transparent' onChange={(e) => dispatch(setStatus(e.target.value))}>
+              <select name="status" value={status} className='bg-transparent' onChange={(e) => dispatch(setStatus(e.target.value))}>
                 <option value={''}>وضعیت</option>
                 <option value="completed">کامل شده</option>
                 <option value="notCompleted">درحال برگزاری</option>
               </select>
             </th>
             <th>
-              <select name="score" defaultValue={scoreStatus} className='bg-transparent' onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
+              <select name="score" value={scoreStatus} className='bg-transparent' onChange={(e) => dispatch(setScoreStatus(e.target.value))}>
                 <option value={''}>امتیاز</option>
                 <option value="5">5</option>
                 <option value="4">4</option>

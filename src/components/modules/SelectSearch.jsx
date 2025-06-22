@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import { memo, useState } from 'react'
 
 const SelectSearch = memo(({ options , searchableChild , blurHandler,valueHandler,valueName, children}) => {
     const [search, setSearch] = useState("");
@@ -13,7 +13,6 @@ const SelectSearch = memo(({ options , searchableChild , blurHandler,valueHandle
     const handleSelect = (value) => {
         valueHandler(valueName,value.id)
         setSelectedValue(value);
-        console.log('value====>' , value)
         setSearch(value[searchableChild]);
         setShowDropdown(false);
     };

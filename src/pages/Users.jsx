@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DataTable from '../components/modules/DataTable'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -75,7 +75,7 @@ export default function Users() {
               <select name="role" className='bg-transparent' value={Number(roleStatus)} onChange={(e) => dispatch(setRoleStatus(e.target.value))}>
                 <option value="">نقش</option>
                 {allRoles?.map((role, index) => (
-                  <option key={index} value={role.id} selected={role.id === Number(roleStatus)}>{role.name}</option>
+                  <option key={index} value={role.id} >{role.name}</option>
                 ))}
               </select>
             </th>
@@ -83,7 +83,7 @@ export default function Users() {
               <select name="levels" className='bg-transparent' value={levelStatus} onChange={e => dispatch(setLevelStatus(e.target.value))}>
                 <option value="">سطح</option>
                 {allLevels?.map((level, index) => (
-                  <option value={level.id} key={index} selected={Number(levelStatus) === level.id}>{level.name}</option>
+                  <option value={level.id} key={index}>{level.name}</option>
                 ))}
               </select>
             </th>
@@ -145,84 +145,4 @@ export default function Users() {
 
     </div>
   )
-
-  // return (
-  //   <div>
-  //     <h3 className='page-title'>لیست کاربران</h3>
-  //     <DataTable>
-  //       <thead>
-  //         <tr>
-  //           <th>شماره</th>
-  //           <th>نام</th>
-  //           <th>نام کاربری</th>
-  //           <th>تلفن</th>
-  //           <th>
-  //             <select name="price" className='bg-transparent'>
-  //               <option value="" selected>میزان خرید</option>
-  //               <option value="">کم ترین خرید</option>
-  //               <option value="">بیشترین خرید</option>
-  //             </select>
-  //           </th>
-  //           <th>
-  //             <select name="level" className='bg-transparent'>
-  //               <option value="" selected>سطح</option>
-  //               <option value="">سطح A+</option>
-  //               <option value="">سطح B+</option>
-  //             </select>
-  //           </th>
-  //           <th>
-  //             <select name="score" className='bg-transparent'>
-  //               <option value="" selected>امتیاز</option>
-  //               <option value="">بیشترین امتیاز</option>
-  //               <option value="">کم ترین امتیاز</option>
-  //             </select>
-  //           </th>
-  //           <th>
-  //             <select name="date" className='bg-transparent'>
-  //               <option value="" selected>پیوستن</option>
-  //               <option value="">قدیمی ترین</option>
-  //               <option value="">جدید ترین</option>
-  //             </select>
-  //           </th>
-  //           <th>افزودن دوره</th>
-  //           <th>تغییر نقش</th>
-  //           <th>بن</th>
-  //           <th>حذف</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         <tr>
-  //           <td>1</td>
-  //           <td>سید محسن موسوی ساعی</td>
-  //           <td>mohsen.wsx</td>
-  //           <td>09382646981</td>
-  //           <td>1300000</td>
-  //           <td>B+</td>
-  //           <td>400</td>
-  //           <td>02/11/1403</td>
-  //           <td>
-  //             <Link to={'1/create-sale'} state={{ userName: 'محسن موسوی' }} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-500"}>
-  //               افزودن
-  //             </Link>
-  //           </td>
-  //           <td>
-  //             <button className="py-1 px-2 rounded-lg text-white bg-green-500">
-  //               تغییر
-  //             </button>
-  //           </td>
-  //           <td>
-  //             <button className="py-1 px-2 rounded-lg text-white bg-orange-500">
-  //               بن
-  //             </button>
-  //           </td>
-  //           <td>
-  //             <button className="py-1 px-2 rounded-lg text-white bg-red-500">
-  //               حذف
-  //             </button>
-  //           </td>
-  //         </tr>
-  //       </tbody>
-  //     </DataTable>
-  //   </div>
-  // )
 }

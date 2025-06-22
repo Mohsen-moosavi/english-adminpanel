@@ -1,5 +1,4 @@
-import React from 'react'
-import userProfile from './../../../public/user-profile.png'
+import userProfile from './../../assets/user-profile.png'
 import { FaBars } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteSession, getSessions, setFileStatus, setOffset, setSearch, setStatus } from '../redux/features/sessionSlice'
 import { Link, useParams } from 'react-router-dom'
@@ -60,7 +60,7 @@ export default function Session() {
                   <th>شماره</th>
                   <th>عنوان</th>
                   <th>
-                    <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+                    <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                       <option value={''}>وضعیت</option>
                       <option value="free">رایگان</option>
                       <option value="notFree">غیر رایگان</option>
@@ -68,7 +68,7 @@ export default function Session() {
                   </th>
                   <th>مدت</th>
                   <th>
-                    <select name="fileStatus" className='bg-transparent' defaultValue={fileStatus} onChange={(e) => dispatch(setFileStatus(e.target.value))}>
+                    <select name="fileStatus" className='bg-transparent' value={fileStatus} onChange={(e) => dispatch(setFileStatus(e.target.value))}>
                       <option value={''}>فایل پیوست</option>
                       <option value="fileExist">با پیوست</option>
                       <option value="fileNotExist">بدون پیوست</option>

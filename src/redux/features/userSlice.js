@@ -11,7 +11,6 @@ export const getUserDate = createAsyncThunk(
         const {response , error} = await authRequest(getUserInfo());
 
         if(response) return response.data;
-        console.log('errorrr=====>',error);
 
         if (error?.response?.status === 401) {
             window.location.assign('/login')
@@ -29,7 +28,6 @@ export const getUserDate = createAsyncThunk(
       { rejectWithValue }
     ) => {      
         const {response , error} = await logOutService();
-        console.log("logout=====================>" ,response)
 
         if(response){
           toast.success('با موفقیت از حسابتان خارج شدید.')

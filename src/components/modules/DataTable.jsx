@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function DataTable({children}) {
   return (
     <div className='dataTable max-w-full'>

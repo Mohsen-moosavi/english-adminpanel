@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { deleteArticle, getArticles, setOffset, setSearch, setStatus } from '../redux/features/articleSlice'
@@ -69,7 +69,7 @@ export default function Article() {
             <th>نام</th>
             <th>لینک</th>
             <th>
-              <select name="status" className='bg-transparent' defaultValue={status} onChange={(e)=>dispatch(setStatus(e.target.value))}>
+              <select name="status" className='bg-transparent' value={status} onChange={(e)=>dispatch(setStatus(e.target.value))}>
                 <option value="">وضعیت</option>
                 <option value="draft">پیش نویس</option>
                 <option value="published">منتشر شده</option>

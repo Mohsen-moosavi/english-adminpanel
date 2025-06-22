@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFormik } from 'formik';
 import FormErrorMsg from '../components/modules/FormErrorMessag';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,7 +60,6 @@ export default function CreateBookCollection() {
             return toast.error(error.response.data.message)
         }
         const book = response.data.data.book
-        console.log("booook=======>", book)
         formik.setFieldValue('name', book.name)
         formik.setFieldValue('shortDescription', book.shortDescription)
         formik.setFieldValue('longDescription', book.longDescription)
@@ -145,7 +144,6 @@ export default function CreateBookCollection() {
                     const links = subtitleArray.map(item => `<a href="#${item.id}">${item.subtitle}</a>`)
                     if (id) {
                         const newFiles = bookFileArray.filter(file => file.isNew)
-                        // console.log('result======>' ,{ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate : values.ageGrate , grate : values.grate, newFiles, deletedFiles : deletedFileArray} )
                         dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, isForChildren:values.isForChildren, navigator, setProgress }))
                     } else {
                         dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, isForChildren:values.isForChildren, navigator, setProgress  }))
@@ -447,7 +445,7 @@ export default function CreateBookCollection() {
                                     </div>
                                     <div>
                                         <label htmlFor="create-book-input-14" className="form-label">نوع فایل:</label>
-                                        <select name="types" className='form-input mt-1' id="create-book-input-14" defaultValue={''} onChange={(e) => setBookTypeInput(e.target.value)}>
+                                        <select name="types" className='form-input mt-1' id="create-book-input-14" value={''} onChange={(e) => setBookTypeInput(e.target.value)}>
                                             <option value="">یک مورد را انتخاب کنید.</option>
                                             <option value="book">کتاب اصلی</option>
                                             <option value="workbook">کتاب کار</option>

@@ -94,7 +94,6 @@ export const getBooks = createAsyncThunk(
         const { response, error } = await getAllBooksFunc(limit , offset , search, tagId)
 
         if (response) {
-            console.log('books=========>' , response)
             return response.data;
         }
 
@@ -188,7 +187,6 @@ export const deleteBook = createAsyncThunk(
         const { response, error } = await authRequest(deleteBookWithGettingAllFunc(id ,limit , offset , search, tagId))
 
         if (response) {
-            console.log('books=========>' , response)
             return response.data;
         }
 
@@ -196,47 +194,6 @@ export const deleteBook = createAsyncThunk(
         return rejectWithValue(error);
     }
 );
-
-// export const updateArticle = createAsyncThunk(
-//     'article/updateArticle',
-//     async (
-//         {id, title , shortDescription , longDescription , cover , slug , isPublished , links , tags  , navigator},
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(updateArticleFunc(id ,title , shortDescription , longDescription , cover , slug , isPublished , links , tags));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             navigator('/articles')
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const deleteArticle = createAsyncThunk(
-//     'article/deleteArticle',
-//     async (
-//         { id , limit , offset , search, status , writerId},
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(deleteArticleFunc(id , limit , offset , search, status , writerId));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-
-//         toast.error(error?.response?.data?.message);
-//         return rejectWithValue(error);
-//     }
-// );
 
 const setSearchWordAction = (state, action) => {
     state.search = action.payload;

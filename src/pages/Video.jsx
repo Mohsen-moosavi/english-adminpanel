@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FaLongArrowAltRight, FaPhotoVideo, FaTrashAlt } from 'react-icons/fa'
 import { HiOutlineUpload } from 'react-icons/hi'
 import { MdVideoLibrary } from 'react-icons/md'

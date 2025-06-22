@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
 import toast from "react-hot-toast";
 import { answerToCommentFunc, answerToCommentInCommentLoopFunc, changeAcceptFunc, changeAcceptInCommentLoopFunc, deleteCommentFunc, deleteCommentInCommentLoopFunc, getCommentsFunc, getCommentTreeFunc } from "../../services/comment.services";
-import { comment } from "postcss";
 
 export const getComments = createAsyncThunk(
     'comment/getComments',
@@ -182,49 +181,6 @@ export const deleteCommentInCommentLoop = createAsyncThunk(
         return rejectWithValue(error);
     }
 );
-
-// export const deleteLevel = createAsyncThunk(
-//     'level/deleteLevel',
-//     async (
-//         { id },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(deleteLevelFunc(id));
-
-//         console.log('responses---=====>', response);
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-//         console.log('errorrr=====>', error);
-
-//         toast.error(error?.response?.data?.message);
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const updateLevel = createAsyncThunk(
-//     'level/updateLevel',
-//     async (
-//         { id, name },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(updateLevelFunc(id, name));
-
-//         if (response) {
-//             toast.success(response?.data?.message);
-//             return response.data;
-//         }
-//         console.log('errorrr=====>', error);
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
 
 const setSearchWordAction = (state, action) => {
     state.search = action.payload;

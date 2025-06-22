@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { answerToContact, changeStatusContact, deleteContact, getContacts, setAnswering, setOffset, setStatus } from '../redux/features/contactSlice'
 import DataTable from '../components/modules/DataTable'
@@ -89,14 +89,14 @@ export default function Contact() {
                         <th>تاریخ</th>
                         <th>پیغام</th>
                         <th>
-                            <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+                            <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                                 <option value={''}>وضعیت</option>
                                 <option value="seen">خوانده شده</option>
                                 <option value="notSeen">خوانده نشده</option>
                             </select>
                         </th>
                         <th>
-                            <select name="answering" className='bg-transparent' defaultValue={answering} onChange={(e) => dispatch(setAnswering(e.target.value))}>
+                            <select name="answering" className='bg-transparent' value={answering} onChange={(e) => dispatch(setAnswering(e.target.value))}>
                                 <option value={''}>پاسخگویی</option>
                                 <option value="answered">پاسخ داده شده</option>
                                 <option value="notAnswered">بدون پاسخ</option>
@@ -124,7 +124,6 @@ export default function Contact() {
                                     </button>
                                 </td>
                                 <td>
-                                    {console.log("status=============================>" , contact.seen)}
                                     {contact.seen ? (
                                         <button disabled={isLoading} className='py-1 px-2 rounded-lg text-white hover:text-white bg-green-500' onClick={() => changeStatusContactHandler(contact.id,'notSeen')}>
                                             خوانده شده

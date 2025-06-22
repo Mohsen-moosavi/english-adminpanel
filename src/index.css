@@ -299,35 +299,35 @@ button{
 @layer base {
     @font-face {
         font-family: Iransans;
-        src: url('./../public/fonts/IRANSans_UltraLight.ttf') format('truetype');
+        src: url('/fonts/IRANSans_UltraLight.ttf') format('truetype');
         font-weight: 100;
         font-display: swap;
     }
   
     @font-face {
         font-family: Iransans;
-        src: url('./../public/fonts/IRANSans_Light.ttf') format('truetype');
+        src: url('/fonts/IRANSans_Light.ttf') format('truetype');
         font-weight: 300;
         font-display: swap;
     }
   
     @font-face {
         font-family: 'Iransans';
-        src: url('./../public/fonts/IRANSans_Medium.ttf') format('truetype');
+        src: url('/fonts/IRANSans_Medium.ttf') format('truetype');
         font-weight: 500;
         font-display: swap;
     }
   
     @font-face {
         font-family: Iran sans;
-        src: url('./../public/fonts/IRANSans_Bold.ttf') format('truetype');
+        src: url('/fonts/IRANSans_Bold.ttf') format('truetype');
         font-weight: 700;
         font-display: swap;
     }
   
     @font-face {
         font-family: Iransans;
-        src: url('./../public/fonts/IRANSans_Black.ttf') format('truetype');
+        src: url('/fonts/IRANSans_Black.ttf') format('truetype');
         font-weight: 900;
         font-display: swap;
     }

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
 import toast from "react-hot-toast";
-import gregorian from 'react-date-object/calendars/gregorian'
 import {createSaleByAdminFunc, deleteSaleFunc, getSalesFunc} from '../../services/sale.Services'
 
 

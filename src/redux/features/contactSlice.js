@@ -108,8 +108,8 @@ const contactSlice = createSlice({
         contactCount: 0,
         limit: 10,
         offset: 0,
-        answering: null,
-        status: null,
+        answering: '',
+        status: '',
         isLoading: false,
 
     },

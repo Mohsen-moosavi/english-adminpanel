@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFormik } from 'formik';
 import FormErrorMsg from '../components/modules/FormErrorMessag';
 import { useDispatch, useSelector } from 'react-redux';
@@ -112,7 +112,6 @@ export default function CreateArticle() {
         },
         validationSchema: FormValidation,
         onSubmit: async (values, { resetForm }) => {
-            console.log("fromik=====>", values)
 
             if (!tagArray.length) {
                 toast.error('مقاله باید حداقل یک تگ داشته باشد.')

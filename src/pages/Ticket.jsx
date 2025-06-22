@@ -1,4 +1,4 @@
-import React, { useEffect,  useState } from 'react'
+import { useEffect,  useState } from 'react'
 import DataTable from '../components/modules/DataTable';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '../components/modules/Pagination';
@@ -18,15 +18,6 @@ export default function Ticket() {
     useEffect(() => {
         dispatch(getTickets({ offset, limit, status, subject, userId }))
     }, [status, subject, userId])
-
-    // async function createTicket() {
-    //     try {
-    //         const response = await apiPrivate(appJsonPostApi).post('/ticket', {subject : 'پول می خوام', message: 'این تیکت، شماره 10 است.' });
-    //         console.log("response==============>", response)
-    //     } catch (error) {
-    //         console.log("error==============>", error)
-    //     }
-    // }
 
     function paginationHandler(page) {
         dispatch(getTickets({ offset: page * limit, limit, status, subject, userId }))
@@ -62,7 +53,7 @@ export default function Ticket() {
                         <th>شماره</th>
                         <th>کاربر</th>
                         <th>
-                            <select name="Subject" className='bg-transparent' defaultValue={subject} onChange={(e) => dispatch(setSubjecth(e.target.value))}>
+                            <select name="Subject" className='bg-transparent' value={subject} onChange={(e) => dispatch(setSubjecth(e.target.value))}>
                                 <option value={''}>موضوع</option>
                                 <option value="fiscal">مالی</option>
                                 <option value="scholastic">درسی</option>
@@ -73,7 +64,7 @@ export default function Ticket() {
                             </select>
                         </th>
                         <th>
-                            <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+                            <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                                 <option value={''}>وضعیت</option>
                                 <option value="open">انتظار</option>
                                 <option value="pending">انتظار مجدد</option>

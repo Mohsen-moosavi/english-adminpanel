@@ -88,7 +88,6 @@ const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, l
         async () => {
             try {
 
-                console.log("teacherID ============================================" , teacherId)
                 let searchQuery = `limit=${limit}&offset=${offset}&search=${search}`
                 status && (searchQuery+=`&status=${status}`)
                 teacherId && (searchQuery+=`&teacherId=${teacherId}`)

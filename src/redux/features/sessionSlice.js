@@ -28,8 +28,7 @@ export const uploadVideo = createAsyncThunk(
 
                 const { response, error } = await authRequest(uploadSessionVideoFunc(chunk, chunkNumber, totalChunks, videoName, courseId, time))
 
-                console.log('response=====>', response)
-                console.log('error=====>', error)
+
                 if (response && response.data.status === 200) {
                     videoDetails = response.data.data?.session;
                     setProgress(Number((chunkNumber + 1) * chunkProgress));
@@ -89,8 +88,7 @@ export const updateVideo = createAsyncThunk(
 
                 const { response, error } = await authRequest(updateSessionVideoFunc(chunk, chunkNumber, totalChunks, videoName, sessionId, time))
 
-                console.log('response=====>', response)
-                console.log('error=====>', error)
+
                 if (response && response.data.status === 200) {
                     videoDetails = response.data.data?.session;
                     setProgress(Number((chunkNumber + 1) * chunkProgress));
@@ -150,8 +148,7 @@ export const updateDetails = createAsyncThunk(
 
                 const { response, error } = await authRequest(uploadSessionDetailsFunc(chunk, chunkNumber, totalChunks, fileName, sessionId, name, isFree))
 
-                console.log('response=====>', response)
-                console.log('error=====>', error)
+
                 if (response && response.data.status === 200) {
                     sessionDetails = response.data.data?.session;
                     setProgress(Number((chunkNumber + 1) * chunkProgress));
@@ -218,7 +215,6 @@ export const getSessions = createAsyncThunk(
         { id, limit, offset, search, status, fileStatus },
         { rejectWithValue }
     ) => {
-        console.log("here================>", limit, offset, search, status, fileStatus )
 
         const { response, error } = await getSessionsFunc(id, limit, offset, search, status, fileStatus)
 
@@ -276,167 +272,6 @@ export const getSingleSession = createAsyncThunk(
     }
 );
 
-// export const changeAccept = createAsyncThunk(
-//     'comment/changeAcceptComments',
-//     async (
-//         { id, accept, limit, offset, search, score, status, parentStatus },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(changeAcceptFunc(id, accept, limit, offset, search, score, status, parentStatus));
-
-//         if (response) {
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const deleteComment = createAsyncThunk(
-//     'comment/deleteComment',
-//     async (
-//         { id, limit, offset, search, score, status, parentStatus },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(deleteCommentFunc(id, limit, offset, search, score, status, parentStatus));
-
-//         if (response) {
-//             toast.error(response?.data?.message);
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-
-//         return rejectWithValue(error);
-//     }
-// );
-
-
-// export const getCommentTree = createAsyncThunk(
-//     'comment/getCommentTree',
-//     async (
-//         { id, navigate },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(getCommentTreeFunc(id))
-
-//         if (response) {
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         navigate('/comments')
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const answerToComment = createAsyncThunk(
-//     'comment/answerToComment',
-//     async (
-//         { content, courseId, parentId, limit, offset, search, score, status, parentStatus },
-//         { rejectWithValue }
-//     ) => {
-
-//         const { response, error } = await authRequest(answerToCommentFunc(content, courseId, parentId, limit, offset, search, score, status, parentStatus))
-
-//         if (response) {
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const answerToCommentInCommentLoop = createAsyncThunk(
-//     'comment/answerToCommentInCommentLoop',
-//     async (
-//         { id, content, courseId, parentId, navigate },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(answerToCommentInCommentLoopFunc(id, content, courseId, parentId))
-
-//         if (response) {
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-//         navigate('/comments')
-//         return rejectWithValue(error);
-//     }
-// );
-
-
-// export const changeAcceptInCommentLoop = createAsyncThunk(
-//     'comment/changeAcceptInCommentLoop',
-//     async (
-//         { id, accept },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(changeAcceptInCommentLoopFunc(id, accept));
-
-//         if (response) {
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//         }
-
-//         return rejectWithValue(error);
-//     }
-// );
-
-// export const deleteCommentInCommentLoop = createAsyncThunk(
-//     'comment/deleteCommentInCommentLoop',
-//     async (
-//         { id, mainCommentId, navigator },
-//         { rejectWithValue }
-//     ) => {
-//         const { response, error } = await authRequest(deleteCommentInCommentLoopFunc(id, mainCommentId));
-
-//         if (response) {
-//             if (!response.data?.data?.commentTree?.length) {
-//                 navigator('/comments')
-//             }
-//             return response.data;
-//         }
-
-//         if (error?.response?.status === 401) {
-//                         window.location.assign('/login');
-//         } else {
-//             toast.error(error?.response?.data?.message);
-//             navigator('/comments')
-//         }
-
-//         return rejectWithValue(error);
-//     }
-// );
-
 const setSearchWordAction = (state, action) => {
     state.search = action.payload;
 }
@@ -452,10 +287,6 @@ const setStatusAction = (state, action) => {
 const setFileStatusAction = (state, action) => {
     state.fileStatus = action.payload;
 }
-
-// const setParentStatusAction = (state, action) => {
-//     state.parentStatus = action.payload
-// }
 
 const sessionSlice = createSlice({
     name: "session",

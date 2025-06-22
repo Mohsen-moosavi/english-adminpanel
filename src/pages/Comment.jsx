@@ -1,12 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { answerToComment, changeAccept, deleteComment, getComments, setOffset, setParentStatus, setScore, setSearch, setStatus } from '../redux/features/commentSlice';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import DataTable from '../components/modules/DataTable';
 import Pagination from '../components/modules/Pagination';
 import Searcher from '../components/modules/Searcher';
-import { authRequest } from '../services/authApi.service';
-import { createCommentsFunc } from '../services/comment.services';
 import Swal from 'sweetalert2';
 
 export default function Comment() {
@@ -17,28 +15,6 @@ export default function Comment() {
 
   const {id : userId} = useParams()
   const {state} = useLocation()
-
-  // const isInitialised = useRef(false)
-  // useEffect(() => {
-  //   if (!isInitialised.current) {
-  //     isInitialised.current = true
-  //     // dispatch(getComments({ limit: 10, offset: 0 }))
-  //     createComments()
-  //   }
-  // }, [])
-
-  // async function createComments() {
-  //   const comments = {
-  //     content: 'سلام این کامنت 4 می باشد.',
-  //     // content: 'سلام این کامنت پاسخ برای کامنت 1 می باشد.',
-  //     score: 4,
-  //     courseId: 2,
-  //     // parentId: 5
-  //   }
-  //   const { response, error } = await authRequest(createCommentsFunc(comments))
-
-  //   console.log("result===>", error, response)
-  // }
 
   function paginationHandler(page) {
     dispatch(getComments({ limit, offset: page * limit, search, score, status, parentStatus , userId }))
@@ -115,7 +91,7 @@ export default function Comment() {
             <th>شماره</th>
             <th>دوره</th>
             <th>
-              <select name="score" className='bg-transparent' defaultValue={score} onChange={(e) => dispatch(setScore(e.target.value))}>
+              <select name="score" className='bg-transparent' value={score} onChange={(e) => dispatch(setScore(e.target.value))}>
                 <option value={''}>امتیاز</option>
                 <option value="5">5</option>
                 <option value="4">4</option>
@@ -127,14 +103,14 @@ export default function Comment() {
             </th>
             <th>کاربر</th>
             <th>
-              <select name="type" className='bg-transparent' defaultValue={parentStatus} onChange={(e) => dispatch(setParentStatus(e.target.value))}>
+              <select name="type" className='bg-transparent' value={parentStatus} onChange={(e) => dispatch(setParentStatus(e.target.value))}>
                 <option value={''}>نوع</option>
                 <option value="main">اصلی</option>
                 <option value="answer">پاسخ</option>
               </select>
             </th>
             <th>
-              <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+              <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                 <option value={''}>وضعیت</option>
                 <option value="accept">تایید شده</option>
                 <option value="notAccept">رد شده</option>

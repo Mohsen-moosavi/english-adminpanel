@@ -35,7 +35,6 @@ export const getArticles = createAsyncThunk(
         const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId, userId, tagId)
 
         if (response) {
-            console.log('res artcile=========>' , response.data.data)
             return response.data;
         }
 
@@ -154,19 +153,6 @@ const articleSlice = createSlice({
             .addCase(deleteArticle.rejected, (state, action) => {
                 state.isLoading = false;
             })
-
-
-    //         .addCase(updateTag.pending, state => {
-    //             state.isLoading = true;
-    //         })
-    //         .addCase(updateTag.fulfilled, (state, action) => {
-    //             state.isLoading = false;
-    //             state.tags = action.payload?.data?.tags;
-    //             state.count = action.payload?.data?.count;
-    //         })
-    //         .addCase(updateTag.rejected, (state, action) => {
-    //             state.isLoading = false;
-    //         })
     },
 });
 

@@ -1,12 +1,10 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-
+import notFound from './../assets/notFoundsvg.svg'
 function NotFound() {
   return (
     <div className='w-full h-screen flex flex-col items-center justify-center'>
-      <p className='text-main-color font-bold text-[lg] sm:text-[20px]'>صفحه مورد نظر یافت نشد!</p>
-        <h1 className='text-main-color font-bold text-[100px] sm:text-[200px] sm:leading-[210px] not-found-404 not-found-text-shadow'>404</h1>
-        <Link to={'/'} className='p-2 rounded-lg bg-main-color !text-white mt-10 max-sm:text-sm hover:opacity-60'>بازگشت به صفحه اصلی</Link>
+      <img src={notFound} alt="not found" className='max-w-[100vw] max-h-[90vh] w-full h-full' />
+      <Link to={'/'} className='p-2 rounded-lg bg-main-color !text-white text-sm hover:opacity-60 relative bottom-5'>بازگشت به صفحه اصلی</Link>
     </div>
   )
 }

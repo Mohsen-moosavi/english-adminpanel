@@ -1,5 +1,4 @@
-import React from 'react'
-import userProfile from './../../../public/user-profile.png'
+import userProfile from './../../assets/user-profile.png'
 import moment from 'moment-jalaali'
 import { FaTrashAlt } from 'react-icons/fa'
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 export default function Searcher({ setPaginatorChangerFlag, defaultgetterValuesObj, reset, getter, setSearch, defaultValue = "",setOffset }) {
 

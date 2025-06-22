@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import userProfile from './../../public/user-profile.png'
+import { useEffect, useRef, useState } from 'react'
+import userProfile from './../assets/user-profile.png'
 import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'

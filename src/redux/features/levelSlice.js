@@ -15,7 +15,6 @@ export const createNewLevel = createAsyncThunk(
             toast.success(response?.data?.message);
             return response.data;
         }
-        console.log('errorrr=====>', error);
 
         if (error?.response?.status === 401) {
                         window.location.assign('/login');
@@ -52,12 +51,10 @@ export const deleteLevel = createAsyncThunk(
     ) => {
         const { response, error } = await authRequest(deleteLevelFunc(id));
 
-        console.log('responses---=====>', response);
         if (response) {
             toast.success(response?.data?.message);
             return response.data;
         }
-        console.log('errorrr=====>', error);
 
         toast.error(error?.response?.data?.message);
         return rejectWithValue(error);
@@ -76,7 +73,6 @@ export const updateLevel = createAsyncThunk(
             toast.success(response?.data?.message);
             return response.data;
         }
-        console.log('errorrr=====>', error);
 
         if (error?.response?.status === 401) {
                         window.location.assign('/login');

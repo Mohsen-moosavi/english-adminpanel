@@ -1,9 +1,9 @@
 import { Toaster } from "react-hot-toast";
 import Router from "./routes/Router";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import environment from "./constant/environment";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 

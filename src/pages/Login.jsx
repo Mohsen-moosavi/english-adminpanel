@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import { appJsonPostApi } from '../configs/axios';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,7 @@ export default function Login() {
   useEffect(() => {
     const savedPhone = localStorage.getItem("phone");
     if (savedPhone) {
-      formik.setValues({phone : savedPhone} , true);
+      formik.setValues({phone : savedPhone,password:''},true);
     }
   }, [])
 
@@ -75,12 +75,14 @@ export default function Login() {
                     </svg>
                     <input
                         name='phone'
-                        type="number"
-                        className="w-full pl-3 pr-8 py-2 rounded-full bg-[#d2eeff] text-[#0000a3] placeholder-[#0000a3]"
+                        type="tel"
+                        className="w-full pl-3 pr-8 py-2 rounded-full bg-[#d2eeff] text-end text-[#0000a3] placeholder-[#0000a3]"
                         placeholder="تلفن همراه"
                         value={formik.values.phone}
                         onChange={formik.handleChange}
-                        onBlur={formik.handleBlur} />
+                        onBlur={formik.handleBlur}
+                        autoComplete='username'
+                        />
 
                 </div>
                 {formik.touched.phone && formik.errors.phone ? (
@@ -102,7 +104,9 @@ export default function Login() {
                         placeholder="گذرواژه"
                         value={formik.values.password}
                         onChange={formik.handleChange}
-                        onBlur={formik.handleBlur} />
+                        onBlur={formik.handleBlur}
+                        autoComplete='current-password'
+                        />
 
                 </div>
                 {formik.touched.password && formik.errors.password ? (

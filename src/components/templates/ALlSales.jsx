@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Searcher from '../modules/Searcher'
 import { deleteSale, getSales, setEndDate, setOffset, setPriceStatus, setSaleStatus, setSearch, setStartDate, setStatus } from '../../redux/features/saleSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -98,14 +98,14 @@ export default function ALlSales() {
               <th>تاریخ</th>
               <th>مبلغ پرداخت شده</th>
               <th>
-                <select name="priceStatus" className='bg-transparent' defaultValue={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
+                <select name="priceStatus" className='bg-transparent' value={priceStatus} onChange={(e) => dispatch(setPriceStatus(e.target.value))}>
                   <option value={''}>مبلغ اصلی</option>
                   <option value="free">رایگان</option>
                   <option value="notFree">غیر رایگان</option>
                 </select>
               </th>
               <th>
-                <select name="status" className='bg-transparent' defaultValue={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
+                <select name="status" className='bg-transparent' value={status} onChange={(e) => dispatch(setStatus(e.target.value))}>
                   <option value={''}>تخفیف</option>
                   <option value="hasOff">تخفیف دار</option>
                   <option value="hasNotOff">بدون تخفیف</option>
@@ -113,7 +113,7 @@ export default function ALlSales() {
               </th>
               <th>درصد تخفیف</th>
               <th>
-                <select name="saleStatus" className='bg-transparent' defaultValue={saleStatus} onChange={(e) => dispatch(setSaleStatus(e.target.value))}>
+                <select name="saleStatus" className='bg-transparent' value={saleStatus} onChange={(e) => dispatch(setSaleStatus(e.target.value))}>
                   <option value={''}>خریدار</option>
                   <option value="user">کاربر</option>
                   <option value="admin">ادمین</option>

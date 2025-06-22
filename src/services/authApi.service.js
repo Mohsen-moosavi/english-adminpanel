@@ -9,7 +9,6 @@ const getUserInfo = () => {
         async () => {
             try {
                 const response = await apiPrivate(appJsonPostApi).get('/auth/get-me');
-                console.log('object111======>', { response})
                 return { response };
             } catch (error) {
                 return { error };
@@ -21,7 +20,6 @@ const getUserInfo = () => {
 const sendRefreshTokenRequest = async () => {
     try {
         const response = await appJsonPostApi.post('/auth/refresh-token')
-        console.log('refreshToken ====>', response)
         return true
     } catch (error) {
         window.location.assign('/login')
@@ -40,7 +38,6 @@ const authRequest = async (request) => {
     const expireTime = getCookie('expireTime');
     const isExpired = (expireTime > Date.now()) ? false : true
 
-    console.log('isExpired' , isExpired)
 
     if (isExpired) {
         const isRefreshed = await refreshToken();

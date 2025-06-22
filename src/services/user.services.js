@@ -16,7 +16,6 @@ const getUsersFunc = (searchName='' , searchPhone='', roleStatus, purchaseStatus
                 !!deletedUser && (queryString += `&deletedUser=${deletedUser}`)
                 !!scorePriority && (queryString += `&scorePriority=${scorePriority}`)
 
-                console.log('params====>',{searchName , searchPhone, roleStatus, purchaseStatus , scoreStatus , levelStatus, deletedUser,scorePriority, limit , offset})
 
                 const response = await apiPrivate(appJsonPostApi).get(`/user/${queryString}`);
                 return { response };

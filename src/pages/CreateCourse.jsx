@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { FiFileText } from 'react-icons/fi';
 import { HiOutlineUpload } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
@@ -326,7 +326,6 @@ export default function CreateCourse() {
                             {levels.length ? (
                                 <select
                                     name='levelId'
-                                    defaultValue={''}
                                     className="form-input"
                                     id="create-course-input-15"
                                     value={formik.values.levelId}
@@ -385,7 +384,6 @@ export default function CreateCourse() {
                                 {bookGroups.length && formik.values.bookCollectionId ? (
                                     <>
                                         <select
-                                        defaultValue={''}
                                             id="create-course-input-13"
                                             className='form-input'
                                             name='bookFileGroup'

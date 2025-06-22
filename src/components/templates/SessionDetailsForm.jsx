@@ -1,11 +1,10 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 import FormErrorMsg from '../modules/FormErrorMessag';
 import { MdClose, MdDownload } from 'react-icons/md';
 import { HiOutlineUpload } from 'react-icons/hi';
 import { FiFileText } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import Progress from '../modules/Progress';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDetails, updateDetailsWithoutFile } from '../../redux/features/sessionSlice';
@@ -121,7 +120,6 @@ export default function SessionDetailsForm({ videoDetails }) {
                 <div className="form-btn-group">
                     <label htmlFor="session-deatils-input-2" className="form-label">وضعیت دوره:</label>
                     <select
-                    defaultValue=''
                     type="text"
                     name='isFree'
                     placeholder="slug دوره را وارد کنید..."

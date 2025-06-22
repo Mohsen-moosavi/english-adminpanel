@@ -6,7 +6,6 @@ const createOffFunc = (percent, expire, times, isPublic, courses, code, isForAll
         async () => {
             try {
 
-                console.log("expire===>", expire)
                 const dataObj = { percent, expire, public: isPublic }
                 times && (dataObj.times = times);
 
