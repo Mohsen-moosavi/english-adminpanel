@@ -1,4 +1,3 @@
-import userProfile from './../../assets/user-profile.png'
 import { FaBars } from 'react-icons/fa6'
 import { useSelector } from 'react-redux'
 
@@ -19,7 +18,9 @@ export default function Header() {
                     <span>{userInfo.name}</span>
                     <span>{userInfo['role.name']}</span>
                 </div>
-                <img src={userInfo?.avatar || userProfile} className="w-[35px] md:w-[50px] rounded-full" alt="user" />
+                <div className='flex items-center justify-center overflow-hidden w-[35px] md:w-[50px] h-[35px] md:h-[50px] border-2 border-main-color rounded-full'>
+                    <img src={userInfo?.avatar || "/public/images/user-profile.png"} className="w-[35px] md:w-[50px] rounded-full" alt="user" />
+                </div>
             </div>
         </div>
     )

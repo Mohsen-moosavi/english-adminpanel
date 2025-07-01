@@ -13,6 +13,7 @@ import ticketReducer from './features/ticketSlice'
 import usersReducer from './features/usersSlice'
 import consoleReducer from './features/consoleSlice'
 import contactReducer from './features/contactSlice'
+import extrafileReducer from './features/extrafileSlice'
 
 const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ const store = configureStore({
     usersData : usersReducer,
     consoleData : consoleReducer,
     contactData : contactReducer,
+    extrafileData :extrafileReducer
   },
 });
 

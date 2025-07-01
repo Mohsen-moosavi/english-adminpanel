@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
-import userProfile from './../assets/user-profile.png'
 import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useDispatch } from 'react-redux'
-import { banUser, changeUserRole, getRoles, getUserDetails, removeUserProfile, resetPassword, updateUserAvtar } from '../redux/features/usersSlice'
+import { banUser, changeUserRole, getRoles, getUserDetails, resetPassword } from '../redux/features/usersSlice'
 import moment from 'moment-jalaali'
 import Swal from 'sweetalert2'
 import { MdEdit } from 'react-icons/md'
 import toast from 'react-hot-toast'
 import { ImSpinner8 } from 'react-icons/im'
+import { removeUserProfile, updateUserAvtar } from '../redux/features/userSlice'
 
 export default function UserDetails() {
 
@@ -153,7 +153,7 @@ export default function UserDetails() {
                       <ImSpinner8 size={50} color='#56abc9' className='animate-[spin_2s_linear_infinite] min-h-[150px]' />
                     ) : (
                       <>
-                        <img src={userData.avatar || userProfile} alt="profile" className='w-full bg-main-color/40' />
+                        <img src={userData.avatar || "/public/images/user-profile.png"} alt="profile" className='w-full bg-main-color/40' />
                         <div className='absolute bottom-0 left-[5%] flex gap-x-2'>
                           <button className={`p-2 rounded-full ${userData.avatar ? 'bg-red-400' : 'bg-red-300'}`} disabled={!userData.avatar} onClick={removeUserProfileHandler}>
                             <FaTrash size={15} color='#fff' />

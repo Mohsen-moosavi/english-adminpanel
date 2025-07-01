@@ -95,7 +95,7 @@ export default function Article() {
                   </Link>
                   </td>
                 <td>
-                  <a target='_blank' href={`${constants.MAIN_URL}/article/${article.slug}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-700"}>
+                  <a target='_blank' href={`${constants.MAIN_URL}/articles/${article.slug}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-700"}>
                     مشاهده
                   </a>
                 </td>

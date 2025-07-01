@@ -291,7 +291,7 @@ export default function CreateArticle() {
 
 
                         <div className="form-btn-group">
-                            <label htmlFor="create-article-input-2" className="form-label">توضیحات کوتاه (به فرم HTML):</label>
+                            <label htmlFor="create-article-input-2" className="form-label">توضیحات کوتاه:</label>
                             <textarea
                                 type="text"
                                 name='shortDescription'

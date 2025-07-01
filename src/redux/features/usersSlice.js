@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest } from "../../services/authApi.service";
-import { banUserFunc, changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, removeUserProfileFunc, resetPasswordFunc, updateProfileAvatarFunc } from "../../services/user.services";
+import { banUserFunc, changeUserRoleFunc, getFinderParamsFunc, getRolesFunc, getUserDetailsFunc, getUsersFunc, resetPasswordFunc } from "../../services/user.services";
 import toast from "react-hot-toast";
 
 export const getUsers = createAsyncThunk(
@@ -135,28 +135,7 @@ export const banUser = createAsyncThunk(
     }
 );
 
-export const removeUserProfile = createAsyncThunk(
-    'users/removeUserProfile',
-    async (
-        { userId, setUserData},
-        { rejectWithValue }
-    ) => {
-        const { response, error } = await authRequest(removeUserProfileFunc(userId));
 
-        if (response) {
-            setUserData(response.data?.data?.user)
-            toast.success(response.data.message)
-            return response.data;
-        }
-
-        if (error?.response?.status === 401) {
-                        window.location.assign('/login');
-        } else {
-            toast.error(error?.response?.data?.message);
-        }
-        return rejectWithValue(error);
-    }
-);
 
 export const resetPassword = createAsyncThunk(
     'users/resetPassword',
@@ -180,31 +159,6 @@ export const resetPassword = createAsyncThunk(
     }
 );
 
-export const updateUserAvtar = createAsyncThunk(
-    'users/updateUserAvatar',
-    async (
-        { userId, avatar, setUserData , setShowLoader},
-        { rejectWithValue }
-    ) => {
-        setShowLoader(true)
-        const { response, error } = await authRequest(updateProfileAvatarFunc(userId,avatar));
-
-        if (response) {
-            setUserData(response.data?.data?.user)
-            toast.success(response.data.message)
-            setShowLoader(false)
-            return response.data;
-        }
-
-        if (error?.response?.status === 401) {
-                        window.location.assign('/login');
-        } else {
-            toast.error(error?.response?.data?.message);
-        }
-        setShowLoader(false)
-        return rejectWithValue(error);
-    }
-);
 
 const setSearchNameAction = (state, action) => {
     state.searchName = action.payload;

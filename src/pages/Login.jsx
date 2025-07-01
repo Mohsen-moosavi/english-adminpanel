@@ -31,7 +31,7 @@ export default function Login() {
         setSending(true)
         
         const response = await appJsonPostApi.post('/auth/login-admins', {
-          phone: `+98${values.phone}`,
+          phone: `+98${Number(values.phone)}`,
           password: values.password
         })
 

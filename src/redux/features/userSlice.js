@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authRequest, getUserInfo, logOutService } from "../../services/authApi.service";
 import toast from "react-hot-toast";
+import { removeUserProfileFunc, updateProfileAvatarFunc } from "../../services/user.services";
 
 export const getUserDate = createAsyncThunk(
     'user/getUserDate',
@@ -20,6 +21,55 @@ export const getUserDate = createAsyncThunk(
           return rejectWithValue(error);
     }
   );
+
+  export const updateUserAvtar = createAsyncThunk(
+    'user/updateUserAvatar',
+    async (
+        { userId, avatar, setUserData , setShowLoader},
+        { rejectWithValue }
+    ) => {
+        setShowLoader(true)
+        const { response, error } = await authRequest(updateProfileAvatarFunc(userId,avatar));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            setShowLoader(false)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+                        window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        setShowLoader(false)
+        return rejectWithValue(error);
+    }
+);
+
+export const removeUserProfile = createAsyncThunk(
+    'user/removeUserProfile',
+    async (
+        { userId, setUserData},
+        { rejectWithValue }
+    ) => {
+        const { response, error } = await authRequest(removeUserProfileFunc(userId));
+
+        if (response) {
+            setUserData(response.data?.data?.user)
+            toast.success(response.data.message)
+            return response.data;
+        }
+
+        if (error?.response?.status === 401) {
+                        window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
+        return rejectWithValue(error);
+    }
+);
 
   export const logout = createAsyncThunk(
     'user/logout',
@@ -80,6 +130,17 @@ const userSlice = createSlice({
           })
 
 
+          .addCase(updateUserAvtar.fulfilled, (state, action) => {
+            if(action.payload.data.user.id === state.userInfo.id){
+              state.userInfo = {...state.userInfo , avatar: action.payload.data.user.avatar}
+            }
+          })
+
+          .addCase(removeUserProfile.fulfilled, (state, action) => {
+            if(action.payload.data.user.id === state.userInfo.id){
+              state.userInfo = {...state.userInfo , avatar: action.payload.data.user.avatar}
+            }
+          })
 
           .addCase(logout.fulfilled, (state, action) => {
             state.userInfo = {};

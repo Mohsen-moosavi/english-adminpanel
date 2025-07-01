@@ -25,6 +25,7 @@ import UserDetails from '../pages/UserDetails';
 import Console from '../pages/Console';
 import Contact from '../pages/Contact';
 import NotFound from '../pages/notFound';
+import Extrafile from '../pages/Extrafile';
 
 export default function Router() {
   return (
@@ -62,6 +63,7 @@ export default function Router() {
         <Route path='tickets' element={<Ticket/>}/>
         <Route path='tickets/:id' element={<TicketDetails/>}/>
         <Route path='contacts' element={<Contact/>}/>
+        <Route path='extra-file' element={<Extrafile/>}/>
 
 
         <Route path='users/:id/create-sale' element={<CreateSaleByAdmin/>}/>

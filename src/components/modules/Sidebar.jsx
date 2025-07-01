@@ -3,12 +3,12 @@ import logoImg from './../../assets/logo2.png'
 import { Link, useLocation } from 'react-router-dom'
 import { BsChatLeftTextFill, BsHouseGearFill, BsTicketPerforatedFill } from 'react-icons/bs'
 import { IoCloseCircleSharp } from 'react-icons/io5'
-import LogoutBtn from './logoutBtn'
+import LogoutBtn from './LogoutBtn'
 import { AiFillGift, AiFillMessage, AiFillTag } from 'react-icons/ai'
 import { BiSolidDollarCircle } from 'react-icons/bi'
 import { GrArticle } from 'react-icons/gr'
 import { PiBooksDuotone, PiStepsFill } from 'react-icons/pi'
-import { FaChalkboardTeacher, FaUsers } from 'react-icons/fa'
+import { FaChalkboardTeacher, FaFileImage, FaUsers } from 'react-icons/fa'
 
 export default function Sidebar() {
 
@@ -131,6 +131,12 @@ export default function Sidebar() {
             <Link to="contacts" className="flex justify-start gap-x-3 items-end sidebar-link">
             <BsChatLeftTextFill className='sidebar-icon'/>
                 <span>پیغام ها</span>
+            </Link>
+        </li>
+        <li className="block w-full p-2 rounded-lg" data-link="/extra-file">
+            <Link to="extra-file" className="flex justify-start gap-x-3 items-end sidebar-link">
+            <FaFileImage className='sidebar-icon'/>
+                <span>تصاویر</span>
             </Link>
         </li>
         <LogoutBtn/>

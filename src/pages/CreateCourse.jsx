@@ -436,7 +436,7 @@ export default function CreateCourse() {
 
 
                         <div className="form-btn-group">
-                            <label htmlFor="create-course-input-2" className="form-label">توضیحات کوتاه (به فرم HTML):</label>
+                            <label htmlFor="create-course-input-2" className="form-label">توضیحات کوتاه:</label>
                             <textarea
                                 type="text"
                                 name='shortDescription'

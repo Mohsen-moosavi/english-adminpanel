@@ -1,4 +1,3 @@
-import userProfile from './../../assets/user-profile.png'
 import moment from 'moment-jalaali'
 import { FaTrashAlt } from 'react-icons/fa'
 
@@ -7,7 +6,7 @@ export default function TicketBox({ message, isUser, deleteMessageHandler , islo
         <div className={`max-w-[80%] w-auto relative border-[3px] border-solid rounded-xl mb-3 ${isUser ? 'border-sky-800 bg-sky-400/10 mr-auto rounded-bl-none' : 'border-main-color bg-green-800/20 ml-auto rounded-br-none'} mb-5`}>
             <div
                 className="flex items-center gap-x-2 border-b border-solid border-gray-400 mx-2 py-2">
-                <img src={message?.sender?.avatar || userProfile} alt="user"
+                <img src={message?.sender?.avatar || "/public/images/user-profile.png"} alt="user"
                     className="rounded-full w-[50px] max-md:w-[30px] bg-green-800/50" />
                 <div className="flex flex-col">
                     <span className="text-main-color max-md:text-[12px] font-bold">{message?.sender?.name}</span>

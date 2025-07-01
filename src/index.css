@@ -166,6 +166,37 @@ button{
     text-wrap: nowrap;
 }
 
+.see-extrafile-modal img{
+    background-color: #e8fff9;
+    position: relative;
+    width: 100%;
+    border: 2px solid  #0e4b50;
+    border-radius: 10px;
+    box-shadow: 0 0 21px -5px #000;
+    z-index: 2;
+}
+
+.see-extrafile-modal p{
+    position: relative;
+    bottom: 10px;
+    direction: ltr;
+    text-wrap: wrap;
+    text-align: center;
+    color: #0e4b50;
+    font-size: small;
+    background-color: #e4e4e4;
+    padding: 10px;
+    padding-top: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+
+
+.extrafile-table *{
+    text-align: center;
+    padding: 5px;
+}
+
 .dataTable tr th{
     font-weight: 700;
 }

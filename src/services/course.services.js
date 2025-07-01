@@ -98,7 +98,7 @@ const getCoursesFunc= (limit , offset , search='' ,status , teacherId, bookId, l
                 userId && (searchQuery+=`&userId=${userId}`)
                 tagId && (searchQuery+=`&tagId=${tagId}`)
     
-                const response = await apiPrivate(appJsonPostApi).get(`/course?${searchQuery}` , { withCredentials : false});
+                const response = await apiPrivate(appJsonPostApi).get(`/course?${searchQuery}` , { withCredentials : true});
     
                 return { response };
             } catch (error) {
