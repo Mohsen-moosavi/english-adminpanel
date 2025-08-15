@@ -10,6 +10,7 @@ import DatePicker, { DateObject } from 'react-multi-date-picker'
 import persian from 'react-date-object/calendars/persian'
 import persian_fa from 'react-date-object/locales/persian_fa'
 import Swal from 'sweetalert2'
+import { FaLongArrowAltRight } from 'react-icons/fa'
 
 
 export default function ALlSales() {
@@ -23,7 +24,8 @@ export default function ALlSales() {
   const { sales, salesCount,totalPrice, search, status, startDate, endDate, saleStatus, offset, priceStatus, limit, isLoading } = useSelector(state => state.saleData)
 
   useEffect(() => {
-    dispatch(getSales({ limit, offset, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
+    setPaginatorChangerFlag(prevValue=>!prevValue)
+    dispatch(getSales({ limit, offset:0, search, status, saleStatus, priceStatus, userId, startDate, endDate }))
   }, [status, userId, startDate, endDate, saleStatus, priceStatus])
 
   function deleteSaleHandler(id) {
@@ -62,6 +64,14 @@ export default function ALlSales() {
 
   return (
     <div>
+      {state?.name ? (
+        <div className='inline-block'>
+          <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+            <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+            <span>بازگشت</span>
+          </Link>
+        </div>
+      ) :null}
       <h3 className='page-title'>{state?.name ? `لیست خرید ${state?.name}` :'لیست فروش دوره ها'}</h3>
 
 

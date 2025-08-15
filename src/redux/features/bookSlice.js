@@ -91,13 +91,17 @@ export const getBooks = createAsyncThunk(
         { limit , offset , search,tagId },
         { rejectWithValue }
     ) => {
-        const { response, error } = await getAllBooksFunc(limit , offset , search, tagId)
+        const { response, error } = await authRequest(getAllBooksFunc(limit , offset , search, tagId))
 
         if (response) {
             return response.data;
         }
 
-        toast.error(error?.response?.data?.message);
+        if (error?.response?.status === 401) {
+            window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
         return rejectWithValue(error);
     }
 );
@@ -138,7 +142,11 @@ export const updateBookCollection = createAsyncThunk(
                                 setProgress(prevValue => Math.ceil(prevValue + chunkProgress));
                                 chunkNumber++;
                                 start = end;
-                                end = start + chunkSize;
+                                if(fileObject.file.size-end !==0 && fileObject.file.size-end < chunkSize){
+                                    end = start + (fileObject.file.size - end)
+                                }else{
+                                    end = start + chunkSize;
+                                }
                                 await uploadNextChunk();
                             }
                             if (error) {

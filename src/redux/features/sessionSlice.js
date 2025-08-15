@@ -216,13 +216,17 @@ export const getSessions = createAsyncThunk(
         { rejectWithValue }
     ) => {
 
-        const { response, error } = await getSessionsFunc(id, limit, offset, search, status, fileStatus)
+        const { response, error } = await authRequest(getSessionsFunc(id, limit, offset, search, status, fileStatus))
 
         if (response) {
             return response.data;
         }
 
-        toast.error(error?.response?.data?.message);
+        if (error?.response?.status === 401) {
+            window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
         return rejectWithValue(error);
     }
 );

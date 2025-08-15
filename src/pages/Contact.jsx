@@ -14,7 +14,8 @@ export default function Contact() {
     const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
 
     useEffect(() => {
-        dispatch(getContacts({ offset, limit, status, answering }))
+        setPaginatorChangerFlag(prev=>!prev)
+        dispatch(getContacts({ offset:0, limit, status, answering }))
     }, [status, answering])
 
     function paginationHandler(page) {

@@ -14,13 +14,17 @@ const createTagFunc= (name,limit, offset) => {
     )
 }
 
-const getTagsFunc= async (limit , offset , search='') => {
-    try {
-        const response = await appJsonPostApi.get(`/tag?limit=${limit}&offset=${offset}&search=${search}` , { withCredentials : false});
-        return { response };
-    } catch (error) {
-        return { error };
-    }
+const getTagsFunc= (limit , offset , search='') => {
+    return(
+        async ()=>{
+            try {
+                const response = await apiPrivate(appJsonPostApi).get(`/tag?limit=${limit}&offset=${offset}&search=${search}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
 }
 
 const deleteTagFunc= (id, limit, offset, search) => {

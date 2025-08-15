@@ -23,7 +23,8 @@ export default function Users() {
       isInitialised.current = true
       dispatch(getFinders({ setAllRoles, setAllLevels }))
     }
-    dispatch(getUsers({ searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus, limit, offset }))
+    setPaginatorChangerFlag(prev=>!prev)
+    dispatch(getUsers({ searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser, scorePriority,banStatus, limit, offset:0 }))
   }, [searchName, searchPhone, roleStatus, purchaseStatus, scoreStatus, levelStatus, deletedUser,banStatus])
 
   function paginationHandler(page) {

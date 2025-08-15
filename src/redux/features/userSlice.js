@@ -119,9 +119,9 @@ const userSlice = createSlice({
           .addCase(getUserDate.fulfilled, (state, action) => {
             state.isLoading = false;
             state.userInfo = action.payload?.data?.user;
-            if(!state.userInfo.avatar){
-              state.userInfo = {...state.userInfo , avatar : '/public/images/user-profile.png'}
-            }
+            // if(!state.userInfo.avatar){
+            //   state.userInfo = {...state.userInfo , avatar : '/public/user-profile.png'}
+            // }
             state.isLogin = true;
           })
           .addCase(getUserDate.rejected, (state, action) => {
@@ -141,7 +141,7 @@ const userSlice = createSlice({
 
           .addCase(removeUserProfile.fulfilled, (state, action) => {
             if(action.payload.data.user.id === state.userInfo.id){
-              state.userInfo = {...state.userInfo , avatar: '/public/images/user-profile.png'}
+              state.userInfo = {...state.userInfo , avatar: null}
             }
           })
 

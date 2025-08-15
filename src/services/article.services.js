@@ -47,28 +47,36 @@ const updateArticleFunc= (id , title , shortDescription , longDescription , cove
     )
 }
 
-const getArticlesFunc= async (limit , offset , search='' , status , writerId , userId, tagId) => {
-    try {
-        let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
-        status && (searchQuery+=`&status=${status}`)
-        writerId && (searchQuery+=`&writerId=${writerId}`)
-        userId && (searchQuery+=`&userId=${userId}`)
-        tagId && (searchQuery+=`&tagId=${tagId}`)
-
-        const response = await appJsonPostApi.get(`/article${searchQuery}` , { withCredentials : false});
-        return { response };
-    } catch (error) {
-        return { error };
+const getArticlesFunc= (limit , offset , search='' , status , writerId , userId, tagId) => {
+    return (
+        async ()=>{
+            try {
+                let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
+                status && (searchQuery+=`&status=${status}`)
+                writerId && (searchQuery+=`&writerId=${writerId}`)
+                userId && (searchQuery+=`&userId=${userId}`)
+                tagId && (searchQuery+=`&tagId=${tagId}`)
+        
+                const response = await apiPrivate(appJsonPostApi).get(`/article${searchQuery}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
     }
+)
 }
 
-const getArticleFunc= async (id) => {
-    try {
-        const response = await appJsonPostApi.get(`/article/${id}` , { withCredentials : false});
-        return { response };
-    } catch (error) {
-        return { error };
-    }
+const getArticleFunc= (id) => {
+    return (
+        async ()=>{
+            try {
+                const response = await apiPrivate(appJsonPostApi).get(`/article/${id}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
 }
 
 const deleteArticleFunc= (id, limit, offset, search , status , writerId , userId, tagId) => {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
+import { FaLongArrowAltRight, FaStar, FaTrash, FaUserAlt } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
 import { useDispatch } from 'react-redux'
@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import { MdEdit } from 'react-icons/md'
 import toast from 'react-hot-toast'
 import { ImSpinner8 } from 'react-icons/im'
+import userProfile from './../assets/user-profile.png'
 import { removeUserProfile, updateUserAvtar } from '../redux/features/userSlice'
 
 export default function UserDetails() {
@@ -145,6 +146,13 @@ export default function UserDetails() {
       {isLoaded ? (
         <>
           {userData ? (
+            <>
+            <div className='inline-block mb-3'>
+              <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+                <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+                  <span>بازگشت</span>
+                  </Link>
+            </div>
             <div className='flex max-sm:flex-col gap-x-[30px] lg:gap-x-[50px] gap-y-5 lg:px-8'>
               <div className='max-sm:order-1 sm:max-w-[180px] max-sm:max-w-full lg:max-w-[230px] flex-1'>
                 <div className='flex flex-col items-center justify-start'>
@@ -153,7 +161,11 @@ export default function UserDetails() {
                       <ImSpinner8 size={50} color='#56abc9' className='animate-[spin_2s_linear_infinite] min-h-[150px]' />
                     ) : (
                       <>
-                        <img src={userData.avatar || "/public/images/user-profile.png"} alt="profile" className='w-full bg-main-color/40' />
+                      {userData.avatar ? (
+                        <img src={userData.avatar} alt="profile" className='w-full bg-main-color/40' />
+                      ) : (
+                        <img src={userProfile} alt="profile" className='w-full bg-main-color/40' />
+                      )}
                         <div className='absolute bottom-0 left-[5%] flex gap-x-2'>
                           <button className={`p-2 rounded-full ${userData.avatar ? 'bg-red-400' : 'bg-red-300'}`} disabled={!userData.avatar} onClick={removeUserProfileHandler}>
                             <FaTrash size={15} color='#fff' />
@@ -289,6 +301,7 @@ export default function UserDetails() {
                 </div>
               </div>
             </div>
+            </>
           ) : (
             <div className='w-full h-full flex items-center justify-center'>
               <h4 className='text-red-500 font-bold'>اطلاعات کاربر یافت نشد!</h4>

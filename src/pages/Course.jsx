@@ -6,6 +6,7 @@ import DataTable from '../components/modules/DataTable'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
 import Swal from 'sweetalert2'
+import { FaLongArrowAltRight } from 'react-icons/fa'
 
 export default function Course() {
 
@@ -35,6 +36,7 @@ export default function Course() {
 
       dispatch(getCourses({ limit, offset: 0, search, status, teacherId : pathname.endsWith('/user-lessons') ? id : null, bookId, levelId, priceStatus, scoreStatus, userId:userId.current , tagId }))
     }else{
+      setPaginatorChangerFlag(prev=>!prev)
       dispatch(getCourses({ limit, offset: 0, search, status, teacherId, bookId, levelId, priceStatus, scoreStatus, userId : userId.current, tagId }))
     }
 
@@ -84,6 +86,15 @@ export default function Course() {
 
   return (
     <div>
+
+    {(state?.name || state?.tagName ) ? (
+      <div className='inline-block'>
+        <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+          <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+          <span>بازگشت</span>
+        </Link>
+      </div>
+    ) : null}
       <h3 className='page-title'>{state?.name  ? `دوره های${pathname.endsWith('/user-lessons') ? ' تدریس شده ' :''} ${state.name}` : state?.tagName ? `دوره های مرتبط با تگ ${state?.tagName}`: 'لیست دوره ها'}</h3>
 
 
@@ -180,14 +191,14 @@ export default function Course() {
                     {course.isCompleted ? 'تکمیل شده' : "در حال برگزاری"}
                   </button>
                 </td>
-                <td>{course.score}</td>
+                <td>{(Number(course.score) % 1) === 0 ? Number(course.score) :  (Number(course.score).toFixed(1))}</td>
                 <td>
                   <Link to={`/courses/video/${course.id}`} state={{ cover: course.cover, video: course.introductionVideo }} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-amber-400"}>
                     مشاهده
                   </Link>
                 </td>
                 <td>
-                  <Link to={`/sessions/${course.id}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-600"}>
+                  <Link to={`/sessions/${course.id}?courseName=${course.name}`} className={"py-1 px-2 rounded-lg text-white hover:text-white bg-green-600"}>
                     مشاهده
                   </Link>
                 </td>

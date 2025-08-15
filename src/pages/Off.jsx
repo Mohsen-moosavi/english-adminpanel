@@ -15,6 +15,7 @@ export default function Off() {
   const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
 
   useEffect(() => {
+    setPaginatorChangerFlag(prev=>!prev)
     dispatch(getOffs({ limit, offset: 0, search, publicStatus, orderStatus }))
   }, [publicStatus, orderStatus])
 

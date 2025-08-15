@@ -32,13 +32,17 @@ export const getTags = createAsyncThunk(
         { limit , offset , search},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getTagsFunc(limit , offset , search)
+        const { response, error } = await authRequest(getTagsFunc(limit , offset , search))
 
         if (response) {
             return response.data;
         }
 
-        toast.error(error?.response?.data?.message);
+        if (error?.response?.status === 401) {
+            window.location.assign('/login');
+        } else {
+            toast.error(error?.response?.data?.message);
+        }
         return rejectWithValue(error);
     }
 );

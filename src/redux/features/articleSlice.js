@@ -32,13 +32,18 @@ export const getArticles = createAsyncThunk(
         { limit , offset , search ,status , writerId, userId, tagId},
         { rejectWithValue }
     ) => {
-        const { response, error } = await getArticlesFunc(limit , offset , search, status , writerId, userId, tagId)
+        const { response, error } = await authRequest(getArticlesFunc(limit , offset , search, status , writerId, userId, tagId))
 
         if (response) {
             return response.data;
         }
 
-        toast.error(error?.response?.data?.message);
+        if (error?.response?.status === 401) {
+            window.location.assign('/login');
+        }else{
+            toast.error(error?.response?.data?.message);
+        }
+
         return rejectWithValue(error);
     }
 );

@@ -78,7 +78,7 @@ export default function CreateSession() {
     return (
         <div>
             <div className='inline-block'>
-                <Link to={`/sessions/${id}`} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+                <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
                     <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
                     <span>بازگشت</span>
                 </Link>

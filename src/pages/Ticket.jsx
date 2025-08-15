@@ -6,6 +6,7 @@ import { deleteTicket, getTickets, setOffset, setStatus, setSubjecth } from '../
 import moment from 'moment-jalaali';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { FaLongArrowAltRight } from 'react-icons/fa';
 
 export default function Ticket() {
 
@@ -16,7 +17,8 @@ export default function Ticket() {
     const [paginatorChangerFlag, setPaginatorChangerFlag] = useState(false)
 
     useEffect(() => {
-        dispatch(getTickets({ offset, limit, status, subject, userId }))
+        setPaginatorChangerFlag(prev=>!prev)
+        dispatch(getTickets({ offset:0, limit, status, subject, userId }))
     }, [status, subject, userId])
 
     function paginationHandler(page) {
@@ -45,6 +47,15 @@ export default function Ticket() {
 
     return (
         <div>
+
+            {state?.name ? (
+              <div className='inline-block'>
+                <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+                  <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+                  <span>بازگشت</span>
+                </Link>
+              </div>
+            ) :null}
             <h3 className='page-title'>{state?.name ? `تیکت های ${state?.name}`:"لیست تیکت ها"}</h3>
 
             <DataTable>

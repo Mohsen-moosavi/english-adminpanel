@@ -11,6 +11,7 @@ import { createArticle, updateArticle } from '../redux/features/articleSlice';
 import toast from 'react-hot-toast';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getArticleFunc } from '../services/article.services';
+import { authRequest } from '../services/authApi.service';
 
 export default function CreateArticle() {
 
@@ -43,8 +44,11 @@ export default function CreateArticle() {
     }, [])
 
     async function getArticleInfo(id) {
-        const { response, error } = await getArticleFunc(id);
+        const { response, error } = await authRequest(getArticleFunc(id));
         if (error) {
+            if (error?.response?.status === 401) {
+                window.location.assign('/login');
+            }
             return toast.error(error.response.data.message)
         }
         const article = response.data.data.article

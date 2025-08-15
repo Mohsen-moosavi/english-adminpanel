@@ -7,6 +7,7 @@ import constants from '../constant/environment'
 import Pagination from '../components/modules/Pagination'
 import Searcher from '../components/modules/Searcher'
 import Swal from 'sweetalert2'
+import { FaLongArrowAltRight } from 'react-icons/fa'
 
 export default function Article() {
 
@@ -25,6 +26,7 @@ export default function Article() {
   // }, [])
 
   useEffect(() => {
+    setPaginatorChangerFlag(prev=>!prev)
     dispatch(getArticles({ limit, offset: 0, search, status, writerId, userId,tagId }))
   }, [status, writerId , userId])
 
@@ -55,6 +57,14 @@ export default function Article() {
 
   return (
     <div>
+      {(state?.name || state?.tagName) ? (
+        <div className='inline-block'>
+          <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+            <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+            <span>بازگشت</span>
+          </Link>
+        </div>
+      ) :null}
       <h3 className='page-title'>{state?.name ? `مقاله های ${state?.name}`: state?.tagName ? `مقاله ها با تگ ${state.tagName}` :"لیست مقاله ها"}</h3>
 
       <div className='mb-3 grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-2'>

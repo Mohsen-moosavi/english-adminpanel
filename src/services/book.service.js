@@ -15,6 +15,7 @@ const uploadFileChunckFunc= (chunk , chunkNumber , totalChunks , fileName , name
                 formData.append("totalChunks", totalChunks);
                 formData.append("fileName", fileName);
 
+
                 const response = await apiPrivate(multipartFormPostApi).post('/book/upload-file' , formData);
                 return { response };
             } catch (error) {
@@ -100,16 +101,20 @@ const deleteBookWhitoutGettingAllFunc = (bookId) => {
     )
 }
 
-const getAllBooksFunc= async (limit , offset , search = '', tagId) => {
-    try {
-        let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
-        tagId && (searchQuery+=`&tagId=${tagId}`)
-
-        const response = await appJsonPostApi.get(`/book${searchQuery}` , { withCredentials : false});
-        return { response };
-    } catch (error) {
-        return { error };
-    }
+const getAllBooksFunc= (limit , offset , search = '', tagId) => {
+    return (
+        async ()=>{
+            try {
+                let searchQuery = `?limit=${limit}&offset=${offset}&search=${search}`
+                tagId && (searchQuery+=`&tagId=${tagId}`)
+        
+                const response = await apiPrivate(appJsonPostApi).get(`/book${searchQuery}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
 }
 
 const deleteBookWithGettingAllFunc = (id, limit, offset, search, tagId) => {
@@ -128,13 +133,17 @@ const deleteBookWithGettingAllFunc = (id, limit, offset, search, tagId) => {
     )
 }
 
-const getBookFunc= async (id) => {
-    try {
-        const response = await appJsonPostApi.get(`/book/${id}` , { withCredentials : false});
-        return { response };
-    } catch (error) {
-        return { error };
-    }
+const getBookFunc= (id) => {
+    return (
+        async ()=>{
+            try {
+                const response = await apiPrivate(appJsonPostApi).get(`/book/${id}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
 }
 
 export {

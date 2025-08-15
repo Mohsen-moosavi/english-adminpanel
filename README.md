@@ -55,11 +55,10 @@ npm run dev
 
 ## 📸 تصاویر محیط پروژه
 
-| داشبورد | مدیریت کاربران |
-|---------|----------------|
-| ![screenshot1](./screenshots/dashboard.png) | ![screenshot2](./screenshots/users.png) |
+![screenshot1](https://github.com/Mohsen-moosavi/project-screenshots/blob/master/classzaban-frontadmin/Screenshot_14-8-2025_02624_localhost.jpeg)
+![screenshot2](https://github.com/Mohsen-moosavi/project-screenshots/blob/master/classzaban-frontadmin/Screenshot_14-8-2025_02746_localhost.jpeg)
+![screenshot3](https://github.com/Mohsen-moosavi/project-screenshots/blob/master/classzaban-frontadmin/Screenshot_14-8-2025_02837_localhost.jpeg)
 
-> لطفاً قبل از استفاده، تصاویر را در پوشه `/screenshots` قرار دهید.
 
 ---
 

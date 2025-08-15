@@ -79,17 +79,21 @@ const uploadSessionDetailsWithoutFileFunc = (sessionId, name, isFree) => {
     )
 }
 
-const getSessionsFunc = async (id, limit, offset, search = '', status, fileStatus) => {
-    try {
-        let queryString = `?limit=${limit}&offset=${offset}&search=${search}`
-        status && (queryString += `&status=${status}`)
-        fileStatus && (queryString += `&fileStatus=${fileStatus}`)
-
-        const response = await appJsonPostApi.get(`/session/${id}${queryString}`, { withCredentials: false });
-        return { response };
-    } catch (error) {
-        return { error };
-    }
+const getSessionsFunc = (id, limit, offset, search = '', status, fileStatus) => {
+    return (
+        async ()=>{   
+            try {
+                let queryString = `?limit=${limit}&offset=${offset}&search=${search}`
+                status && (queryString += `&status=${status}`)
+                fileStatus && (queryString += `&fileStatus=${fileStatus}`)
+                
+                const response = await apiPrivate(appJsonPostApi).get(`/session/${id}${queryString}`);
+                return { response };
+            } catch (error) {
+                return { error };
+            }
+        }
+    )
 }
 
 const deleteSessionFunc = (id,courseId, limit, offset, search = '', status, fileStatus) => {

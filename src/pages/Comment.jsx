@@ -6,6 +6,7 @@ import DataTable from '../components/modules/DataTable';
 import Pagination from '../components/modules/Pagination';
 import Searcher from '../components/modules/Searcher';
 import Swal from 'sweetalert2';
+import { FaLongArrowAltRight } from 'react-icons/fa';
 
 export default function Comment() {
 
@@ -21,6 +22,7 @@ export default function Comment() {
   }
 
   useEffect(() => {
+    setPaginatorChangerFlag(prev=>!prev)
     dispatch(getComments({ limit, offset: 0, search, score, status, parentStatus , userId }))
   }, [score, status, parentStatus , userId])
 
@@ -78,6 +80,15 @@ export default function Comment() {
 
   return (
     <div>
+
+      {state?.name ? (
+        <div className='inline-block'>
+          <Link to={-1} className='flex items-center gap-x-2 text-main-color font-bold hover:text-secound-color'>
+            <FaLongArrowAltRight size={20}></FaLongArrowAltRight>
+            <span>بازگشت</span>
+          </Link>
+        </div>
+      ) :null}
       <h3 className='page-title'>{state?.name ? `کامنت های ${state?.name}`: 'لیست کامنت ها'}</h3>
 
 

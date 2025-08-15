@@ -14,6 +14,7 @@ import { FaFileZipper } from 'react-icons/fa6';
 import { createBookCollection, updateBookCollection } from '../redux/features/bookSlice';
 import Progress from '../components/modules/Progress';
 import { getBookFunc } from '../services/book.service';
+import { authRequest } from '../services/authApi.service';
 
 export default function CreateBookCollection() {
 
@@ -55,8 +56,11 @@ export default function CreateBookCollection() {
     }, [])
 
     async function getBookInfo(id) {
-        const { response, error } = await getBookFunc(id);
+        const { response, error } = await authRequest(getBookFunc(id));
         if (error) {
+            if (error?.response?.status === 401) {
+                window.location.assign('/login');
+            }
             return toast.error(error.response.data.message)
         }
         const book = response.data.data.book
@@ -144,9 +148,10 @@ export default function CreateBookCollection() {
                     const links = subtitleArray.map(item => `<a href="#${item.id}">${item.subtitle}</a>`)
                     if (id) {
                         const newFiles = bookFileArray.filter(file => file.isNew)
-                        dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, isForChildren:values.isForChildren, navigator, setProgress }))
+                        // dispatch(updateBookCollection({ id, name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, newFiles, deletedFiles: deletedFileArray, isForChildren:values.isForChildren, navigator, setProgress }))
                     } else {
-                        dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, isForChildren:values.isForChildren, navigator, setProgress  }))
+                        console.log({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, isForChildren:values.isForChildren, navigator, setProgress  })
+                        // dispatch(createBookCollection({ name: values.name, shortDescription: values.shortDescription, longDescription: values.longDescription, cover: values.cover, slug: values.slug, links, tags: tagArray, ageGrate: values.ageGrate, grate: values.grate, files: bookFileArray, isForChildren:values.isForChildren, navigator, setProgress  }))
                     }
                     // setSearchChangerFlag(prev=>!prev)
                     // setPaginatorChangerFlag(prev=>!prev)
